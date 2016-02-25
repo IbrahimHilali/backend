@@ -9,7 +9,7 @@
 
                 {{ $persons->links() }}
 
-                <table class="table table-responsive">
+                <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -21,7 +21,7 @@
                     </thead>
                     <tbody>
                     @foreach($persons->items() as $person)
-                        <tr>
+                        <tr onclick="location.href='{{ route('persons.show', ['id' => $person->id]) }}'" style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif">
                             <td>{{ $person->id }}</td>
                             <td>{{ $person->last_name }}</td>
                             <td>{{ $person->first_name }}</td>
