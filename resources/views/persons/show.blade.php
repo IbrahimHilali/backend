@@ -114,9 +114,20 @@
                             </table>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="inheritances">
-                            @foreach($person->inheritances as $inheritance)
-                                {{ $inheritance->toJson() }}
-                            @endforeach
+                            <table class="table table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Eintrag</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($person->inheritances as $inheritance)
+                                    <tr>
+                                        <td>{{ $inheritance->entry }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="books">
                             <table class="table table-responsive">
