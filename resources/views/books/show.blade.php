@@ -96,6 +96,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
+                                    @can('books.store')
                                     <button type="submit" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-save"></span>
                                         Speichern
@@ -105,6 +106,7 @@
                                         <span class="glyphicon glyphicon-refresh"></span>
                                         Änderungen zurücksetzen
                                     </button>
+                                    @endcan
                                 </div>
                             </div>
                         </form>

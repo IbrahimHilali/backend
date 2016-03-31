@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use Grimm\Book;
+use Grimm\Person;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $latestPeopleCreated = Person::latest()->take(5)->get();
+        $latestBooksCreated = Book::latest()->take(5)->get();
+
+        $latestPeopleUpdated = Person::orderBy('updated_at', 'desc')->take(5)->get();
+        $latestBooksUpdated = Book::orderBy('updated_at', 'desc')->take(5)->get();
+
+        return view(
+            'home',
+            compact('latestPeopleCreated', 'latestBooksCreated', 'latestPeopleUpdated', 'latestBooksUpdated')
+        );
     }
 }

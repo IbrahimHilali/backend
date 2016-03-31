@@ -34,10 +34,12 @@ class AuthServiceProvider extends ServiceProvider
 
     private function registerRolesAsGates(GateContract $gate)
     {
-        // TODO: define a gate for each permission
+        $permissions = config('permissions');
 
-        $gate->before(function ($user, $abillity) {
-            return true; // TODO: implement roles and permissions
-        });
+        foreach($permissions as $permission) {
+            $gate->define($permission, function($user) use($permission) {
+                return true; // $user->hasPermission($permission);
+            });
+        }
     }
 }

@@ -6,6 +6,7 @@ use Grimm\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UsersController extends Controller
 {
@@ -19,7 +20,11 @@ class UsersController extends Controller
     {
         $users = User::query()->paginate(50);
 
-        return view('users.index', compact('users'));
+        $roles = new LengthAwarePaginator([], 0, 50);
+
+        $permissions = config('permissions');
+
+        return view('users.index', compact('users', 'roles', 'permissions'));
     }
 
     /**
