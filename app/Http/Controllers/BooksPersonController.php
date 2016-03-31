@@ -58,6 +58,8 @@ class BooksPersonController extends Controller
             ->where('person_id', $person_id)
             ->first();
 
+        // TODO: fancy gallery with scan of pages
+
         return view('books.person', compact('association'));
     }
 

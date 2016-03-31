@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-7 col-md-offset-1">
+            <div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h1 class="panel-title">Buch-Person-Verknüpfung</h1>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
                         <h1 class="panel-title">Gefahrenzone</h1>
