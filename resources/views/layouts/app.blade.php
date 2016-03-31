@@ -18,7 +18,7 @@
 
     <style>
         body {
-            font-family: 'Lato';
+            font-family: 'Lato', sans-serif;
         }
 
         .fa-btn {
@@ -49,9 +49,10 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                <li class="disabled"><a href="#">Briefe</a></li>
-                <li><a href="{{ route('persons.index') }}">Personen</a></li>
-                <li><a href="{{ route('books.index') }}">Bücher</a></li>
+                <li class="disabled"><a href="#" onclick="return false">Briefe</a></li>
+                <li><a href="{{ route('persons.index') }}">{{ trans('people.people') }}</a></li>
+                <li><a href="{{ route('books.index') }}">{{ trans('books.books') }}</a></li>
+                <li><a href="{{ route('users.index') }}">{{ trans('users.users') }}</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
