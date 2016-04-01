@@ -57,6 +57,9 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @include('partials.backup-link')
+                </li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
@@ -84,6 +87,7 @@
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover({html: true});
     });
 </script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}

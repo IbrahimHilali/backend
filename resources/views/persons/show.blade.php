@@ -27,14 +27,14 @@
                                 <label class="col-sm-2 control-label">Geburtsdatum</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="birth_date"
-                                           value="{{ $person->birth_date->format('d.m.Y') }}">
+                                           value="{{ (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "" }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Todesdatum</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="death_date"
-                                           value="{{ $person->death_date->format('d.m.Y') }}">
+                                           value="{{ (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "" }}">
                                 </div>
                             </div>
                             <div class="form-group">

@@ -25,8 +25,8 @@
                             <td>{{ $person->id }}</td>
                             <td>{{ $person->last_name }}</td>
                             <td>{{ $person->first_name }}</td>
-                            <td>{{ $person->birth_date->format('d.m.Y') }}</td>
-                            <td>{{ $person->death_date->format('d.m.Y') }}</td>
+                            <td>{{ (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "" }}</td>
+                            <td>{{ (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "" }}</td>
                         </tr>
                     @endforeach
                     </tbody>

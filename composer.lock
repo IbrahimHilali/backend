@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ac4ba39d1e19283be3085e90e2613489",
-    "content-hash": "ca0b14e47d0618d5ef25b9bb1b153abd",
+    "hash": "eca05d659ae02d9fc888a85b666ef13a",
+    "content-hash": "8f4a7af21beb2f0da82ea099847d89eb",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -226,16 +226,16 @@
         },
         {
             "name": "grimmdevelop/models",
-            "version": "0.3.0",
+            "version": "0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrimmDevelop/models.git",
-                "reference": "7f0637639bc8228f59de6b83c000ce83a9db3779"
+                "reference": "4bf16eaff63eca29a618a13672beccd704ff92f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/7f0637639bc8228f59de6b83c000ce83a9db3779",
-                "reference": "7f0637639bc8228f59de6b83c000ce83a9db3779",
+                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/4bf16eaff63eca29a618a13672beccd704ff92f9",
+                "reference": "4bf16eaff63eca29a618a13672beccd704ff92f9",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                     "email": "davbohn@gmail.com"
                 }
             ],
-            "time": "2016-03-31 15:36:21"
+            "time": "2016-04-01 17:47:11"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -412,16 +412,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.27",
+            "version": "v5.2.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a"
+                "reference": "69acb1f8ec254511e10138890364865ff2645ddd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a",
-                "reference": "ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/69acb1f8ec254511e10138890364865ff2645ddd",
+                "reference": "69acb1f8ec254511e10138890364865ff2645ddd",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-03-29 13:32:58"
+            "time": "2016-04-01 18:26:27"
         },
         {
             "name": "league/flysystem",
@@ -987,6 +987,56 @@
                 }
             ],
             "time": "2015-02-03 12:10:50"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "84060b9034d756b4d79641667d7f9efe1aeb8e04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/84060b9034d756b4d79641667d7f9efe1aeb8e04",
+                "reference": "84060b9034d756b4d79641667d7f9efe1aeb8e04",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete PHP client library for Redis",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2015-07-30 18:34:15"
         },
         {
             "name": "psr/log",
