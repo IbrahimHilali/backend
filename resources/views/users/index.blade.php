@@ -81,7 +81,7 @@
                     <div role="tabpanel" class="tab-pane" id="permissions">
                         <ul class="list-group">
                             @foreach($permissions as $permission)
-                                <li class="list-group-item">{{ $permission }}</li>
+                                <li class="list-group-item">{{ $permission->name }}</li>
                             @endforeach
                         </ul>
                     </div>

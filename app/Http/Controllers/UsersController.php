@@ -23,7 +23,7 @@ class UsersController extends Controller
 
         $roles = Role::query()->paginate(50);
 
-        $permissions = Permission::query()->paginate(50);
+        $permissions = Permission::orderBy('name', 'asc')->paginate(50);
 
         return view('users.index', compact('users', 'roles', 'permissions'));
     }
