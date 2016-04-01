@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Grimm\Permission;
+use Grimm\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -34,11 +36,12 @@ class AuthServiceProvider extends ServiceProvider
 
     private function registerRolesAsGates(GateContract $gate)
     {
-        $permissions = config('permissions');
+        $permissions = Permission::all();
 
+        /** @var Permission $permission */
         foreach($permissions as $permission) {
-            $gate->define($permission, function($user) use($permission) {
-                return true; // $user->hasPermission($permission);
+            $gate->define($permission, function(User $user) use($permission) {
+                return $user->hasPermission($permission->name);
             });
         }
     }

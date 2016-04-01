@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Grimm\Permission;
+use Grimm\Role;
 use Grimm\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class UsersController extends Controller
 {
@@ -20,9 +21,9 @@ class UsersController extends Controller
     {
         $users = User::query()->paginate(50);
 
-        $roles = new LengthAwarePaginator([], 0, 50);
+        $roles = Role::query()->paginate(50);
 
-        $permissions = config('permissions');
+        $permissions = Permission::query()->paginate(50);
 
         return view('users.index', compact('users', 'roles', 'permissions'));
     }
