@@ -3,7 +3,18 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 page-title">
+                {{-- <div class="button-container">
+                    <div class="generic">
+                        <a href="{{ route('books.create') }}" role="button" class="btn btn-default btn-sm">
+                            <span class="fa fa-plus"></span>
+                            {{ trans('books.store') }}
+                        </a>
+                    </div>
+                </div> --}}
+                <h1>Benutzerverwaltung</h1>
+            </div>
+            <div class="col-md-12 tabs-container">
 
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li role="presentation" class="active">
@@ -19,7 +30,8 @@
                            data-toggle="tab">{{ trans('users.permissions') }}</a>
                     </li>
                 </ul>
-
+            </div>
+            <div class="col-md-12 list-content">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="users">
                         {{ $users->links() }}
@@ -64,7 +76,7 @@
                             </thead>
                             <tbody>
                             @foreach($roles->items() as $role)
-                                <tr onclick="location.href='{{ route('users.role', ['id' => $role->id]) }}'"
+                                <tr onclick="location.href='{{ route('roles.show', ['id' => $role->id]) }}'"
                                     style="cursor: pointer;">
                                     <td>{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
@@ -76,12 +88,14 @@
                         </table>
 
                         {{ $roles->links() }}
+
+                        <a href="{{ route('roles.create') }}" role="button" class="btn btn-default">{{ trans('user.roles.create') }}</a>
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="permissions">
                         <ul class="list-group">
                             @foreach($permissions as $permission)
-                                <li class="list-group-item">{{ $permission->name }}</li>
+                                <li class="list-group-item">{{ trans($permission->name) }}</li>
                             @endforeach
                         </ul>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
 use Grimm\Book;
 use Illuminate\Http\Request;
@@ -34,18 +35,22 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param BookStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookStoreRequest $request)
     {
-        //
+        $book = $request->persist();
+
+        return redirect()
+            ->route('books.show', ['id' => $book->id])
+            ->with('success', trans('books.save'));
     }
 
     /**
@@ -105,6 +110,15 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /** @var Book $book */
+        $book = Book::query()->findOrFail($id);
+
+        $book->personAssociations()->delete();
+
+        $book->delete();
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', trans('books.delete'));
     }
 }

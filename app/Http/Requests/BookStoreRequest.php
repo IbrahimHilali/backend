@@ -5,17 +5,17 @@ namespace App\Http\Requests;
 use Gate;
 use Grimm\Book;
 
-class BookUpdateRequest extends Request
+class BookStoreRequest extends Request
 {
 
     /**
-     * Always returns true, the controller
+     * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return Gate::allows('books.update');
+        return Gate::allows('books.store');
     }
 
     /**
@@ -36,13 +36,14 @@ class BookUpdateRequest extends Request
     }
 
     /**
-     * Persists changes to the database
+     * Creates a new book entry in database
      *
-     * @param Book $book
      * @return bool
      */
-    public function persist(Book $book)
+    public function persist()
     {
+        $book = new Book();
+
         $book->title = $this->input('title');
         $book->short_title = $this->input('short_title') ?: null;
 
@@ -52,6 +53,8 @@ class BookUpdateRequest extends Request
 
         $book->year = (int)$this->input('year') ?: null;
 
-        return $book->save();
+        $book->save();
+
+        return $book;
     }
 }

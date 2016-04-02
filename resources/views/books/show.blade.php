@@ -3,155 +3,178 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Buchdaten</h1>
-                    </div>
+            <div class="col-md-12 page-title">
+                <h1>Buchdaten</h1>
+            </div>
+            <div class="col-md-12 list-content">
+                <div class="panel-body">
+                    <form class="form-horizontal" action="{{ route('books.update', ['id' => $book->id]) }}"
+                          method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
 
-                    <div class="panel-body">
-                        <form class="form-horizontal" action="{{ route('books.update', ['id' => $book->id]) }}"
-                              method="post">
-                            {{ csrf_field() }}
-                            {{ method_field('PUT') }}
+                        @include('info')
 
-                            @include('info')
+                        <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputTitle">Titel</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="title" id="inputTitle"
+                                       value="{{ old('title', $book->title) }}">
 
-                            <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Titel</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" name="title" value="{{ old('title', $book->title) }}">
-
-                                    @if ($errors->has('title'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('title') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @if ($errors->has('title'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group{{ $errors->has('short_title') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Kurztitel</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" name="short_title"
-                                           value="{{ old('short_title', $book->short_title) }}">
+                        </div>
+                        <div class="form-group{{ $errors->has('short_title') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputShortTitle">Kurztitel</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="short_title" id="inputShortTitle"
+                                       value="{{ old('short_title', $book->short_title) }}">
 
-                                    @if ($errors->has('short_title'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('short_title') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @if ($errors->has('short_title'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('short_title') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Jahr</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" name="year"
-                                           value="{{ old('year', $book->year) }}">
+                        </div>
+                        <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputYear">Jahr</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="year" id="inputYear"
+                                       value="{{ old('year', $book->year) }}">
 
-                                    @if ($errors->has('year'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('year') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @if ($errors->has('year'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('year') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group{{ $errors->has('volume') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Band</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" name="volume"
-                                           value="{{ old('volume', $book->volume) }}">
+                        </div>
+                        <div class="form-group{{ $errors->has('volume') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputVolume">Band</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="volume" id="inputVolume"
+                                       value="{{ old('volume', $book->volume) }}">
 
-                                    @if ($errors->has('volume'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('volume') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @if ($errors->has('volume'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('volume') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group{{ $errors->has('volume_irregular') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Zusatzband</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" name="volume_irregular"
-                                           value="{{ old('volume_irregular', $book->volume_irregular) }}">
+                        </div>
+                        <div class="form-group{{ $errors->has('volume_irregular') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputVolumeIrregular">Zusatzband</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="volume_irregular" id="inputVolumeIrregular"
+                                       value="{{ old('volume_irregular', $book->volume_irregular) }}">
 
-                                    @if ($errors->has('volume_irregular'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('volume_irregular') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @if ($errors->has('volume_irregular'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('volume_irregular') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group{{ $errors->has('edition') ? ' has-error' : '' }}">
-                                <label class="col-sm-2 control-label">Edition</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" name="edition"
-                                           value="{{ old('edition', $book->edition) }}">
+                        </div>
+                        <div class="form-group{{ $errors->has('edition') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputEdition">Edition</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="edition" id="inputEdition"
+                                       value="{{ old('edition', $book->edition) }}">
 
-                                    @if ($errors->has('edition'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('edition') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                                @if ($errors->has('edition'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('edition') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-2">
-                                    @can('books.store')
-                                    <button type="submit" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-save"></span>
-                                        Speichern
-                                    </button>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                @can('books.update')
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-save"></span>
+                                    Speichern
+                                </button>
 
-                                    <button type="reset" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-refresh"></span>
-                                        Änderungen zurücksetzen
-                                    </button>
-                                    @endcan
-                                </div>
+                                <button type="reset" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                    Änderungen zurücksetzen
+                                </button>
+                                @endcan
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+                </div>
 
-                    <table class="table table-responsive">
-                        <thead>
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nachname</th>
+                        <th>Vorname</th>
+                        <th>Seite</th>
+                        <th>Zeile</th>
+                        <th>Notiz</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($book->personAssociations as $personAssociation)
                         <tr>
-                            <th>#</th>
-                            <th>Nachname</th>
-                            <th>Vorname</th>
-                            <th>Seite</th>
-                            <th>Zeile</th>
-                            <th>Notiz</th>
-                            <th></th>
+                            <td>
+                                <a href="{{ route('persons.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
+                            </td>
+                            <td>{{ $personAssociation->person->last_name }}</td>
+                            <td>{{ $personAssociation->person->first_name }}</td>
+                            <td>
+                                {{ $personAssociation->page }}
+                                @if($personAssociation->page_to)
+                                    bis {{ $personAssociation->page_to }}
+                                @endif
+                            </td>
+                            <td>{{ $personAssociation->line }}</td>
+                            <td>{{ $personAssociation->page_description }}</td>
+                            <td>
+                                <a href="{{ route('books.person', ['book_id' => $book->id, 'person_id' => $personAssociation->person->id]) }}"
+                                   data-toggle="tooltip" data-title="Verknüpfung">
+                                    <span class="fa fa-link"></span>
+                                </a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($book->personAssociations as $personAssociation)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('persons.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
-                                </td>
-                                <td>{{ $personAssociation->person->last_name }}</td>
-                                <td>{{ $personAssociation->person->first_name }}</td>
-                                <td>
-                                    {{ $personAssociation->page }}
-                                    @if($personAssociation->page_to)
-                                        bis {{ $personAssociation->page_to }}
-                                    @endif
-                                </td>
-                                <td>{{ $personAssociation->line }}</td>
-                                <td>{{ $personAssociation->page_description }}</td>
-                                <td>
-                                    <a href="{{ route('books.person', ['book_id' => $book->id, 'person_id' => $personAssociation->person->id]) }}"
-                                       data-toggle="tooltip" data-title="Verknüpfung">
-                                        <span class="glyphicon glyphicon-link"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                    @endforeach
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Gefahrenzone</h1>
+                            </div>
+
+                            <div class="panel-body">
+                                <p>
+                                <form action="{{ route('books.destroy', ['id' => $book->id]) }}" method="post" class="form-inline">
+                                    {{ csrf_field() }}
+                                    {{ method_field('delete') }}
+                                    <button class="btn btn-danger">
+                                        <span class="fa fa-trash"></span>
+                                        {{ trans('books.delete') }}
+                                    </button>
+                                </form>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 @endsection

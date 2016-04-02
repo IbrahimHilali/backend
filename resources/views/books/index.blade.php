@@ -4,6 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 page-title">
+                <div class="button-container">
+                    <div class="generic">
+                    <a href="{{ route('books.create') }}" role="button" class="btn btn-default btn-sm">
+                        <span class="fa fa-plus"></span>
+                        {{ trans('books.store') }}
+                    </a>
+                    </div>
+                </div>
                 <h1>Bücherdatenbank</h1>
             </div>
             <div class="col-md-12 pagination-container">
@@ -20,7 +28,8 @@
                     </thead>
                     <tbody>
                     @foreach($books->items() as $book)
-                        <tr onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'" style="cursor: pointer;">
+                        <tr onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'"
+                            style="cursor: pointer;">
                             <td>{{ $book->id }}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->short_title }}</td>
