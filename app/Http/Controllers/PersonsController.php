@@ -16,9 +16,14 @@ class PersonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $persons = Person::orderBy('last_name')->orderBy('first_name')->paginate(20);
+        if ($request->has('name')) {
+            $persons = Person::searchByName($request->get('name'));
+        } else {
+            $persons = Person::query();
+        }
+        $persons = $persons->orderBy('last_name')->orderBy('first_name')->paginate(20);
 
         return view('persons.index', compact('persons'));
     }

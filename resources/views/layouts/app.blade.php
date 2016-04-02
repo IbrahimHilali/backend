@@ -81,6 +81,8 @@
         $('[data-toggle="popover"]').popover({html: true});
     });
 </script>
+
+@yield('scripts')
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>

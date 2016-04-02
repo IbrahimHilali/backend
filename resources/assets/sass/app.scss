@@ -1,5 +1,7 @@
 $body-bg: #F0F0F0;
 $pager-border-radius: 0;
+$border-radius-base: 1px;
+$border-radius-small: 1px;
 $link-color: #3081B7;
 //$pagination-bg: lighten(#BDC3C7, 5%);
 $pagination-bg: darken($body-bg, 10%);
@@ -61,4 +63,65 @@ body {
 
 .list-content {
   background: #fff;
+}
+
+.button-container {
+  float: right;
+  margin-top: 9px;
+  width: 280px;
+
+  .btn {
+    height: 30px;
+  }
+
+  .reset-search {
+    position: relative;
+
+    .btn {
+      position: absolute;
+      top: 5px;
+    }
+  }
+}
+
+.search {
+  padding: 5px 0;
+  width: 230px;
+  height: 30px;
+  position: relative;
+  left: 0px;
+  float: left;
+  line-height: 22px;
+
+  .btn {
+    //height: 30px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    border-radius:1px;
+  }
+
+  input {
+    position: absolute;
+    width: 0px;
+    float: Left;
+    margin-left: 210px;
+    -webkit-transition: all 0.7s ease-in-out;
+    -moz-transition: all 0.7s ease-in-out;
+    -o-transition: all 0.7s ease-in-out;
+    transition: all 0.7s ease-in-out;
+    height: 30px;
+    line-height: 18px;
+    padding: 0 2px 0 2px;
+    border-radius:1px;
+  }
+}
+
+.search:hover input, .search input:focus, .search.active input {
+  width: 200px;
+  margin-left: 0px;
+}
+
+.empty-list {
+  text-align: center;
 }
