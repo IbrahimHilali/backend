@@ -22,8 +22,8 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nachname</th>
-                        <th>Vorname</th>
+                        <th>Titel</th>
+                        <th>Kurztitel</th>
                     </tr>
                     </thead>
                     <tbody>
