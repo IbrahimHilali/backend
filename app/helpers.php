@@ -4,11 +4,11 @@ if (!function_exists('sort_link')) {
     /**
      * @param $url
      * @param $key
+     * @return string
      */
     function sort_link($url, $key) {
         $currentSort = request()->get('order-by', 'name');
 
-        $queryParams = [];
         if ($currentSort != $key) {
             $queryParams = ['order-by' => $key, 'direction' => 0];
         } else {
@@ -17,5 +17,21 @@ if (!function_exists('sort_link')) {
         }
 
         return url($url) . '?' . http_build_query($queryParams);
+    }
+}
+
+if (!function_exists('checked')) {
+    /**
+     * @param $url
+     * @param $key
+     * @return string
+     */
+    function checked($field, $value) {
+
+        if ($field == $value) {
+            return ' checked="checked';
+        }
+
+        return '';
     }
 }

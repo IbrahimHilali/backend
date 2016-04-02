@@ -36,13 +36,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Bio data</label>
+                            <label class="col-sm-2 control-label">Biographische Daten</label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="bio_data" value="{{ $person->bio_data }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Bio Data (Quelle)</label>
+                            <label class="col-sm-2 control-label">Quelle der biogr. Daten</label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="bio_data_source"
                                        value="{{ $person->bio_data_source }}">
@@ -63,8 +63,16 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Organisation</label>
                             <div class="col-sm-10">
-                                <input class="form-control" name="is_organization"
-                                       value="{{ $person->is_organization }}">
+                                <label class="radio-inline">
+                                    <input type="radio" name="is_organization" id="is_organization1"
+                                           value="0" {{ checked(old('is_organization', $person->is_organization), 0) }}>
+                                    Nein
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="is_organization" id="is_organization2"
+                                           value="1" {{ checked(old('is_organization', $person->is_organization), 1) }}>
+                                    Ja
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -97,16 +105,14 @@
                         <table class="table table-responsive">
                             <thead>
                             <tr>
-                                <th>Eintrag</th>
-                                <th>Jahr</th>
+                                <th colspan="2">Eintrag</th>
+                                <th colspan="2">Jahr</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($person->prints as $print)
-                                <tr>
-                                    <td>{{ $print->entry }}</td>
-                                    <td>{{ $print->year }}</td>
-                                </tr>
+                                <tr is="in-place" print-id="{{ $print->id }}" print-entry="{{ $print->entry }}"
+                                    print-year="{{ $print->year }}" base-url="{{ url('persons/' . $person->id . '/prints/' . $print->id) }}"></tr>
                             @endforeach
                             </tbody>
                         </table>
@@ -159,7 +165,8 @@
                         </table>
 
                         <p>
-                            <a href="{{ route('persons.add-book', ['id' => $person->id]) }}" role="button" class="btn btn-default">
+                            <a href="{{ route('persons.add-book', ['id' => $person->id]) }}" role="button"
+                               class="btn btn-default">
                                 Buch hinzufügen
                             </a>
                         </p>
@@ -168,15 +175,15 @@
                         <table class="table table-responsive">
                             <thead>
                             <tr>
-                                <th>Wert</th>
                                 <th>Code</th>
+                                <th>Wert</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($person->information as $information)
                                 <tr class="@if($information->code->error_generated) bg-danger @endif">
-                                    <td>{{ $information->data }}</td>
                                     <td>{{ $information->code->name }}</td>
+                                    <td>{{ $information->data }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -186,4 +193,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ url('js/persons.js') }}"></script>
 @endsection
