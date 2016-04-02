@@ -15,7 +15,7 @@ class BookUpdateRequest extends Request
      */
     public function authorize()
     {
-        return Gate::allows('books_update');
+        return Gate::allows('books.update');
     }
 
     /**

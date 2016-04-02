@@ -45,6 +45,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::resource('books', 'BooksController');
         Route::resource('persons', 'PersonsController');
         Route::resource('users', 'UsersController');
+        Route::resource('roles', 'RolesController');
 
         Route::get('books/{book_id}/person/{person_id}', ['as' => 'books.person', 'uses' => 'BooksPersonController@show']);
     });

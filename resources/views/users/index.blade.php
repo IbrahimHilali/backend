@@ -64,7 +64,7 @@
                             </thead>
                             <tbody>
                             @foreach($roles->items() as $role)
-                                <tr onclick="location.href='{{ route('users.role', ['id' => $role->id]) }}'"
+                                <tr onclick="location.href='{{ route('roles.show', ['id' => $role->id]) }}'"
                                     style="cursor: pointer;">
                                     <td>{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
@@ -76,12 +76,14 @@
                         </table>
 
                         {{ $roles->links() }}
+
+                        <a href="{{ route('roles.create') }}" role="button" class="btn btn-default">{{ trans('user.roles.create') }}</a>
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="permissions">
                         <ul class="list-group">
                             @foreach($permissions as $permission)
-                                <li class="list-group-item">{{ $permission->name }}</li>
+                                <li class="list-group-item">{{ trans($permission->name) }}</li>
                             @endforeach
                         </ul>
                     </div>
