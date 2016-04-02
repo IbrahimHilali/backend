@@ -10245,6 +10245,7 @@ exports.default = {
             this.editing = false;
         },
         savePrint: function savePrint() {
+            this.saving = true;
             $.ajax({
                 data: {
                     'entry': this.editingEntry,
@@ -10256,6 +10257,7 @@ exports.default = {
                 this.printEntry = response.entry;
                 this.printYear = response.year;
                 this.editing = false;
+                this.saving = false;
             }.bind(this));
         },
         focusEntryInput: function focusEntryInput() {
@@ -10267,13 +10269,14 @@ exports.default = {
     data: function data() {
         return {
             editing: false,
+            saving: false,
             editingEntry: '',
             editingYear: ''
         };
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<tr data-id=\"{{ printId }}\">\n    <td v-if=\"editing\">\n        <a href=\"#\" class=\"btn btn-link\" v-on:click=\"stopEdit()\"><i class=\"fa fa-times\"></i></a>\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingEntry\" v-el:entry-input=\"\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">\n        <a href=\"#\" v-on:click=\"clickEdit()\"><i class=\"fa fa-edit\"></i></a> {{ printEntry }}\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingYear\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td v-if=\"editing\">\n        <button type=\"button\" class=\"btn btn-primary btn-sm\" v-on:click=\"savePrint()\">Speichern</button>\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">{{ printYear }}</td>\n</tr>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<tr data-id=\"{{ printId }}\">\n    <td v-if=\"editing\">\n        <a href=\"#\" class=\"btn btn-link\" v-on:click.prevent=\"stopEdit\"><i class=\"fa fa-times\"></i></a>\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingEntry\" v-el:entry-input=\"\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">\n        <a href=\"#\" v-on:click.prevent=\"clickEdit\"><i class=\"fa fa-edit\"></i></a> {{ printEntry }}\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingYear\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td v-if=\"editing\">\n        <button type=\"button\" class=\"btn btn-primary btn-sm\" v-on:click=\"savePrint()\"><i class=\"fa fa-spinner fa-spin\" v-if=\"saving\"></i> Speichern</button>\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">{{ printYear }}</td>\n</tr>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

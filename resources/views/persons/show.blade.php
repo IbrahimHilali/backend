@@ -4,86 +4,93 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 page-title">
-                <h1>Personendaten</h1>
+                <h1>Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
             </div>
-            <div class="col-md-12 list-content">
-                <div class="panel-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nachname</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="last_name" value="{{ $person->last_name }}">
-                            </div>
+            <div class="col-md-12 page-content">
+                @include('partials.errors')
+                <form action="{{ route('persons.update', ['persons' => $person->id]) }}" class="form-horizontal" method="POST">
+                    {{ method_field('PUT') }}
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nachname</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="last_name" value="{{ old('last_name', $person->last_name) }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Vorname</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="first_name" value="{{ $person->first_name }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Vorname</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="first_name" value="{{ old('first_name', $person->first_name) }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Geburtsdatum</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="birth_date"
-                                       value="{{ (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "" }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Geburtsdatum</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="birth_date"
+                                   value="{{ old('birth_date', (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "") }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Todesdatum</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="death_date"
-                                       value="{{ (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "" }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Todesdatum</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="death_date"
+                                   value="{{ old('death_date', (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "") }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Biographische Daten</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="bio_data" value="{{ $person->bio_data }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Biographische Daten</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="bio_data" value="{{ old('bio_data', $person->bio_data) }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Quelle der biogr. Daten</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="bio_data_source"
-                                       value="{{ $person->bio_data_source }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Quelle der biogr. Daten</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="bio_data_source"
+                                   value="{{ old('bio_data_source', $person->bio_data_source) }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">zusätzl. Daten</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="add_bio_data" value="{{ $person->add_bio_data }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">zusätzl. Daten</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="add_bio_data" value="{{ old('add_bio_data', $person->add_bio_data) }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Quelle</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="source" value="{{ $person->source }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Quelle</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="source" value="{{ old('source', $person->source) }}">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Organisation</label>
-                            <div class="col-sm-10">
-                                <label class="radio-inline">
-                                    <input type="radio" name="is_organization" id="is_organization1"
-                                           value="0" {{ checked(old('is_organization', $person->is_organization), 0) }}>
-                                    Nein
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="is_organization" id="is_organization2"
-                                           value="1" {{ checked(old('is_organization', $person->is_organization), 1) }}>
-                                    Ja
-                                </label>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Organisation</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="is_organization" id="is_organization1"
+                                       value="0" {{ checked(old('is_organization', $person->is_organization), 0) }}>
+                                Nein
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="is_organization" id="is_organization2"
+                                       value="1" {{ checked(old('is_organization', $person->is_organization), 1) }}>
+                                Ja
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Generiert</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" name="auto_generated"
-                                       value="{{ $person->auto_generated }}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Generiert</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="auto_generated"
+                                   value="{{ old('auto_generated', $person->auto_generated) }}">
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="button-bar row">
+                        <div class="col-sm-10 col-md-offset-2">
+                            <button type="submit" class="btn btn-primary">Speichern</button>
+                            <a href="javascript:history.back()" class="btn btn-link">Abbrechen</a>
+                        </div>
+                    </div>
+                </form>
 
                 <ul class="nav nav-tabs">
                     <li class="active">
@@ -112,7 +119,8 @@
                             <tbody>
                             @foreach($person->prints as $print)
                                 <tr is="in-place" print-id="{{ $print->id }}" print-entry="{{ $print->entry }}"
-                                    print-year="{{ $print->year }}" base-url="{{ url('persons/' . $person->id . '/prints/' . $print->id) }}"></tr>
+                                    print-year="{{ $print->year }}"
+                                    base-url="{{ route('persons.prints.update', ['persons' => $person->id, 'prints' => $print->id]) }}"></tr>
                             @endforeach
                             </tbody>
                         </table>

@@ -1,19 +1,19 @@
 <template>
     <tr data-id="{{ printId }}">
         <td v-if="editing">
-            <a href="#" class="btn btn-link" v-on:click="stopEdit()"><i class="fa fa-times"></i></a>
+            <a href="#" class="btn btn-link" v-on:click.prevent="stopEdit"><i class="fa fa-times"></i></a>
         </td>
         <td v-if="editing">
             <input type="text" class="form-control input-sm" v-model="editingEntry" v-el:entry-input v-on:keyup.enter="savePrint()" />
         </td>
         <td colspan="2" v-if="!editing">
-            <a href="#" v-on:click="clickEdit()"><i class="fa fa-edit"></i></a> {{ printEntry }}
+            <a href="#" v-on:click.prevent="clickEdit"><i class="fa fa-edit"></i></a> {{ printEntry }}
         </td>
         <td v-if="editing">
             <input type="text" class="form-control input-sm" v-model="editingYear" v-on:keyup.enter="savePrint()" />
         </td>
         <td v-if="editing">
-            <button type="button" class="btn btn-primary btn-sm" v-on:click="savePrint()">Speichern</button>
+            <button type="button" class="btn btn-primary btn-sm" v-on:click="savePrint()"><i class="fa fa-spinner fa-spin" v-if="saving"></i> Speichern</button>
         </td>
         <td colspan="2" v-if="!editing">{{ printYear }}</td>
     </tr>
@@ -39,6 +39,7 @@
                 this.editing = false;
             },
             savePrint: function() {
+                this.saving = true;
                 $.ajax({
                     data: {
                         'entry': this.editingEntry,
@@ -50,6 +51,7 @@
                     this.printEntry = response.entry;
                     this.printYear = response.year;
                     this.editing = false;
+                    this.saving = false;
                 }).bind(this));
             },
             focusEntryInput: function() {
@@ -61,6 +63,7 @@
         data: function () {
             return {
                 editing: false,
+                saving: false,
                 editingEntry: '',
                 editingYear: ''
             }

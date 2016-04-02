@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePersonDataRequest;
+use Carbon\Carbon;
 use Grimm\Person;
 use Illuminate\Http\Request;
 
@@ -97,13 +99,14 @@ class PersonsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param UpdatePersonDataRequest $request
+     * @param Person $persons
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePersonDataRequest $request, Person $persons)
     {
-        //
+        $this->updatePersonModel($request, $persons);
+        return redirect()->route('persons.show', ['persons' => $persons->id]);
     }
 
     /**
@@ -115,5 +118,41 @@ class PersonsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * TODO: Extract this method
+     * @param $request
+     * @param Person $person
+     */
+    private function updatePersonModel($request, Person $person)
+    {
+        $person->last_name = $request->get('last_name');
+        $person->first_name = $request->get('first_name');
+
+        if ($request->has('birth_date')) {
+            $person->birth_date = new Carbon($request->get('birth_date'));
+        } else {
+            $person->birth_date = null;
+        }
+
+        if ($request->has('death_date')) {
+            $person->death_date = new Carbon($request->get('death_date'));
+        } else {
+            $person->death_date = null;
+        }
+
+        $person->bio_data = $request->get('bio_data');
+        $person->bio_data_source = $request->get('bio_data_source');
+
+        $person->add_bio_data = $request->get('add_bio_data');
+
+        $person->source = $request->get('source');
+
+        $person->is_organization = $request->get('is_organization');
+
+        $person->auto_generated = $request->get('auto_generated');
+
+        $person->save();
     }
 }

@@ -13,13 +13,13 @@ class PersonPrintController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $personId
+     * @param Person $persons
      * @return \Illuminate\Http\Response
      */
-    public function index($personId)
+    public function index(Person $persons)
     {
-        $person = Person::findOrFail($personId);
-        return $person->prints;
+        //$person = Person::findOrFail($personId);
+        return $persons->prints;
     }
 
     /**
@@ -46,15 +46,15 @@ class PersonPrintController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $personId
+     * @param Person $persons
      * @param $printId
      * @return \Illuminate\Http\Response
      */
-    public function show($personId, $printId)
+    public function show(Person $persons, $printId)
     {
-        $person = Person::findOrFail($personId);
+        //$person = Person::findOrFail($personId);
 
-        return $person->prints()->find($printId);
+        return $persons->prints()->findOrFail($printId);
     }
 
     /**
@@ -72,16 +72,15 @@ class PersonPrintController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param $personId
+     * @param Person $persons
      * @param $printId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $personId, $printId)
+    public function update(Request $request, Person $persons, $printId)
     {
-        $person = Person::findOrFail($personId);
 
         /** @var PersonPrint $print */
-        $print = $person->prints()->find($printId);
+        $print = $persons->prints()->find($printId);
 
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
