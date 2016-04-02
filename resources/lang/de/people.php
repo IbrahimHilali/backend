@@ -2,7 +2,7 @@
 
 return [
     'people' => 'Personen',
-    'store' => 'Personen hinzufügen',
-    'update' => 'Personen bearbeiten',
-    'delete' => 'Personen löschen',
+    'store' => 'Person hinzufügen',
+    'update' => 'Person bearbeiten',
+    'delete' => 'Person löschen',
 ];

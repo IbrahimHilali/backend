@@ -7,6 +7,13 @@
 
                 <h1>Bücherdatenbank</h1>
 
+                <p>
+                    <a href="{{ route('books.create') }}" role="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-new-window"></span>
+                        {{ trans('books.store') }}
+                    </a>
+                </p>
+
                 {{ $books->links() }}
 
                 <table class="table table-responsive table-hover">
@@ -19,7 +26,8 @@
                     </thead>
                     <tbody>
                     @foreach($books->items() as $book)
-                        <tr onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'" style="cursor: pointer;">
+                        <tr onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'"
+                            style="cursor: pointer;">
                             <td>{{ $book->id }}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->short_title }}</td>

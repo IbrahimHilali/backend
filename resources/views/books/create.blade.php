@@ -10,10 +10,9 @@
                     </div>
 
                     <div class="panel-body">
-                        <form class="form-horizontal" action="{{ route('books.update', ['id' => $book->id]) }}"
+                        <form class="form-horizontal" action="{{ route('books.store') }}"
                               method="post">
                             {{ csrf_field() }}
-                            {{ method_field('PUT') }}
 
                             @include('info')
 
@@ -21,7 +20,7 @@
                                 <label class="col-sm-2 control-label" for="inputTitle">Titel</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="title" id="inputTitle"
-                                           value="{{ old('title', $book->title) }}">
+                                           value="{{ old('title') }}">
 
                                     @if ($errors->has('title'))
                                         <span class="help-block">
@@ -34,7 +33,7 @@
                                 <label class="col-sm-2 control-label" for="inputShortTitle">Kurztitel</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="short_title" id="inputShortTitle"
-                                           value="{{ old('short_title', $book->short_title) }}">
+                                           value="{{ old('short_title') }}">
 
                                     @if ($errors->has('short_title'))
                                         <span class="help-block">
@@ -47,7 +46,7 @@
                                 <label class="col-sm-2 control-label" for="inputYear">Jahr</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="year" id="inputYear"
-                                           value="{{ old('year', $book->year) }}">
+                                           value="{{ old('year') }}">
 
                                     @if ($errors->has('year'))
                                         <span class="help-block">
@@ -60,7 +59,7 @@
                                 <label class="col-sm-2 control-label" for="inputVolume">Band</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="volume" id="inputVolume"
-                                           value="{{ old('volume', $book->volume) }}">
+                                           value="{{ old('volume') }}">
 
                                     @if ($errors->has('volume'))
                                         <span class="help-block">
@@ -73,7 +72,7 @@
                                 <label class="col-sm-2 control-label" for="inputVolumeIrregular">Zusatzband</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="volume_irregular" id="inputVolumeIrregular"
-                                           value="{{ old('volume_irregular', $book->volume_irregular) }}">
+                                           value="{{ old('volume_irregular') }}">
 
                                     @if ($errors->has('volume_irregular'))
                                         <span class="help-block">
@@ -86,7 +85,7 @@
                                 <label class="col-sm-2 control-label" for="inputEdition">Edition</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" name="edition" id="inputEdition"
-                                           value="{{ old('edition', $book->edition) }}">
+                                           value="{{ old('edition') }}">
 
                                     @if ($errors->has('edition'))
                                         <span class="help-block">
@@ -97,82 +96,19 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    @can('books.update')
+                                    @can('books.store')
                                     <button type="submit" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-save"></span>
                                         Speichern
                                     </button>
 
-                                    <button type="reset" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-refresh"></span>
-                                        Änderungen zurücksetzen
-                                    </button>
+                                    <a href="{{ route('books.index') }}" role="button" class="btn btn-default">
+                                        {{ trans('form.abort') }}
+                                    </a>
                                     @endcan
                                 </div>
                             </div>
                         </form>
-                    </div>
-
-                    <table class="table table-responsive">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nachname</th>
-                            <th>Vorname</th>
-                            <th>Seite</th>
-                            <th>Zeile</th>
-                            <th>Notiz</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($book->personAssociations as $personAssociation)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('persons.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
-                                </td>
-                                <td>{{ $personAssociation->person->last_name }}</td>
-                                <td>{{ $personAssociation->person->first_name }}</td>
-                                <td>
-                                    {{ $personAssociation->page }}
-                                    @if($personAssociation->page_to)
-                                        bis {{ $personAssociation->page_to }}
-                                    @endif
-                                </td>
-                                <td>{{ $personAssociation->line }}</td>
-                                <td>{{ $personAssociation->page_description }}</td>
-                                <td>
-                                    <a href="{{ route('books.person', ['book_id' => $book->id, 'person_id' => $personAssociation->person->id]) }}"
-                                       data-toggle="tooltip" data-title="Verknüpfung">
-                                        <span class="glyphicon glyphicon-link"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Gefahrenzone</h1>
-                    </div>
-
-                    <div class="panel-body">
-                        <p>
-                        <form action="{{ route('books.destroy', ['id' => $book->id]) }}" method="post" class="form-inline">
-                            {{ csrf_field() }}
-                            {{ method_field('delete') }}
-                            <button class="btn btn-danger">
-                                <span class="glyphicon glyphicon-trash"></span>
-                                {{ trans('books.delete') }}
-                            </button>
-                        </form>
-                        </p>
                     </div>
                 </div>
             </div>

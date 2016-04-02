@@ -2,7 +2,7 @@
 
 return [
     'books' => 'Bücher',
-    'store' => 'Bücher hinzufügen',
-    'update' => 'Bücher bearbeiten',
-    'delete' => 'Bücher löschen',
+    'store' => 'Buch hinzufügen',
+    'update' => 'Buch bearbeiten',
+    'delete' => 'Buch löschen',
 ];
