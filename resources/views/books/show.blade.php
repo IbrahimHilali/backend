@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row page">
             <div class="col-md-12 page-title">
                 <h1>Buchdaten</h1>
             </div>

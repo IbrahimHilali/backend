@@ -5755,6 +5755,9 @@ body {
 .fa-btn {
   margin-right: 6px; }
 
+.page {
+  box-shadow: 7px 2px 3px -3px #e3e3e3; }
+
 .page-title {
   background: #35495D; }
   .page-title h1 {
