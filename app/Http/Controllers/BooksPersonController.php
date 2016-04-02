@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Grimm\BookPersonAssociation;
+use Grimm\Person;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,11 +25,15 @@ class BooksPersonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param $person_id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function personAddBook($person_id)
     {
-        //
+        /** @var Person $person */
+        $person = Person::query()->findOrFail($person_id);
+
+        return view('persons.add-book', compact('person'));
     }
 
     /**

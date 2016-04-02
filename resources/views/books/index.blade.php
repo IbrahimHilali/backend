@@ -6,10 +6,10 @@
             <div class="col-md-12 page-title">
                 <div class="button-container">
                     <div class="generic">
-                    <a href="{{ route('books.create') }}" role="button" class="btn btn-default btn-sm">
-                        <span class="fa fa-plus"></span>
-                        {{ trans('books.store') }}
-                    </a>
+                        <a href="{{ route('books.create') }}" role="button" class="btn btn-default btn-sm">
+                            <span class="fa fa-plus"></span>
+                            {{ trans('books.store') }}
+                        </a>
                     </div>
                 </div>
                 <h1>Bücherdatenbank</h1>
@@ -24,6 +24,9 @@
                         <th>#</th>
                         <th>Titel</th>
                         <th>Kurztitel</th>
+                        <th>Jahr</th>
+                        <th>Band</th>
+                        <th>Edition</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -33,6 +36,14 @@
                             <td>{{ $book->id }}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->short_title }}</td>
+                            <td>{{ $book->year }}</td>
+                            <td>
+                                {{ $book->volume }}
+                                @if($book->volume_irregular)
+                                    <span data-toggle="tooltip" data-title="Zusatzband">({{ $book->volume_irregular }})</span>
+                                @endif
+                            </td>
+                            <td>{{ $book->edition }}</td>
                         </tr>
                     @endforeach
                     </tbody>

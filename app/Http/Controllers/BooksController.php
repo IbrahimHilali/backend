@@ -23,6 +23,7 @@ class BooksController extends Controller
         $books = Book::orderBy('title')
             ->orderBy('volume')
             ->orderBy('volume_irregular')
+            ->orderBy('edition')
             ->paginate(150);
 
         return view('books.index', compact('books'));

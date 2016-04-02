@@ -157,6 +157,12 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        <p>
+                            <a href="{{ route('persons.add-book', ['id' => $person->id]) }}" role="button" class="btn btn-default">
+                                Buch hinzufügen
+                            </a>
+                        </p>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="information">
                         <table class="table table-responsive">
