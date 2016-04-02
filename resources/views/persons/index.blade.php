@@ -29,7 +29,8 @@
                     <tr>
                         {{--<th><a href="{{ sort_link('persons', 'id') }}"># {!! sort_arrow('id') !!}</a></th>--}}
                         <th><a href="{{ sort_link('persons', 'last_name') }}">Nachname {!! sort_arrow('last_name') !!}</a></th>
-                        <th colspan="2"><a href="{{ sort_link('persons', 'first_name') }}">Vorname {!! sort_arrow('first_name') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'first_name') }}">Vorname {!! sort_arrow('first_name') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'is_organization') }}"><i class="fa fa-user"></i> / <i class="fa fa-building"></i> {!! sort_arrow('is_organization') !!}</a></th>
                         <th><a href="{{ sort_link('persons', 'source') }}">Quelle {!! sort_arrow('source') !!}</a></th>
                         <th><a href="{{ sort_link('persons', 'birth_date') }}"><span class="fa fa-asterisk"></span> {!! sort_arrow('birth_date') !!}</a></th>
                         <th><a href="{{ sort_link('persons', 'death_date') }}">&#10013; {!! sort_arrow('death_date') !!}</a></th>

@@ -80,8 +80,17 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Generiert</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="auto_generated"
-                                   value="{{ old('auto_generated', $person->auto_generated) }}">
+                            <label class="radio-inline">
+                                <input type="radio" name="auto_generated" id="auto_generated1"
+                                       value="0" {{ checked(old('auto_generated', $person->auto_generated), 0) }}>
+                                Nein
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="auto_generated" id="auto_generated2"
+                                       value="1" {{ checked(old('auto_generated', $person->auto_generated), 1) }}>
+                                Ja
+                            </label>
+                            
                         </div>
                     </div>
                     <div class="button-bar row">

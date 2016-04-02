@@ -3,8 +3,6 @@ $pager-border-radius: 0;
 $border-radius-base: 1px;
 $border-radius-small: 1px;
 $link-color: #3081B7;
-//$pagination-bg: lighten(#BDC3C7, 5%);
-//$pagination-bg: darken($body-bg, 10%);
 $pagination-bg: #ECECEC;
 $pagination-color: darken($pagination-bg, 40%);
 $pagination-hover-color: darken($pagination-bg, 60%);
@@ -28,6 +26,7 @@ body {
 
 .page-title {
   background: #35495D;
+  border: 1px solid darken(#35495D, 10%);
   h1 {
     color: #fff;
     margin-top: 10px;
@@ -71,6 +70,9 @@ body {
 
 .list-content, .page-content {
   background: #fff;
+  border-left: 1px solid darken($pagination-bg, 5%);
+  border-right: 1px solid darken($pagination-bg, 5%);
+  border-bottom: 1px solid darken($pagination-bg, 10%);
 }
 
 .page-content {

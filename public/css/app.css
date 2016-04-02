@@ -5759,7 +5759,8 @@ body {
   box-shadow: 7px 2px 3px -3px #e3e3e3; }
 
 .page-title {
-  background: #35495D; }
+  background: #35495D;
+  border: 1px solid #22303d; }
   .page-title h1 {
     color: #fff;
     margin-top: 10px;
@@ -5795,7 +5796,10 @@ body {
   background: #ECECEC; }
 
 .list-content, .page-content {
-  background: #fff; }
+  background: #fff;
+  border-left: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
+  border-bottom: 1px solid lightgray; }
 
 .page-content {
   padding-top: 10px; }
