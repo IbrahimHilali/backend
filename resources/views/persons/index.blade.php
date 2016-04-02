@@ -27,12 +27,12 @@
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
-                        <th><a href="{{ sort_link('persons', 'id') }}">#</a></th>
-                        <th><a href="{{ sort_link('persons', 'last_name') }}">Nachname</a></th>
-                        <th><a href="{{ sort_link('persons', 'first_name') }}">Vorname</a></th>
-                        <th><a href="{{ sort_link('persons', 'source') }}">Quelle</a></th>
-                        <th><a href="{{ sort_link('persons', 'birth_date') }}"><span class="fa fa-asterisk"></span></a></th>
-                        <th><a href="{{ sort_link('persons', 'death_date') }}">&#10013;</a></th>
+                        <th><a href="{{ sort_link('persons', 'id') }}"># {!! sort_arrow('id') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'last_name') }}">Nachname {!! sort_arrow('last_name') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'first_name') }}">Vorname {!! sort_arrow('first_name') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'source') }}">Quelle {!! sort_arrow('source') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'birth_date') }}"><span class="fa fa-asterisk"></span> {!! sort_arrow('birth_date') !!}</a></th>
+                        <th><a href="{{ sort_link('persons', 'death_date') }}">&#10013; {!! sort_arrow('death_date') !!}</a></th>
                     </tr>
                     </thead>
                     <tbody>

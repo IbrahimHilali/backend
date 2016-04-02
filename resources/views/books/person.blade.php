@@ -6,7 +6,7 @@
             <div class="col-md-12 page-title">
                 <h1>Buch-Person-Verknüpfung</h1>
             </div>
-            <div class="col-md-12 list-content">
+            <div class="col-md-12 page-content">
                 <div class="row">
                     <div class="col-md-9">
                         <p>
