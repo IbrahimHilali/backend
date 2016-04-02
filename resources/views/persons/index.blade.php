@@ -3,12 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-
+            <div class="col-md-12 page-title">
                 <h1>Personendatenbank</h1>
-
+            </div>
+            <div class="col-md-12 pagination-container">
                 {{ $persons->links() }}
-
+            </div>
+            <div class="col-md-12 list-content">
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
@@ -31,8 +32,11 @@
                     @endforeach
                     </tbody>
                 </table>
-
-                {{ $persons->links() }}
+            </div>
+            <div class="col-md-12 pagination-container">
+                <div class="pagination-container">
+                    {{ $persons->links() }}
+                </div>
             </div>
         </div>
     </div>

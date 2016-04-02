@@ -1,2 +1,64 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$body-bg: #F0F0F0;
+$pager-border-radius: 0;
+$link-color: #3081B7;
+//$pagination-bg: lighten(#BDC3C7, 5%);
+$pagination-bg: darken($body-bg, 10%);
+$pagination-color: darken($pagination-bg, 40%);
+$pagination-hover-color: darken($pagination-bg, 60%);
+$pagination-active-bg: darken($pagination-bg, 30%);
+$pagination-disabled-bg: $pagination-bg;
+$pagination-active-border: darken($pagination-bg, 40%);
 
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.fa-btn {
+  margin-right: 6px;
+}
+
+.container {
+  //background: #fff;
+}
+
+.page-title {
+  background: #35495D;
+  h1 {
+    color: #fff;
+    margin-top: 10px;
+    font-weight: 100;
+    font-size: $font-size-h2;
+  }
+}
+
+.pagination-container {
+  background: $pagination-bg;
+  text-align: center;
+  border-bottom: 1px solid darken($pagination-bg, 10%);
+  padding-bottom: -5px;
+  display: flex;
+  justify-content: center;
+
+  .pagination {
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .pagination li * {
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-radius: 0;
+  }
+}
+
+.list-content {
+  background: #fff;
+}
