@@ -3,7 +3,18 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 page-title">
+                {{-- <div class="button-container">
+                    <div class="generic">
+                        <a href="{{ route('books.create') }}" role="button" class="btn btn-default btn-sm">
+                            <span class="fa fa-plus"></span>
+                            {{ trans('books.store') }}
+                        </a>
+                    </div>
+                </div> --}}
+                <h1>Benutzerverwaltung</h1>
+            </div>
+            <div class="col-md-12 tabs-container">
 
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li role="presentation" class="active">
@@ -19,7 +30,8 @@
                            data-toggle="tab">{{ trans('users.permissions') }}</a>
                     </li>
                 </ul>
-
+            </div>
+            <div class="col-md-12 list-content">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="users">
                         {{ $users->links() }}

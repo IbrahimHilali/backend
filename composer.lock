@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eca05d659ae02d9fc888a85b666ef13a",
-    "content-hash": "8f4a7af21beb2f0da82ea099847d89eb",
+    "hash": "38ba49025cfbc81ef8419f9e53f3054c",
+    "content-hash": "91e0d194ce2af957f01ad50a56123c52",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -226,16 +226,16 @@
         },
         {
             "name": "grimmdevelop/models",
-            "version": "0.3.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrimmDevelop/models.git",
-                "reference": "4bf16eaff63eca29a618a13672beccd704ff92f9"
+                "reference": "4a3954f898fd2b25ba2e752dfc0d869d888e3691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/4bf16eaff63eca29a618a13672beccd704ff92f9",
-                "reference": "4bf16eaff63eca29a618a13672beccd704ff92f9",
+                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/4a3954f898fd2b25ba2e752dfc0d869d888e3691",
+                "reference": "4a3954f898fd2b25ba2e752dfc0d869d888e3691",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                     "email": "davbohn@gmail.com"
                 }
             ],
-            "time": "2016-04-01 17:47:11"
+            "time": "2016-04-02 12:27:58"
         },
         {
             "name": "jakub-onderka/php-console-color",

@@ -1,2 +1,149 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$body-bg: #F0F0F0;
+$pager-border-radius: 0;
+$border-radius-base: 1px;
+$border-radius-small: 1px;
+$link-color: #3081B7;
+//$pagination-bg: lighten(#BDC3C7, 5%);
+//$pagination-bg: darken($body-bg, 10%);
+$pagination-bg: #ECECEC;
+$pagination-color: darken($pagination-bg, 40%);
+$pagination-hover-color: darken($pagination-bg, 60%);
+$pagination-active-bg: darken($pagination-bg, 30%);
+$pagination-disabled-bg: $pagination-bg;
+$pagination-active-border: darken($pagination-bg, 40%);
 
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.fa-btn {
+  margin-right: 6px;
+}
+
+.container {
+  //background: #fff;
+}
+
+.page-title {
+  background: #35495D;
+  h1 {
+    color: #fff;
+    margin-top: 10px;
+    font-weight: 100;
+    font-size: $font-size-h2;
+  }
+}
+
+.pagination-container {
+  background: $pagination-bg;
+  text-align: center;
+  border-bottom: 1px solid darken($pagination-bg, 10%);
+  padding-bottom: -5px;
+  display: flex;
+  justify-content: center;
+
+  border-left: 1px solid darken($pagination-bg, 5%);
+  border-right: 1px solid darken($pagination-bg, 5%);
+
+  .pagination {
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .pagination li * {
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-radius: 0;
+  }
+}
+
+.tabs-container {
+  background: $pagination-bg;
+}
+
+.list-content, .page-content {
+  background: #fff;
+}
+
+.page-content {
+  padding-top: 10px;
+}
+
+.button-container {
+  float: right;
+  margin-top: 9px;
+  width: 280px;
+
+  .btn {
+    height: 30px;
+  }
+
+  .generic {
+    position: relative;
+
+    .btn {
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
+  }
+
+  .reset-search {
+    position: relative;
+
+    .btn {
+      position: absolute;
+      top: 5px;
+    }
+  }
+}
+
+.search {
+  padding: 5px 0;
+  width: 230px;
+  height: 30px;
+  position: relative;
+  left: 0px;
+  float: left;
+  line-height: 22px;
+
+  .btn {
+    //height: 30px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    border-radius:1px;
+  }
+
+  input {
+    position: absolute;
+    width: 0px;
+    float: Left;
+    margin-left: 210px;
+    -webkit-transition: all 0.7s ease-in-out;
+    -moz-transition: all 0.7s ease-in-out;
+    -o-transition: all 0.7s ease-in-out;
+    transition: all 0.7s ease-in-out;
+    height: 30px;
+    line-height: 18px;
+    padding: 0 2px 0 2px;
+    border-radius:1px;
+  }
+}
+
+.search:hover input, .search input:focus, .search.active input {
+  width: 200px;
+  margin-left: 0px;
+}
+
+.empty-list {
+  text-align: center;
+}
