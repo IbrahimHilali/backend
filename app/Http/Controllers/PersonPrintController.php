@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddNewPrintToPersonRequest;
 use Grimm\Person;
 use Grimm\PersonPrint;
 use Illuminate\Http\Request;
@@ -35,12 +36,17 @@ class PersonPrintController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param AddNewPrintToPersonRequest $request
+     * @param Person $persons
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddNewPrintToPersonRequest $request, Person $persons)
     {
-        //
+        $print = new PersonPrint();
+        $print->entry = $request->get('entry');
+        $print->year = $request->get('year');
+        $persons->prints()->save($print);
+        return redirect()->route('persons.show', ['persons' => $persons->id]);
     }
 
     /**

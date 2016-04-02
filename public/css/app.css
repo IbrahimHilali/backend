@@ -5802,7 +5802,8 @@ body {
   border-bottom: 1px solid lightgray; }
 
 .page-content {
-  padding-top: 10px; }
+  padding-top: 10px;
+  padding-bottom: 20px; }
 
 .button-container {
   float: right;

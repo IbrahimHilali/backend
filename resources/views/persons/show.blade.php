@@ -90,7 +90,7 @@
                                        value="1" {{ checked(old('auto_generated', $person->auto_generated), 1) }}>
                                 Ja
                             </label>
-                            
+
                         </div>
                     </div>
                     <div class="button-bar row">
@@ -133,6 +133,23 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <hr>
+                        <h4>Druck hinzufügen</h4>
+                        <form action="{{ route('persons.prints.store', ['persons' => $person->id]) }}"
+                              class="form-inline" method="POST">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="entry">Eintrag: </label>
+                                <input type="text" class="form-control input-sm" name="entry">
+                            </div>
+                            <div class="form-group">
+                                <label for="year">Jahr: </label>
+                                <input type="text" class="form-control input-sm" name="year">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-sm">Speichern</button>
+                            </div>
+                        </form>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="inheritances">
                         <table class="table table-responsive">

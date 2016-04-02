@@ -43,7 +43,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/home', 'HomeController@index');
 
         Route::resource('books', 'BooksController');
-        Route::resource('persons', 'PersonsController');
+        Route::resource('persons', 'PersonsController', ['except' => ['edit']]);
         Route::resource('persons.prints', 'PersonPrintController');
         Route::resource('users', 'UsersController');
         Route::resource('roles', 'RolesController');
