@@ -14,6 +14,7 @@ class PersonsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -23,7 +24,16 @@ class PersonsController extends Controller
         } else {
             $persons = Person::query();
         }
-        $persons = $persons->orderBy('last_name')->orderBy('first_name')->paginate(20);
+
+        $orderByKey = $request->get('order-by', 'name');
+        $direction = ($request->get('direction', 0)) ? 'desc' : 'asc';
+
+        if ($orderByKey === 'name') {
+            $persons->orderBy('last_name', $direction)->orderBy('first_name', $direction);
+        } else {
+            $persons->orderBy($orderByKey, $direction);
+        }
+        $persons = $persons->paginate(20);
 
         return view('persons.index', compact('persons'));
     }

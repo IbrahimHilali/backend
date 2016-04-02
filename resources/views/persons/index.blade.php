@@ -27,11 +27,12 @@
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Nachname</th>
-                        <th>Vorname</th>
-                        <th><span class="glyphicon glyphicon-asterisk"></span></th>
-                        <th>&#10013;</th>
+                        <th><a href="{{ sort_link('persons', 'id') }}">#</a></th>
+                        <th><a href="{{ sort_link('persons', 'last_name') }}">Nachname</a></th>
+                        <th><a href="{{ sort_link('persons', 'first_name') }}">Vorname</a></th>
+                        <th><a href="{{ sort_link('persons', 'source') }}">Quelle</a></th>
+                        <th><a href="{{ sort_link('persons', 'birth_date') }}"><span class="fa fa-asterisk"></span></a></th>
+                        <th><a href="{{ sort_link('persons', 'death_date') }}">&#10013;</a></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,12 +41,13 @@
                             <td>{{ $person->id }}</td>
                             <td>{{ $person->last_name }}</td>
                             <td>{{ $person->first_name }}</td>
-                            <td>{{ (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "" }}</td>
-                            <td>{{ (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "" }}</td>
+                            <td>{{ $person->source }}</td>
+                            <td>{{ (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "?" }}</td>
+                            <td>{{ (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "?" }}</td>
                         </tr>
                     @empty
                         <tr onclick="location.href='{{ route('persons.create') }}'" style="cursor: pointer;">
-                            <td class="empty-list" colspan="5">In der Datenbank ist keine Person vorhanden. Möchten Sie eine erstellen?</td>
+                            <td class="empty-list" colspan="6">In der Datenbank ist keine Person vorhanden. Möchten Sie eine erstellen?</td>
                         </tr>
                     @endforelse
                     </tbody>
