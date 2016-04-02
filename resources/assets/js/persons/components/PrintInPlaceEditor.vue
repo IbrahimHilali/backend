@@ -1,5 +1,5 @@
 <template>
-    <tr data-id="{{ printId }}">
+    <tr v-if="existing">
         <td v-if="editing">
             <a href="#" class="btn btn-link" v-on:click.prevent="stopEdit"><i class="fa fa-times"></i></a>
         </td>
@@ -15,7 +15,7 @@
         <td v-if="editing">
             <button type="button" class="btn btn-primary btn-sm" v-on:click="savePrint()"><i class="fa fa-spinner fa-spin" v-if="saving"></i> Speichern</button>
         </td>
-        <td colspan="2" v-if="!editing">{{ printYear }}</td>
+        <td colspan="2" v-if="!editing">{{ printYear }} <a href="#" v-on:click.prevent="deletePrint"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
     </tr>
 </template>
 
@@ -54,6 +54,16 @@
                     this.saving = false;
                 }).bind(this));
             },
+            deletePrint: function() {
+                if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
+                    $.ajax({
+                        url: this.baseUrl,
+                        method: 'DELETE'
+                    }).done((response) => {
+                        this.existing = false;
+                    });
+                }
+            },
             focusEntryInput: function() {
                 Vue.nextTick((function() {
                     this.$els.entryInput.focus();
@@ -63,6 +73,7 @@
         data: function () {
             return {
                 editing: false,
+                existing: true,
                 saving: false,
                 editingEntry: '',
                 editingYear: ''

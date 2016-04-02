@@ -10260,6 +10260,18 @@ exports.default = {
                 this.saving = false;
             }.bind(this));
         },
+        deletePrint: function deletePrint() {
+            var _this = this;
+
+            if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
+                $.ajax({
+                    url: this.baseUrl,
+                    method: 'DELETE'
+                }).done(function (response) {
+                    _this.existing = false;
+                });
+            }
+        },
         focusEntryInput: function focusEntryInput() {
             _vue2.default.nextTick(function () {
                 this.$els.entryInput.focus();
@@ -10269,6 +10281,7 @@ exports.default = {
     data: function data() {
         return {
             editing: false,
+            existing: true,
             saving: false,
             editingEntry: '',
             editingYear: ''
@@ -10276,7 +10289,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<tr data-id=\"{{ printId }}\">\n    <td v-if=\"editing\">\n        <a href=\"#\" class=\"btn btn-link\" v-on:click.prevent=\"stopEdit\"><i class=\"fa fa-times\"></i></a>\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingEntry\" v-el:entry-input=\"\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">\n        <a href=\"#\" v-on:click.prevent=\"clickEdit\"><i class=\"fa fa-edit\"></i></a> {{ printEntry }}\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingYear\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td v-if=\"editing\">\n        <button type=\"button\" class=\"btn btn-primary btn-sm\" v-on:click=\"savePrint()\"><i class=\"fa fa-spinner fa-spin\" v-if=\"saving\"></i> Speichern</button>\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">{{ printYear }}</td>\n</tr>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<tr v-if=\"existing\">\n    <td v-if=\"editing\">\n        <a href=\"#\" class=\"btn btn-link\" v-on:click.prevent=\"stopEdit\"><i class=\"fa fa-times\"></i></a>\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingEntry\" v-el:entry-input=\"\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">\n        <a href=\"#\" v-on:click.prevent=\"clickEdit\"><i class=\"fa fa-edit\"></i></a> {{ printEntry }}\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingYear\" v-on:keyup.enter=\"savePrint()\">\n    </td>\n    <td v-if=\"editing\">\n        <button type=\"button\" class=\"btn btn-primary btn-sm\" v-on:click=\"savePrint()\"><i class=\"fa fa-spinner fa-spin\" v-if=\"saving\"></i> Speichern</button>\n    </td>\n    <td colspan=\"2\" v-if=\"!editing\">{{ printYear }} <a href=\"#\" v-on:click.prevent=\"deletePrint\"><i class=\"fa fa-times\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Löschen\"></i></a></td>\n</tr>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
