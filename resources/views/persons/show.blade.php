@@ -7,67 +7,107 @@
                 <h1><a href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i class="fa fa-caret-left"></i></a> Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
             </div>
             <div class="col-md-12 page-content">
-                @include('partials.errors')
+                @include('info')
                 <form action="{{ route('persons.update', ['persons' => $person->id]) }}" class="form-horizontal"
                       method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Nachname</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="last_name"
                                    value="{{ old('last_name', $person->last_name) }}">
+                            @if ($errors->has('last_name'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('last_name') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Vorname</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="first_name"
                                    value="{{ old('first_name', $person->first_name) }}">
+                            @if ($errors->has('first_name'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('first_name') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('birth_date') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Geburtsdatum</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="birth_date"
                                    value="{{ old('birth_date', (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "") }}">
+                            @if ($errors->has('birth_date'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('birth_date') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('death_date') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Todesdatum</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="death_date"
                                    value="{{ old('death_date', (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "") }}">
+                            @if ($errors->has('death_date'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('death_date') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('bio_data') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Biographische Daten</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="bio_data"
                                    value="{{ old('bio_data', $person->bio_data) }}">
+                            @if ($errors->has('bio_data'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('bio_data') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('bio_data_source') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Quelle der biogr. Daten</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="bio_data_source"
                                    value="{{ old('bio_data_source', $person->bio_data_source) }}">
+                            @if ($errors->has('bio_data_source'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('bio_dat_source') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('add_bio_data') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">zusätzl. Daten</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="add_bio_data"
                                    value="{{ old('add_bio_data', $person->add_bio_data) }}">
+                            @if ($errors->has('add_bio_data'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('add_bio_data') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('source') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Quelle</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="source" value="{{ old('source', $person->source) }}">
+                            @if ($errors->has('source'))
+                                <span class="help-block">
+                                            <strong>{{ $errors->first('source') }}</strong>
+                                        </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('is_organization') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Organisation</label>
                         <div class="col-sm-10">
                             <label class="radio-inline">
@@ -82,7 +122,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('auto_generated') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Generiert</label>
                         <div class="col-sm-10">
                             <label class="radio-inline">
