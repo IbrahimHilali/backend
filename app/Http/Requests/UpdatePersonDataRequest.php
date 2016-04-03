@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Gate;
 
 class UpdatePersonDataRequest extends Request
 {
@@ -13,8 +14,7 @@ class UpdatePersonDataRequest extends Request
      */
     public function authorize()
     {
-        // TODO: fix as soon as roles and stuff are established
-        return true;
+        return Gate::allows('people.update');
     }
 
     /**

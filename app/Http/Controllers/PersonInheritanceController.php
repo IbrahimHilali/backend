@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddNewPrintToPersonRequest;
+use App\Http\Requests\AddNewInheritanceToPersonRequest;
+use App\Http\Requests\UpdateInheritanceRequest;
 use Gate;
 use Grimm\Person;
-use Grimm\PersonPrint;
+use Grimm\PersonInheritance;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class PersonPrintController extends Controller
+class PersonInheritanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +21,7 @@ class PersonPrintController extends Controller
      */
     public function index(Person $persons)
     {
-        //$person = Person::findOrFail($personId);
-        return $persons->prints;
+        return $persons->inheritances;
     }
 
     /**
@@ -37,31 +37,27 @@ class PersonPrintController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param AddNewPrintToPersonRequest $request
+     * @param AddNewInheritanceToPersonRequest $request
      * @param Person $persons
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewPrintToPersonRequest $request, Person $persons)
+    public function store(AddNewInheritanceToPersonRequest $request, Person $persons)
     {
-        $print = new PersonPrint();
+        $print = new PersonInheritance();
         $print->entry = $request->get('entry');
-        $print->year = $request->get('year');
-        $persons->prints()->save($print);
-        return redirect()->route('persons.show', ['persons' => $persons->id]);
+        $persons->inheritances()->save($print);
+        return redirect()->route('persons.show', ['persons' => $persons->id])->with('success', 'Nachlass hinzugefügt');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Person $persons
-     * @param $printId
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Person $persons, $printId)
+    public function show($id)
     {
-        //$person = Person::findOrFail($personId);
-
-        return $persons->prints()->findOrFail($printId);
+        //
     }
 
     /**
@@ -78,37 +74,37 @@ class PersonPrintController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param UpdateInheritanceRequest $request
      * @param Person $persons
-     * @param $printId
+     * @param $inheritanceId
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, Person $persons, $printId)
+    public function update(UpdateInheritanceRequest $request, Person $persons, $inheritanceId)
     {
+        /** @var PersonInheritance $inheritance */
+        $inheritance = $persons->inheritances()->find($inheritanceId);
 
-        /** @var PersonPrint $print */
-        $print = $persons->prints()->find($printId);
+        $inheritance->entry = $request->get('entry');
 
-        $print->entry = $request->get('entry');
-        $print->year = $request->get('year');
+        $inheritance->save();
 
-        $print->save();
-
-        return $print;
+        return $inheritance;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Person $persons
-     * @param $printId
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $persons, $printId)
+    public function destroy(Person $persons, $inheritanceId)
     {
         if (Gate::allows('people.update')) {
-            $persons->prints()->find($printId)->delete();
-            return $persons->prints;
+            // TODO: Add permission check
+            $persons->inheritances()->find($inheritanceId)->delete();
+            return $persons->inheritances;
         }
+        
     }
 }

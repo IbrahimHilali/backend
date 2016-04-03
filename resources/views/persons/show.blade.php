@@ -178,22 +178,61 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="inheritances">
+                        <div class="add-button">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#addInheritance">
+                                <i class="fa fa-plus"></i> Nachlass hinzufügen
+                            </button>
+                        </div>
                         <table class="table table-responsive">
                             <thead>
                             <tr>
-                                <th>Eintrag</th>
+                                <th colspan="3">Eintrag</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($person->inheritances as $inheritance)
-                                <tr>
-                                    <td>{{ $inheritance->entry }}</td>
+                                <tr is="inheritance-in-place" inheritance-id="{{ $inheritance->id }}" inheritance-entry="{{ $inheritance->entry }}" base-url="{{ route('persons.inheritances.update', ['persons' => $person->id, 'inheritances' => $inheritance->id]) }}">
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="modal fade" id="addInheritance" role="dialog" aria-labelledby="addInheritanceTitle">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal" aria-label="Schließen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="addInheritanceTitle">Nachlass hinzufügen</h4>
+                                    </div>
+                                    <form action="{{ route('persons.inheritances.store', ['persons' => $person->id]) }}"
+                                          class="form-inline" method="POST">
+                                        <div class="modal-body">
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label for="entry">Eintrag: </label>
+                                                <input type="text" class="form-control input-sm" name="entry">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                Schließen
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Speichern</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="books">
+                        <div class="add-button">
+                            <a href="{{ route('persons.add-book', ['id' => $person->id]) }}" role="button"
+                               class="btn btn-primary btn-sm">
+                                <i class="fa fa-plus"></i> Buch hinzufügen
+                            </a>
+                        </div>
                         <table class="table table-responsive">
                             <thead>
                             <tr>
@@ -223,13 +262,6 @@
                             @endforeach
                             </tbody>
                         </table>
-
-                        <p>
-                            <a href="{{ route('persons.add-book', ['id' => $person->id]) }}" role="button"
-                               class="btn btn-default">
-                                Buch hinzufügen
-                            </a>
-                        </p>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="information">
                         <table class="table table-responsive">

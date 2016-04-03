@@ -37,13 +37,7 @@ class PersonsController extends Controller
         }
         $persons = $persons->paginate(20);
 
-        session([
-            'last_person_index' => [
-                'page' => $persons->currentPage(),
-                'order-by' => $orderByKey,
-                'direction' => $request->get('direction', 0)
-            ]
-        ]);
+        $this->preserveIndexSet($request, $persons, $orderByKey);
 
         return view('persons.index', compact('persons'));
     }
@@ -162,5 +156,21 @@ class PersonsController extends Controller
         $person->auto_generated = $request->get('auto_generated');
 
         $person->save();
+    }
+
+    /**
+     * @param Request $request
+     * @param $persons
+     * @param $orderByKey
+     */
+    protected function preserveIndexSet(Request $request, $persons, $orderByKey)
+    {
+        session([
+            'last_person_index' => [
+                'page' => $persons->currentPage(),
+                'order-by' => $orderByKey,
+                'direction' => $request->get('direction', 0)
+            ]
+        ]);
     }
 }

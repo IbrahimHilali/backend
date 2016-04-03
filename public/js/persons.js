@@ -10229,6 +10229,86 @@ var _vue2 = _interopRequireDefault(_vue);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+    props: ['inheritanceId', 'inheritanceEntry', 'baseUrl'],
+    methods: {
+        clickEdit: function clickEdit() {
+            if (this.editingEntry == '') {
+                this.editingEntry = this.inheritanceEntry;
+            }
+            this.editing = true;
+            this.focusEntryInput();
+        },
+        stopEdit: function stopEdit() {
+            this.editing = false;
+        },
+        saveInheritance: function saveInheritance() {
+            this.saving = true;
+            $.ajax({
+                data: {
+                    'entry': this.editingEntry
+                },
+                url: this.baseUrl,
+                method: 'PUT'
+            }).done(function (response) {
+                this.inheritanceEntry = response.entry;
+                this.editing = false;
+                this.saving = false;
+            }.bind(this));
+        },
+        deleteInheritance: function deleteInheritance() {
+            var _this = this;
+
+            if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
+                $.ajax({
+                    url: this.baseUrl,
+                    method: 'DELETE'
+                }).done(function (response) {
+                    _this.existing = false;
+                });
+            }
+        },
+        focusEntryInput: function focusEntryInput() {
+            _vue2.default.nextTick(function () {
+                this.$els.entryInput.focus();
+            }.bind(this));
+        }
+    },
+    data: function data() {
+        return {
+            editing: false,
+            existing: true,
+            saving: false,
+            editingEntry: ''
+        };
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<tr v-if=\"existing\">\n    <td colspan=\"2\" v-if=\"!editing\">\n        <a href=\"#\" v-on:click.prevent=\"clickEdit\"><i class=\"fa fa-edit\"></i></a> {{ inheritanceEntry }}\n    </td>\n    <td v-if=\"!editing\"><a href=\"#\" v-on:click.prevent=\"deleteInheritance\"><i class=\"fa fa-times\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Löschen\"></i></a></td>\n    <td v-if=\"editing\">\n        <a href=\"#\" class=\"btn btn-link btn-sm\" v-on:click.prevent=\"stopEdit\"><i class=\"fa fa-times\"></i></a>\n    </td>\n    <td v-if=\"editing\">\n        <input type=\"text\" class=\"form-control input-sm\" v-model=\"editingEntry\" v-el:entry-input=\"\" v-on:keyup.enter=\"saveInheritance()\">\n    </td>\n    <td v-if=\"editing\">\n        <button type=\"button\" class=\"btn btn-primary btn-sm\" v-on:click=\"saveInheritance()\"><i class=\"fa fa-spinner fa-spin\" v-if=\"saving\"></i> Speichern</button>\n    </td>\n</tr>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/davidbohn/Sites/grimm-backend/resources/assets/js/persons/components/InheritanceInPlaceEditor.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":3,"vue-hot-reload-api":2}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vue = require('vue');
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
     props: ['printId', 'printEntry', 'printYear', 'baseUrl'],
     methods: {
         clickEdit: function clickEdit() {
@@ -10301,7 +10381,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":3,"vue-hot-reload-api":2}],5:[function(require,module,exports){
+},{"vue":3,"vue-hot-reload-api":2}],6:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -10312,14 +10392,23 @@ var _PrintInPlaceEditor = require('./components/PrintInPlaceEditor.vue');
 
 var _PrintInPlaceEditor2 = _interopRequireDefault(_PrintInPlaceEditor);
 
+var _InheritanceInPlaceEditor = require('./components/InheritanceInPlaceEditor.vue');
+
+var _InheritanceInPlaceEditor2 = _interopRequireDefault(_InheritanceInPlaceEditor);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.component('in-place', _PrintInPlaceEditor2.default);
+_vue2.default.component('inheritance-in-place', _InheritanceInPlaceEditor2.default);
 
 new _vue2.default({
     el: '#prints'
 });
 
-},{"./components/PrintInPlaceEditor.vue":4,"vue":3}]},{},[5]);
+new _vue2.default({
+    el: '#inheritances'
+});
+
+},{"./components/InheritanceInPlaceEditor.vue":4,"./components/PrintInPlaceEditor.vue":5,"vue":3}]},{},[6]);
 
 //# sourceMappingURL=persons.js.map

@@ -45,6 +45,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::resource('books', 'BooksController');
         Route::resource('persons', 'PersonsController', ['except' => ['edit']]);
         Route::resource('persons.prints', 'PersonPrintController');
+        Route::resource('persons.inheritances', 'PersonInheritanceController');
         Route::resource('users', 'UsersController');
         Route::resource('roles', 'RolesController');
 
