@@ -2,7 +2,13 @@
 
 return [
     'users' => 'Benutzer',
-    'roles' => 'Rollen',
+    'roles' => [
+        'title' => 'Rollen',
+        'name'  => 'Rolle',
+        'created_at' => 'Erstellt am',
+        'updated_at' => 'Zuletzt geändert',
+        'create' => 'Rolle hinzufügen',
+    ],
     'permissions' => 'Rechte',
 
     'store' => 'Benutzer hinzufügen',
@@ -12,5 +18,5 @@ return [
     'name' => 'Name',
     'mail' => 'E-Mail',
     'created_at' => 'hinzugefügt',
-    'updated_at' => 'zuletzt geändert',
+    'updated_at' => 'Zuletzt geändert',
 ];

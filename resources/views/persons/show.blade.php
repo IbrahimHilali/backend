@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1><a href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i class="fa fa-caret-left"></i></a> Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
+                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i class="fa fa-caret-left"></i></a> Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
             </div>
             <div class="col-md-12 page-content">
                 @include('info')

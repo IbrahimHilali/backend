@@ -5766,7 +5766,7 @@ body {
     margin-top: 10px;
     font-weight: 100;
     font-size: 30px; }
-  .page-title a {
+  .page-title a.prev-link {
     color: #fff; }
 
 .pagination-container {

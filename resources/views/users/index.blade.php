@@ -23,7 +23,7 @@
                     </li>
                     <li role="presentation">
                         <a href="#roles" aria-controls="roles" role="tab"
-                           data-toggle="tab">{{ trans('users.roles') }}</a>
+                           data-toggle="tab">{{ trans('users.roles.title') }}</a>
                     </li>
                     <li role="presentation">
                         <a href="#permissions" aria-controls="permissions" role="tab"
@@ -31,7 +31,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-12 list-content">
+            <div class="col-md-12 page-content">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="users">
                         {{ $users->links() }}
@@ -63,7 +63,11 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="roles">
-
+                        <div class="add-button">
+                            <a class="btn btn-primary btn-sm" href="{{ route('roles.create') }}">
+                                <i class="fa fa-plus"></i> Rolle hinzufügen
+                            </a>
+                        </div>
                         {{ $roles->links() }}
                         <table class="table table-responsive table-hover">
                             <thead>
@@ -88,8 +92,6 @@
                         </table>
 
                         {{ $roles->links() }}
-
-                        <a href="{{ route('roles.create') }}" role="button" class="btn btn-default">{{ trans('user.roles.create') }}</a>
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="permissions">
