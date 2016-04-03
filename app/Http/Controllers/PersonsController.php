@@ -37,6 +37,14 @@ class PersonsController extends Controller
         }
         $persons = $persons->paginate(20);
 
+        session([
+            'last_person_index' => [
+                'page' => $persons->currentPage(),
+                'order-by' => $orderByKey,
+                'direction' => $request->get('direction', 0)
+            ]
+        ]);
+
         return view('persons.index', compact('persons'));
     }
 
@@ -106,7 +114,7 @@ class PersonsController extends Controller
     public function update(UpdatePersonDataRequest $request, Person $persons)
     {
         $this->updatePersonModel($request, $persons);
-        return redirect()->route('persons.show', ['persons' => $persons->id]);
+        return redirect()->route('persons.show', ['persons' => $persons->id])->with('success', 'Eintrag erfolgreich aktualisiert!');
     }
 
     /**

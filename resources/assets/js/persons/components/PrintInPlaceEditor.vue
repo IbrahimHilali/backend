@@ -1,7 +1,7 @@
 <template>
     <tr v-if="existing">
         <td v-if="editing">
-            <a href="#" class="btn btn-link" v-on:click.prevent="stopEdit"><i class="fa fa-times"></i></a>
+            <a href="#" class="btn btn-link btn-sm" v-on:click.prevent="stopEdit"><i class="fa fa-times"></i></a>
         </td>
         <td v-if="editing">
             <input type="text" class="form-control input-sm" v-model="editingEntry" v-el:entry-input v-on:keyup.enter="savePrint()" />

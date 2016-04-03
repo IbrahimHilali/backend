@@ -5766,6 +5766,8 @@ body {
     margin-top: 10px;
     font-weight: 100;
     font-size: 30px; }
+  .page-title a {
+    color: #fff; }
 
 .pagination-container {
   background: #ECECEC;
@@ -5856,5 +5858,10 @@ body {
 
 .button-bar {
   margin-bottom: 10px; }
+
+.add-button {
+  position: absolute;
+  right: 15px;
+  margin-top: 5px; }
 
 /*# sourceMappingURL=app.css.map */

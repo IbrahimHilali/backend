@@ -58,3 +58,16 @@ if (!function_exists('checked')) {
         return '';
     }
 }
+
+if (!function_exists('referrer_url')) {
+    function referrer_url($key, $dest) {
+        $params = session($key);
+        if (!$params) {
+            return $dest;
+        }
+        
+        $params = http_build_query($params);
+        
+        return $dest . '?' . $params;
+    }
+}

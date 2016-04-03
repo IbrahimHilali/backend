@@ -4,23 +4,26 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1>Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
+                <h1><a href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i class="fa fa-caret-left"></i></a> Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
             </div>
             <div class="col-md-12 page-content">
                 @include('partials.errors')
-                <form action="{{ route('persons.update', ['persons' => $person->id]) }}" class="form-horizontal" method="POST">
+                <form action="{{ route('persons.update', ['persons' => $person->id]) }}" class="form-horizontal"
+                      method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Nachname</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="last_name" value="{{ old('last_name', $person->last_name) }}">
+                            <input class="form-control" name="last_name"
+                                   value="{{ old('last_name', $person->last_name) }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Vorname</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="first_name" value="{{ old('first_name', $person->first_name) }}">
+                            <input class="form-control" name="first_name"
+                                   value="{{ old('first_name', $person->first_name) }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,7 +43,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Biographische Daten</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="bio_data" value="{{ old('bio_data', $person->bio_data) }}">
+                            <input class="form-control" name="bio_data"
+                                   value="{{ old('bio_data', $person->bio_data) }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,7 +57,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">zusätzl. Daten</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="add_bio_data" value="{{ old('add_bio_data', $person->add_bio_data) }}">
+                            <input class="form-control" name="add_bio_data"
+                                   value="{{ old('add_bio_data', $person->add_bio_data) }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -96,7 +101,7 @@
                     <div class="button-bar row">
                         <div class="col-sm-10 col-md-offset-2">
                             <button type="submit" class="btn btn-primary">Speichern</button>
-                            <a href="javascript:history.back()" class="btn btn-link">Abbrechen</a>
+                            <a href="{{ referrer_url('last_person_index', route('persons.index')) }}" class="btn btn-link">Abbrechen</a>
                         </div>
                     </div>
                 </form>
@@ -118,6 +123,12 @@
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="prints">
+                        <div class="add-button">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#addPrint">
+                                <i class="fa fa-plus"></i> Druck hinzufügen
+                            </button>
+                        </div>
                         <table class="table table-responsive">
                             <thead>
                             <tr>
@@ -133,23 +144,38 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <hr>
-                        <h4>Druck hinzufügen</h4>
-                        <form action="{{ route('persons.prints.store', ['persons' => $person->id]) }}"
-                              class="form-inline" method="POST">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="entry">Eintrag: </label>
-                                <input type="text" class="form-control input-sm" name="entry">
+                        <div class="modal fade" id="addPrint" role="dialog" aria-labelledby="addPrintTitle">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal" aria-label="Schließen">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="addPrintTitle">Druck hinzufügen</h4>
+                                    </div>
+                                    <form action="{{ route('persons.prints.store', ['persons' => $person->id]) }}"
+                                          class="form-inline" method="POST">
+                                        <div class="modal-body">
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label for="entry">Eintrag: </label>
+                                                <input type="text" class="form-control input-sm" name="entry">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="year">Jahr: </label>
+                                                <input type="text" class="form-control input-sm" name="year">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                Schließen
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Speichern</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="year">Jahr: </label>
-                                <input type="text" class="form-control input-sm" name="year">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-sm">Speichern</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="inheritances">
                         <table class="table table-responsive">

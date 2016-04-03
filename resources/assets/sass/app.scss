@@ -33,6 +33,10 @@ body {
     font-weight: 100;
     font-size: $font-size-h2;
   }
+
+  a {
+    color: #fff;
+  }
 }
 
 .pagination-container {
@@ -153,4 +157,11 @@ body {
 
 .button-bar {
   margin-bottom: 10px;
+}
+
+.add-button {
+  position: absolute;
+  right: 15px;
+  margin-top: 5px;
+  //top: 5px;
 }
