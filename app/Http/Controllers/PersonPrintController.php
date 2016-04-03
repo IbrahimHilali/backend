@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddNewPrintToPersonRequest;
+use App\Http\Requests\UpdatePrintRequest;
 use Gate;
 use Grimm\Person;
 use Grimm\PersonPrint;
@@ -78,12 +79,12 @@ class PersonPrintController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param UpdatePrintRequest $request
      * @param Person $persons
      * @param $printId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $persons, $printId)
+    public function update(UpdatePrintRequest $request, Person $persons, $printId)
     {
 
         /** @var PersonPrint $print */
