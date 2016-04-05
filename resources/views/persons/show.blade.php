@@ -328,6 +328,28 @@
                         </table>
                     </div>
                 </div>
+
+                @can('people.delete')
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Gefahrenzone</h1>
+                    </div>
+
+                    <div class="panel-body">
+                        <p>
+                        <form action="{{ route('persons.destroy', ['id' => $person->id]) }}" method="post"
+                              class="form-inline">
+                            {{ csrf_field() }}
+                            {{ method_field('delete') }}
+                            <button class="btn btn-danger">
+                                <span class="fa fa-trash"></span>
+                                {{ trans('people.delete') }}
+                            </button>
+                        </form>
+                        </p>
+                    </div>
+                </div>
+                @endcan
             </div>
         </div>
     </div>

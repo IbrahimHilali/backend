@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyPersonRequest;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonDataRequest;
 use Carbon\Carbon;
@@ -119,12 +120,15 @@ class PersonsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param DestroyPersonRequest $request
+     * @param Person $persons
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DestroyPersonRequest $request, Person $persons)
     {
-        //
+        $persons->delete();
+
+        return redirect()->route('persons.index')->with('success', 'Die Person wurde erfolgreich gelöscht!');
     }
 
     /**

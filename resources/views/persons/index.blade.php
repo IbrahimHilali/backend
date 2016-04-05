@@ -30,6 +30,7 @@
                 {{ $persons->appends(Request::except('page'))->links() }}
             </div>
             <div class="col-md-12 list-content">
+                @include('info')
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
