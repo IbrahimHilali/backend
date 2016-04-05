@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonDataRequest;
 use Carbon\Carbon;
 use Grimm\Person;
@@ -58,9 +59,13 @@ class PersonsController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePersonRequest $request)
     {
-        //
+        $person = new Person();
+
+        $this->updatePersonModel($request, $person);
+
+        return redirect()->route('persons.show', [$person->id])->with('success', 'Die Person wurde erfolgreich erstellt!');
     }
 
     /**

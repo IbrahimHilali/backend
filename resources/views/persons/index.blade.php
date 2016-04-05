@@ -17,6 +17,12 @@
                             <a href="{{ url('persons') }}" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>
                         </div>
                     @endif
+                    <div class="generic">
+                        <a href="{{ route('persons.create') }}" role="button" class="btn btn-default btn-sm">
+                            <span class="fa fa-plus"></span>
+                            {{ trans('people.store') }}
+                        </a>
+                    </div>
                 </div>
                 <h1>Personendatenbank</h1>
             </div>

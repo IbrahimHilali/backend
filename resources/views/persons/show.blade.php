@@ -184,11 +184,6 @@
                                 :print-id="print.id" :print-entry="print.entry" :print-year="print.year"
                                 base-url="{{ route('persons.prints.index', [$person->id]) }}">
                             </tr>
-                            {{--@foreach($person->prints as $print)
-                                <tr is="in-place" print-id="{{ $print->id }}" print-entry="{{ $print->entry }}"
-                                    print-year="{{ $print->year }}"
-                                    base-url="{{ route('persons.prints.update', ['persons' => $person->id, 'prints' => $print->id]) }}"></tr>
-                            @endforeach --}}
                             </tbody>
                         </table>
                         <div class="modal fade" id="addPrint" role="dialog" aria-labelledby="addPrintTitle">
