@@ -36,12 +36,24 @@ class AuthServiceProvider extends ServiceProvider
 
     private function registerRolesAsGates(GateContract $gate)
     {
-        $permissions = Permission::all();
+        $groups = Permission::selectRaw("SUBSTRING_INDEX(`name`, '.', 1) as topic, GROUP_CONCAT(name) as permissions")->groupBy('topic')->get();
 
         /** @var Permission $permission */
-        foreach($permissions as $permission) {
-            $gate->define($permission->name, function(User $user) use($permission) {
-                return $user->hasPermission($permission->name);
+        foreach($groups as $permissionGroup) {
+            $permissions = explode(",", $permissionGroup->permissions);
+            foreach ($permissions as $permission) {
+                $gate->define($permission, function (User $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
+
+            $gate->define($permissionGroup->topic . '.*', function(User $user) use($permissions) {
+                foreach ($permissions as $permission) {
+                    if ($user->hasPermission($permission)) {
+                        return true;
+                    }
+                }
+                return false;
             });
         }
     }
