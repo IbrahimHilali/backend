@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Grimm\Book;
 use Grimm\BookPersonAssociation;
 use Grimm\Person;
 use Illuminate\Http\Request;
@@ -25,15 +26,20 @@ class BooksPersonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param $person_id
+     * @param Person $person
      * @return \Illuminate\Http\Response
      */
-    public function personAddBook($person_id)
+    public function personAddBook(Person $person)
     {
-        /** @var Person $person */
-        $person = Person::query()->findOrFail($person_id);
-
         return view('persons.add-book', compact('person'));
+    }
+
+    /**
+     * @param Person $person
+     */
+    public function personStoreBook(Person $person)
+    {
+
     }
 
     /**
@@ -50,17 +56,17 @@ class BooksPersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $book_id
-     * @param $person_id
+     * @param Book $book
+     * @param Person $person
      * @return \Illuminate\Http\Response
      */
-    public function show($book_id, $person_id)
+    public function show(Book $book, Person $person)
     {
         /** @var BookPersonAssociation $association */
         $association = BookPersonAssociation::query()
             ->with('book', 'person')
-            ->where('book_id', $book_id)
-            ->where('person_id', $person_id)
+            ->where('book_id', $book->id)
+            ->where('person_id', $person->id)
             ->first();
 
         // TODO: fancy gallery with scan of pages

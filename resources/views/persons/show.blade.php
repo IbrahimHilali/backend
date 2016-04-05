@@ -274,7 +274,7 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="books">
                         <div class="add-button">
-                            <a href="{{ route('persons.add-book', ['id' => $person->id]) }}" role="button"
+                            <a href="{{ route('persons.add-book', [$person->id]) }}" role="button"
                                class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i> Buch hinzufügen
                             </a>

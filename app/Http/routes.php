@@ -48,8 +48,9 @@ Route::group(['middleware' => 'web'], function () {
         Route::resource('users', 'UsersController');
         Route::resource('roles', 'RolesController');
 
-        Route::get('books/{book_id}/person/{person_id}', ['as' => 'books.person', 'uses' => 'BooksPersonController@show']);
-        Route::get('persons/{person_id}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
+        Route::get('books/{book}/person/{person}', ['as' => 'books.person', 'uses' => 'BooksPersonController@show']);
+        Route::get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
+        Route::post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
     });
     
 });

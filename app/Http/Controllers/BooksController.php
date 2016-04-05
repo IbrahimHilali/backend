@@ -88,35 +88,30 @@ class BooksController extends Controller
      * Update the specified resource in storage.
      *
      * @param BookUpdateRequest $request
-     * @param  int $id
+     * @param Book $books
      * @return \Illuminate\Http\Response
      */
-    public function update(BookUpdateRequest $request, $id)
+    public function update(BookUpdateRequest $request, Book $books)
     {
-        /** @var Book $book */
-        $book = Book::query()->findOrFail($id);
-
-        $request->persist($book);
+        $request->persist($books);
 
         return redirect()
-            ->route('books.show', ['id' => $book->id])
+            ->route('books.show', ['id' => $books->id])
             ->with('success', 'Saved changes');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param Book $books
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Book $books)
     {
-        /** @var Book $book */
-        $book = Book::query()->findOrFail($id);
+        $books->personAssociations()->delete();
 
-        $book->personAssociations()->delete();
-
-        $book->delete();
+        $books->delete();
 
         return redirect()
             ->route('books.index')
