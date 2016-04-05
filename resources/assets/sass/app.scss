@@ -168,3 +168,9 @@ body {
   margin-top: 5px;
   //top: 5px;
 }
+
+.check-helper:checked + * {
+  color: $btn-primary-color;
+  background-color: $btn-primary-bg;
+  border: 1px solid $btn-primary-border;
+}

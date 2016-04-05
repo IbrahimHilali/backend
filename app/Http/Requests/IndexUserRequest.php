@@ -13,7 +13,7 @@ class IndexUserRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->can('users.update') || $this->user()->can('users.store') || $this->user()->can('users.delete');
+        return $this->user()->can('users.*');
     }
 
     /**
