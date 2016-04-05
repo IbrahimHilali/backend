@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Grimm\Book;
 use Grimm\BookPersonAssociation;
 use Grimm\Person;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,20 +27,38 @@ class BooksPersonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @param Person $person
      * @return \Illuminate\Http\Response
      */
-    public function personAddBook(Person $person)
+    public function personAddBook(Request $request, Person $person)
     {
-        return view('persons.add-book', compact('person'));
+        $searchTitle = $request->get('search');
+
+        if($searchTitle) {
+            /** @var LengthAwarePaginator $books */
+            $books = Book::searchByTitle($searchTitle)->paginate(10);
+
+            $books->appends(['search' => $request->get('search')]);
+        } else {
+            $books = Book::query()
+                ->orderBy('title')
+                ->orderBy('volume')
+                ->orderBy('volume_irregular')
+                ->orderBy('edition')
+                ->paginate(10);;
+        }
+
+        return view('persons.add-book', compact('books', 'person'));
     }
 
     /**
+     * @param Request $request
      * @param Person $person
      */
-    public function personStoreBook(Person $person)
+    public function personStoreBook(Request $request, Person $person)
     {
-
+        var_dump($request->all());
     }
 
     /**

@@ -36,6 +36,45 @@
                 <form action="{{ route('persons.add-book.store', [$person->id]) }}" class="form-horizontal"
                       method="POST">
                     {{ csrf_field() }}
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="text-center">
+                                {{ $books->links() }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Buch</label>
+                        <div class="col-sm-10">
+                            <div class="list-group">
+                                @foreach($books->items() as $book)
+                                    <input class="check-helper" name="book" value="{{ $book->id }}" type="radio"
+                                           style="display: none;" id="book-{{ $book->id }}">
+                                    <label class="list-group-item text-center"
+                                           for="book-{{ $book->id }}">
+                                        {{ $book->title }}
+                                        <em style="font-weight: 300;">
+                                            @if($book->year)
+                                                - {{ $book->year }}
+                                            @endif
+                                            @if($book->volume)
+                                                - Bd. {{ $book->volume }}
+                                            @endif
+                                            @if($book->volume_irregular)
+                                                - i. Bd. {{ $book->volume_irregular }}
+                                            @endif
+                                            @if($book->edition)
+                                                - Ed. {{ $book->edition }}
+                                            @endif
+                                        </em>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Nachname</label>
                         <div class="col-sm-10">

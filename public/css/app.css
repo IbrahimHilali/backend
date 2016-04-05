@@ -5866,4 +5866,9 @@ body {
   right: 15px;
   margin-top: 5px; }
 
+.check-helper:checked + * {
+  color: #fff;
+  background-color: #337ab7;
+  border: 1px solid #2e6da4; }
+
 /*# sourceMappingURL=app.css.map */
