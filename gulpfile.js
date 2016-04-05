@@ -1,5 +1,7 @@
 var elixir = require('laravel-elixir');
 
+process.env['NODE_ENV'] = 'production';
+
 require('laravel-elixir-vueify');
 
 /*
