@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "38ba49025cfbc81ef8419f9e53f3054c",
+    "hash": "289db4832c2b718b97cfb600e89cebb8",
     "content-hash": "91e0d194ce2af957f01ad50a56123c52",
     "packages": [
         {
@@ -226,16 +226,16 @@
         },
         {
             "name": "grimmdevelop/models",
-            "version": "0.4.0",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrimmDevelop/models.git",
-                "reference": "4a3954f898fd2b25ba2e752dfc0d869d888e3691"
+                "reference": "418ed7dda57227b346c5e319ba5127a27c76c58f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/4a3954f898fd2b25ba2e752dfc0d869d888e3691",
-                "reference": "4a3954f898fd2b25ba2e752dfc0d869d888e3691",
+                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/418ed7dda57227b346c5e319ba5127a27c76c58f",
+                "reference": "418ed7dda57227b346c5e319ba5127a27c76c58f",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                     "email": "davbohn@gmail.com"
                 }
             ],
-            "time": "2016-04-02 12:27:58"
+            "time": "2016-04-05 12:25:27"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -412,16 +412,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.28",
+            "version": "v5.2.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "69acb1f8ec254511e10138890364865ff2645ddd"
+                "reference": "e3d644eb131f18c5f3d28ff7bc678bc797091f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/69acb1f8ec254511e10138890364865ff2645ddd",
-                "reference": "69acb1f8ec254511e10138890364865ff2645ddd",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e3d644eb131f18c5f3d28ff7bc678bc797091f20",
+                "reference": "e3d644eb131f18c5f3d28ff7bc678bc797091f20",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-04-01 18:26:27"
+            "time": "2016-04-03 01:43:55"
         },
         {
             "name": "league/flysystem",
@@ -623,16 +623,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.18.1",
+            "version": "1.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45"
+                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
-                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
+                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
                 "shasum": ""
             },
             "require": {
@@ -647,13 +647,13 @@
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
                 "jakub-onderka/php-parallel-lint": "0.9",
+                "php-amqplib/php-amqplib": "~2.4",
                 "php-console/php-console": "^3.1.3",
                 "phpunit/phpunit": "~4.5",
                 "phpunit/phpunit-mock-objects": "2.3.0",
                 "raven/raven": "^0.13",
                 "ruflin/elastica": ">=0.90 <3.0",
-                "swiftmailer/swiftmailer": "~5.3",
-                "videlalvaro/php-amqplib": "~2.4"
+                "swiftmailer/swiftmailer": "~5.3"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -662,11 +662,11 @@
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
                 "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
-                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
             "extra": {
@@ -697,7 +697,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-03-13 16:08:35"
+            "time": "2016-04-02 13:12:58"
         },
         {
             "name": "mtdowling/cron-expression",
