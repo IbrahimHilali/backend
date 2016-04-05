@@ -46,7 +46,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::resource('persons', 'PersonsController', ['except' => ['edit']]);
         
         Route::resource('users', 'UsersController');
-        Route::resource('roles', 'RolesController');
+        Route::resource('roles', 'RolesController', ['except' => ['edit']]);
 
         Route::get('books/{book}/person/{person}', ['as' => 'books.person', 'uses' => 'BooksPersonController@show']);
         Route::get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
@@ -56,6 +56,6 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['middleware' => 'api'], function() {
-    Route::resource('persons.prints', 'PersonPrintController');
-    Route::resource('persons.inheritances', 'PersonInheritanceController');
+    Route::resource('persons.prints', 'PersonPrintController', ['except' => ['edit']]);
+    Route::resource('persons.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
 });

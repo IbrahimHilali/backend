@@ -16,7 +16,7 @@ class RoleStoreRequest extends Request
      */
     public function authorize()
     {
-        return Gate::allows('users.store');;
+        return Gate::allows('users.store');
     }
 
     /**

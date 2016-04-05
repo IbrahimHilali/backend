@@ -16,7 +16,11 @@ return [
     'delete' => 'Benutzer löschen',
 
     'name' => 'Name',
-    'mail' => 'E-Mail',
+    'email' => 'E-Mail',
     'created_at' => 'hinzugefügt',
     'updated_at' => 'Zuletzt geändert',
+
+    'password' => 'Passwort',
+    'password_confirmation' => 'Passwort bestätigen',
+    'api_only' => 'Nur API-Zugriff',
 ];

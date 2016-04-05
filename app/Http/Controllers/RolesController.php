@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleStoreRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Grimm\Permission;
 use Grimm\Role;
 use Grimm\User;
@@ -82,13 +83,28 @@ class RolesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param UpdateRoleRequest $request
+     * @param Role $roles
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request, Role $roles)
     {
-        //
+        $roles->name = $request->input('name');
+
+        //$role->save();
+        $roles->users()->detach();
+        foreach($request->input('users') as $id) {
+            $roles->users()->attach($id);
+        }
+
+        $roles->permissions()->detach();
+        foreach($request->input('permissions') as $id) {
+            $roles->permissions()->attach($id);
+        }
+
+        $roles->save();
+
+        return redirect()->route('roles.show', [$roles->id])->with('success', trans('users.update.success'));
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndexUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use Grimm\Permission;
 use Grimm\Role;
 use Grimm\User;
@@ -15,9 +17,10 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param IndexUserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexUserRequest $request)
     {
         $users = User::query()->paginate(50);
 
@@ -35,18 +38,28 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StoreUserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = bcrypt($request->get('password'));
+        $user->api_only = $request->get('api_only');
+        $user->api_token = str_random(60);
+
+        $user->save();
+
+        redirect()->route('user.show', [$user->id])->with('success', trans('user.store_success'));
     }
 
     /**

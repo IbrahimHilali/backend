@@ -4,14 +4,14 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                {{-- <div class="button-container">
+                <div class="button-container">
                     <div class="generic">
-                        <a href="{{ route('books.create') }}" role="button" class="btn btn-default btn-sm">
+                        <a href="{{ route('users.create') }}" role="button" class="btn btn-default btn-sm">
                             <span class="fa fa-plus"></span>
-                            {{ trans('books.store') }}
+                            {{ trans('users.store') }}
                         </a>
                     </div>
-                </div> --}}
+                </div>
                 <h1>Benutzerverwaltung</h1>
             </div>
             <div class="col-md-12 tabs-container">
@@ -31,7 +31,7 @@
                     </li>--}}
                 </ul>
             </div>
-            <div class="col-md-12 page-content">
+            <div class="col-md-12 list-content">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="users">
                         {{ $users->links() }}
@@ -40,7 +40,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ trans('users.name') }}</th>
-                                <th>{{ trans('users.mail') }}</th>
+                                <th>{{ trans('users.email') }}</th>
                                 <th>{{ trans('users.created_at') }}</th>
                                 <th>{{ trans('users.updated_at') }}</th>
                             </tr>

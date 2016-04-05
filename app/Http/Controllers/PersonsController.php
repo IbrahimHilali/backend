@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DestroyPersonRequest;
+use App\Http\Requests\IndexPersonRequest;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonDataRequest;
 use Carbon\Carbon;
@@ -18,10 +19,10 @@ class PersonsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param IndexPersonRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(IndexPersonRequest $request)
     {
         if ($request->has('name')) {
             $persons = Person::searchByName($request->get('name'));

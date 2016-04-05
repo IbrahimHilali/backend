@@ -29,7 +29,7 @@
                             {{ trans('users.users') }}
                         </label>
                         <div class="col-sm-10">
-                            <select class="form-control" multiple name="users[]" id="users">
+                            <select size="10" class="form-control" multiple name="users[]" id="users">
                                 @foreach($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach

@@ -4,10 +4,12 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1>{{ trans('users.roles.name') }}: {{ $role->name }}</h1>
+                <h1><a class="prev-link" href="{{ route('users.index') }}"><i
+                                class="fa fa-caret-left"></i></a> {{ trans('users.roles.name') }}: {{ $role->name }}</h1>
             </div>
             <div class="col-md-12 page-content">
                 <form class="form-horizontal" action="{{ route('roles.update', [$role->id]) }}" method="post">
+                    {{ method_field('PUT') }}
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
