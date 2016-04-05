@@ -11,4 +11,34 @@ new Vue({
 
 new Vue({
     el: '#inheritances',
+
+    data: {
+        inheritances: [],
+        createEntry: ''
+    },
+
+    ready: function () {
+        var url = BASE_URL + '/inheritances';
+        $.get(url).done((response) => {
+            this.inheritances = response;
+        });
+        $('#addInheritance').on('shown.bs.modal', (e) => {
+            this.$els.createEntryField.focus();
+        });
+    },
+
+    methods: {
+        storeInheritance: function () {
+            var url = $('#createInheritanceForm').attr('action');
+
+            $.ajax({
+                url: url,
+                data: {'entry': this.createEntry},
+                method: 'POST'
+            }).done((response) => {
+                this.inheritances = response;
+                $('#addInheritance').modal('hide');
+            });
+        }
+    }
 });

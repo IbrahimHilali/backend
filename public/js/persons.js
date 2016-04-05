@@ -9854,7 +9854,7 @@ exports.default = {
                 data: {
                     'entry': this.editingEntry
                 },
-                url: this.baseUrl,
+                url: this.baseUrl + '/' + this.inheritanceId,
                 method: 'PUT'
             }).done(function (response) {
                 this.inheritanceEntry = response.entry;
@@ -9867,7 +9867,7 @@ exports.default = {
 
             if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
                 $.ajax({
-                    url: this.baseUrl,
+                    url: this.baseUrl + '/' + this.inheritanceId,
                     method: 'DELETE'
                 }).done(function (response) {
                     _this.existing = false;
@@ -9993,7 +9993,41 @@ new _vue2.default({
 });
 
 new _vue2.default({
-    el: '#inheritances'
+    el: '#inheritances',
+
+    data: {
+        inheritances: [],
+        createEntry: ''
+    },
+
+    ready: function ready() {
+        var _this = this;
+
+        var url = BASE_URL + '/inheritances';
+        $.get(url).done(function (response) {
+            _this.inheritances = response;
+        });
+        $('#addInheritance').on('shown.bs.modal', function (e) {
+            _this.$els.createEntryField.focus();
+        });
+    },
+
+    methods: {
+        storeInheritance: function storeInheritance() {
+            var _this2 = this;
+
+            var url = $('#createInheritanceForm').attr('action');
+
+            $.ajax({
+                url: url,
+                data: { 'entry': this.createEntry },
+                method: 'POST'
+            }).done(function (response) {
+                _this2.inheritances = response;
+                $('#addInheritance').modal('hide');
+            });
+        }
+    }
 });
 
 },{"./components/InheritanceInPlaceEditor.vue":2,"./components/PrintInPlaceEditor.vue":3,"vue":1}]},{},[4]);

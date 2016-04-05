@@ -38,7 +38,7 @@
                     data: {
                         'entry': this.editingEntry,
                     },
-                    url: this.baseUrl,
+                    url: this.baseUrl + '/' + this.inheritanceId,
                     method: 'PUT'
                 }).done((function(response) {
                     this.inheritanceEntry = response.entry;
@@ -49,7 +49,7 @@
             deleteInheritance: function() {
                 if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
                     $.ajax({
-                        url: this.baseUrl,
+                        url: this.baseUrl + '/' + this.inheritanceId,
                         method: 'DELETE'
                     }).done((response) => {
                         this.existing = false;

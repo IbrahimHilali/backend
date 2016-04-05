@@ -43,16 +43,21 @@ class PersonInheritanceController extends Controller
      */
     public function store(AddNewInheritanceToPersonRequest $request, Person $persons)
     {
-        $print = new PersonInheritance();
-        $print->entry = $request->get('entry');
-        $persons->inheritances()->save($print);
+        $inheritance = new PersonInheritance();
+        $inheritance->entry = $request->get('entry');
+        $persons->inheritances()->save($inheritance);
+
+        if ($request->ajax()) {
+            return $persons->inheritances;
+        }
+
         return redirect()->route('persons.show', ['persons' => $persons->id])->with('success', 'Nachlass hinzugefügt');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -63,7 +68,7 @@ class PersonInheritanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -95,7 +100,7 @@ class PersonInheritanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Person $persons, $inheritanceId)
@@ -105,6 +110,6 @@ class PersonInheritanceController extends Controller
             $persons->inheritances()->find($inheritanceId)->delete();
             return $persons->inheritances;
         }
-        
+
     }
 }

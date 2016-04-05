@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i class="fa fa-caret-left"></i></a> Personendaten: {{ $person->last_name }}, {{ $person->first_name }}</h1>
+                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i
+                                class="fa fa-caret-left"></i></a> Personendaten: {{ $person->last_name }}
+                    , {{ $person->first_name }}</h1>
             </div>
             <div class="col-md-12 page-content">
                 @include('info')
@@ -141,7 +143,8 @@
                     <div class="button-bar row">
                         <div class="col-sm-10 col-md-offset-2">
                             <button type="submit" class="btn btn-primary">Speichern</button>
-                            <a href="{{ referrer_url('last_person_index', route('persons.index')) }}" class="btn btn-link">Abbrechen</a>
+                            <a href="{{ referrer_url('last_person_index', route('persons.index')) }}"
+                               class="btn btn-link">Abbrechen</a>
                         </div>
                     </div>
                 </form>
@@ -231,10 +234,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($person->inheritances as $inheritance)
-                                <tr is="inheritance-in-place" inheritance-id="{{ $inheritance->id }}" inheritance-entry="{{ $inheritance->entry }}" base-url="{{ route('persons.inheritances.update', ['persons' => $person->id, 'inheritances' => $inheritance->id]) }}">
-                                </tr>
-                            @endforeach
+                            <tr v-for="inheritance in inheritances" is="inheritance-in-place"
+                                :inheritance-id="inheritance.id" :inheritance-entry="inheritance.entry"
+                                base-url="{{ route('persons.inheritances.index', [$person->id]) }}">
+                            </tr>
                             </tbody>
                         </table>
                         <div class="modal fade" id="addInheritance" role="dialog" aria-labelledby="addInheritanceTitle">
@@ -246,13 +249,12 @@
                                         </button>
                                         <h4 class="modal-title" id="addInheritanceTitle">Nachlass hinzufügen</h4>
                                     </div>
-                                    <form action="{{ route('persons.inheritances.store', ['persons' => $person->id]) }}"
-                                          class="form-inline" method="POST">
+                                    <form  @submit.prevent="storeInheritance" action="{{ route('persons.inheritances.store', ['persons' => $person->id]) }}"
+                                          class="form-inline" id="createInheritanceForm" method="POST">
                                         <div class="modal-body">
-                                            {{ csrf_field() }}
                                             <div class="form-group">
                                                 <label for="entry">Eintrag: </label>
-                                                <input type="text" class="form-control input-sm" name="entry">
+                                                <input type="text" class="form-control input-sm" name="entry" v-el:create-entry-field v-model="createEntry">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -328,5 +330,11 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var BASE_URL = "{{ route('persons.show', [$person->id]) }}";
+    </script>
     <script src="{{ url('js/persons.js') }}"></script>
+    <script>
+
+    </script>
 @endsection
