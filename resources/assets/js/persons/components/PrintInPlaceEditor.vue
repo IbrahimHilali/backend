@@ -45,7 +45,7 @@
                         'entry': this.editingEntry,
                         'year': this.editingYear
                     },
-                    url: this.baseUrl,
+                    url: this.baseUrl + '/' + this.printId,
                     method: 'PUT'
                 }).done((function(response) {
                     this.printEntry = response.entry;
@@ -57,7 +57,7 @@
             deletePrint: function() {
                 if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
                     $.ajax({
-                        url: this.baseUrl,
+                        url: this.baseUrl + '/' + this.printId,
                         method: 'DELETE'
                     }).done((response) => {
                         this.existing = false;

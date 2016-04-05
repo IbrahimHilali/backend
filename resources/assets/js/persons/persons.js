@@ -7,6 +7,39 @@ Vue.component('inheritance-in-place', InheritanceInPlaceEditor);
 
 new Vue({
     el: '#prints',
+
+    data: {
+        prints: [],
+        createEntry: '',
+        createYear: ''
+    },
+
+    ready: function () {
+        var url = BASE_URL + '/prints';
+        $.get(url).done((response) => {
+            this.prints = response;
+        });
+        $('#addPrint').on('shown.bs.modal', (e) => {
+            this.$els.createEntryField.focus();
+        });
+    },
+
+    methods: {
+        storePrint: function () {
+            var url = $('#createPrintForm').attr('action');
+
+            $.ajax({
+                url: url,
+                data: {entry: this.createEntry, year: this.createYear},
+                method: 'POST'
+            }).done((response) => {
+                this.prints = response;
+                this.createEntry = '';
+                this.createYear = '';
+                $('#addPrint').modal('hide');
+            });
+        }
+    }
 });
 
 new Vue({
@@ -37,6 +70,7 @@ new Vue({
                 method: 'POST'
             }).done((response) => {
                 this.inheritances = response;
+                this.createEntry = '';
                 $('#addInheritance').modal('hide');
             });
         }

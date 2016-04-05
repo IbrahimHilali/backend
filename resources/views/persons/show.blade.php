@@ -180,11 +180,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($person->prints as $print)
+                            <tr v-for="print in prints" is="in-place"
+                                :print-id="print.id" :print-entry="print.entry" :print-year="print.year"
+                                base-url="{{ route('persons.prints.index', [$person->id]) }}">
+                            </tr>
+                            {{--@foreach($person->prints as $print)
                                 <tr is="in-place" print-id="{{ $print->id }}" print-entry="{{ $print->entry }}"
                                     print-year="{{ $print->year }}"
                                     base-url="{{ route('persons.prints.update', ['persons' => $person->id, 'prints' => $print->id]) }}"></tr>
-                            @endforeach
+                            @endforeach --}}
                             </tbody>
                         </table>
                         <div class="modal fade" id="addPrint" role="dialog" aria-labelledby="addPrintTitle">
@@ -196,17 +200,20 @@
                                         </button>
                                         <h4 class="modal-title" id="addPrintTitle">Druck hinzufügen</h4>
                                     </div>
-                                    <form action="{{ route('persons.prints.store', ['persons' => $person->id]) }}"
+                                    <form @submit.prevent="storePrint" id="createPrintForm"
+                                          action="{{ route('persons.prints.store', ['persons' => $person->id]) }}"
                                           class="form-inline" method="POST">
                                         <div class="modal-body">
                                             {{ csrf_field() }}
                                             <div class="form-group">
                                                 <label for="entry">Eintrag: </label>
-                                                <input type="text" class="form-control input-sm" name="entry">
+                                                <input type="text" class="form-control input-sm" name="entry"
+                                                       v-el:create-entry-field v-model="createEntry">
                                             </div>
                                             <div class="form-group">
                                                 <label for="year">Jahr: </label>
-                                                <input type="text" class="form-control input-sm" name="year">
+                                                <input type="text" class="form-control input-sm" name="year"
+                                                       v-model="createYear">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -249,12 +256,14 @@
                                         </button>
                                         <h4 class="modal-title" id="addInheritanceTitle">Nachlass hinzufügen</h4>
                                     </div>
-                                    <form  @submit.prevent="storeInheritance" action="{{ route('persons.inheritances.store', ['persons' => $person->id]) }}"
+                                    <form @submit.prevent="storeInheritance"
+                                          action="{{ route('persons.inheritances.store', ['persons' => $person->id]) }}"
                                           class="form-inline" id="createInheritanceForm" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="entry">Eintrag: </label>
-                                                <input type="text" class="form-control input-sm" name="entry" v-el:create-entry-field v-model="createEntry">
+                                                <input type="text" class="form-control input-sm" name="entry"
+                                                       v-el:create-entry-field v-model="createEntry">
                                             </div>
                                         </div>
                                         <div class="modal-footer">

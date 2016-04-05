@@ -9928,7 +9928,7 @@ exports.default = {
                     'entry': this.editingEntry,
                     'year': this.editingYear
                 },
-                url: this.baseUrl,
+                url: this.baseUrl + '/' + this.printId,
                 method: 'PUT'
             }).done(function (response) {
                 this.printEntry = response.entry;
@@ -9942,7 +9942,7 @@ exports.default = {
 
             if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
                 $.ajax({
-                    url: this.baseUrl,
+                    url: this.baseUrl + '/' + this.printId,
                     method: 'DELETE'
                 }).done(function (response) {
                     _this.existing = false;
@@ -9989,7 +9989,44 @@ _vue2.default.component('in-place', _PrintInPlaceEditor2.default);
 _vue2.default.component('inheritance-in-place', _InheritanceInPlaceEditor2.default);
 
 new _vue2.default({
-    el: '#prints'
+    el: '#prints',
+
+    data: {
+        prints: [],
+        createEntry: '',
+        createYear: ''
+    },
+
+    ready: function ready() {
+        var _this = this;
+
+        var url = BASE_URL + '/prints';
+        $.get(url).done(function (response) {
+            _this.prints = response;
+        });
+        $('#addPrint').on('shown.bs.modal', function (e) {
+            _this.$els.createEntryField.focus();
+        });
+    },
+
+    methods: {
+        storePrint: function storePrint() {
+            var _this2 = this;
+
+            var url = $('#createPrintForm').attr('action');
+
+            $.ajax({
+                url: url,
+                data: { entry: this.createEntry, year: this.createYear },
+                method: 'POST'
+            }).done(function (response) {
+                _this2.prints = response;
+                _this2.createEntry = '';
+                _this2.createYear = '';
+                $('#addPrint').modal('hide');
+            });
+        }
+    }
 });
 
 new _vue2.default({
@@ -10001,20 +10038,20 @@ new _vue2.default({
     },
 
     ready: function ready() {
-        var _this = this;
+        var _this3 = this;
 
         var url = BASE_URL + '/inheritances';
         $.get(url).done(function (response) {
-            _this.inheritances = response;
+            _this3.inheritances = response;
         });
         $('#addInheritance').on('shown.bs.modal', function (e) {
-            _this.$els.createEntryField.focus();
+            _this3.$els.createEntryField.focus();
         });
     },
 
     methods: {
         storeInheritance: function storeInheritance() {
-            var _this2 = this;
+            var _this4 = this;
 
             var url = $('#createInheritanceForm').attr('action');
 
@@ -10023,7 +10060,8 @@ new _vue2.default({
                 data: { 'entry': this.createEntry },
                 method: 'POST'
             }).done(function (response) {
-                _this2.inheritances = response;
+                _this4.inheritances = response;
+                _this4.createEntry = '';
                 $('#addInheritance').modal('hide');
             });
         }

@@ -48,6 +48,11 @@ class PersonPrintController extends Controller
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
         $persons->prints()->save($print);
+        
+        if ($request->ajax()) {
+            return $persons->prints;
+        }
+
         return redirect()->route('persons.show', ['persons' => $persons->id]);
     }
 
@@ -68,7 +73,7 @@ class PersonPrintController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
