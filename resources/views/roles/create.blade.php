@@ -29,30 +29,30 @@
                             {{ trans('users.users') }}
                         </label>
                         <div class="col-sm-10">
-                            @foreach($users as $user)
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="users[]" value="{{ $user->id }}">
-                                        {{ $user->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            <select class="form-control" multiple name="users[]" id="users">
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
+                    <h3>{{ trans('users.permissions') }}</h3>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                            {{ trans('users.permissions') }}
-                        </label>
-                        <div class="col-sm-10">
-                            @foreach($permissions as $permission)
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}">
-                                        {{ trans($permission->name) }}
-                                    </label>
-                                </div>
-                            @endforeach
+                        <div class="col-md-12">
+                            <div class="list-group">
+                                @foreach($permissions as $permission)
+                                    <div class="list-group-item">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="permissions[]"
+                                                       value="{{ $permission->id }}">
+                                                <strong>{{ trans($permission->name) }}</strong>
+                                                <p>{{ trans('permission_desc.'.$permission->name) }}</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 

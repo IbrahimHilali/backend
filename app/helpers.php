@@ -52,22 +52,45 @@ if (!function_exists('checked')) {
     {
 
         if ($field == $value) {
-            return ' checked="checked';
+            return ' checked="checked"';
         }
 
         return '';
     }
 }
 
+if (!function_exists('checked_if')) {
+    /**
+     * @param $condition
+     * @return string
+     */
+    function checked_if($condition)
+    {
+        return ($condition) ? ' checked="checked"' : '';
+    }
+}
+
+if (!function_exists('selected_if')) {
+    /**
+     * @param $condition
+     * @return string
+     */
+    function selected_if($condition)
+    {
+        return ($condition) ? ' selected="selected"' : '';
+    }
+}
+
 if (!function_exists('referrer_url')) {
-    function referrer_url($key, $dest) {
+    function referrer_url($key, $dest)
+    {
         $params = session($key);
         if (!$params) {
             return $dest;
         }
-        
+
         $params = http_build_query($params);
-        
+
         return $dest . '?' . $params;
     }
 }

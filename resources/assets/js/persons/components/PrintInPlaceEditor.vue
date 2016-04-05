@@ -15,7 +15,7 @@
         <td v-if="editing">
             <button type="button" class="btn btn-primary btn-sm" v-on:click="savePrint()"><i class="fa fa-spinner fa-spin" v-if="saving"></i> Speichern</button>
         </td>
-        <td colspan="2" v-if="!editing">{{ printYear }} <a href="#" v-on:click.prevent="deletePrint"><i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
+        <td colspan="2" v-if="!editing">{{ printYear }} <a href="#" v-on:click.prevent="deletePrint"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
     </tr>
 </template>
 
