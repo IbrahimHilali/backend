@@ -56,7 +56,7 @@
                             <div class="panel-body">
                                 <p>
                                     <button class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
+                                        <i class="fa fa-trash"></i>
                                         Verknüpfung aufheben
                                     </button>
                                 </p>

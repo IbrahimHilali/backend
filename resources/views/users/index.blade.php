@@ -41,6 +41,7 @@
                                 <th>#</th>
                                 <th>{{ trans('users.name') }}</th>
                                 <th>{{ trans('users.email') }}</th>
+                                <th><i class="fa fa-desktop"></i> / <i class="fa fa-user"></i></th>
                                 <th>{{ trans('users.created_at') }}</th>
                                 <th>{{ trans('users.updated_at') }}</th>
                             </tr>
@@ -52,6 +53,13 @@
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
+                                    <td>
+                                        @if($user->api_only)
+                                            <i class="fa fa-desktop"></i>
+                                        @else
+                                            <i class="fa fa-user"></i>
+                                        @endif
+                                    </td>
                                     <td>{{ $user->created_at->format('d.m.Y H:i:s') }}</td>
                                     <td>{{ $user->updated_at->format('d.m.Y H:i:s') }}</td>
                                 </tr>

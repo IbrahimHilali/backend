@@ -30,17 +30,11 @@ class PersonsController extends Controller
             $persons = Person::query();
         }
 
-        $orderByKey = $request->get('order-by', 'name');
-        $direction = ($request->get('direction', 0)) ? 'desc' : 'asc';
-
-        if ($orderByKey === 'name') {
-            $persons->orderBy('last_name', $direction)->orderBy('first_name', $direction);
-        } else {
-            $persons->orderBy($orderByKey, $direction);
-        }
-        $persons = $persons->paginate(20);
-
-        $this->preserveIndexSet($request, $persons, $orderByKey);
+        $persons = $this->prepareCollection('last_person_index', $persons, $request,
+            function ($builder, $orderByKey, $direction) {
+                $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
+                return 'name';
+            }, 20);
 
         return view('persons.index', compact('persons'));
     }
@@ -67,7 +61,8 @@ class PersonsController extends Controller
 
         $this->updatePersonModel($request, $person);
 
-        return redirect()->route('persons.show', [$person->id])->with('success', 'Die Person wurde erfolgreich erstellt!');
+        return redirect()->route('persons.show', [$person->id])->with('success',
+            'Die Person wurde erfolgreich erstellt!');
     }
 
     /**
@@ -115,7 +110,8 @@ class PersonsController extends Controller
     public function update(UpdatePersonDataRequest $request, Person $persons)
     {
         $this->updatePersonModel($request, $persons);
-        return redirect()->route('persons.show', ['persons' => $persons->id])->with('success', 'Eintrag erfolgreich aktualisiert!');
+        return redirect()->route('persons.show', ['persons' => $persons->id])->with('success',
+            'Eintrag erfolgreich aktualisiert!');
     }
 
     /**
@@ -166,21 +162,5 @@ class PersonsController extends Controller
         $person->auto_generated = $request->get('auto_generated');
 
         $person->save();
-    }
-
-    /**
-     * @param Request $request
-     * @param $persons
-     * @param $orderByKey
-     */
-    protected function preserveIndexSet(Request $request, $persons, $orderByKey)
-    {
-        session([
-            'last_person_index' => [
-                'page' => $persons->currentPage(),
-                'order-by' => $orderByKey,
-                'direction' => $request->get('direction', 0)
-            ]
-        ]);
     }
 }
