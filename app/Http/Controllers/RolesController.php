@@ -91,16 +91,9 @@ class RolesController extends Controller
     {
         $roles->name = $request->input('name');
 
-        //$role->save();
-        $roles->users()->detach();
-        foreach($request->input('users') as $id) {
-            $roles->users()->attach($id);
-        }
+        $roles->users()->sync($request->input('users'));
 
-        $roles->permissions()->detach();
-        foreach($request->input('permissions') as $id) {
-            $roles->permissions()->attach($id);
-        }
+        $roles->permissions()->sync($request->input('permissions'));
 
         $roles->save();
 
