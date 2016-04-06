@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IndexUserRequest;
 use App\Http\Requests\ShowUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Grimm\Permission;
 use Grimm\Role;
 use Grimm\User;
@@ -95,13 +96,27 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param UpdateUserRequest $request
+     * @param User $users
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $users)
     {
-        //
+        $users->name = $request->get('name');
+        $users->email = $request->get('email');
+
+        if ($request->has('password')) {
+            $users->password = bcrypt($request->get('password'));
+        }
+
+        if ($request->has('roles')) {
+            $users->roles()->sync($request->get('roles'));
+        }
+
+        $users->save();
+
+        return redirect()->route('users.show', [$users->id])->with('success', 'Die Nutzerdaten wurden erfolgreich aktualisiert!');
     }
 
     /**

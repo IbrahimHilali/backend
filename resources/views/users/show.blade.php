@@ -12,7 +12,9 @@
                     {{ trans('users.update') }}: {{ $user->name }}</h1>
             </div>
             <div class="col-md-12 page-content">
+                @include('info')
                 <form class="form-horizontal" action="{{ route('users.update', [$user->id]) }}" method="post">
+                    {{ method_field('PUT') }}
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -74,6 +76,7 @@
                         </div>
                     </div>
 
+                    @can('users.store')
                     <div class="form-group{{ $errors->has('api_only') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">{{ trans('users.api_only') }}</label>
                         <div class="col-sm-10">
@@ -90,7 +93,6 @@
                         </div>
                     </div>
 
-                    @can('users.store')
                     <div class="form-group">
                         <label class="col-sm-2 control-label">
                             {{ trans('users.roles.name') }}
@@ -98,12 +100,32 @@
                         <div class="col-sm-10">
                             <select size="5" class="form-control" multiple name="roles[]" id="roles">
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    <option {{ selected_if($user->roles->contains('id', $role->id)) }} value="{{ $role->id }}">{{ $role->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     @endcan
+
+                    @cannot('users.store')
+                    <div class="form-group{{ $errors->has('current_password') ? ' has-error' : '' }}">
+                        <label for="inputCurrentPassword" class="col-sm-2 control-label">{{ trans('users.current_password') }}</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputCurrentPassword" name="current_password"
+                                    placeholder="{{ trans('users.current_password') }}">
+
+                            @if ($errors->has('current_password'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('current_password') }}</strong>
+                                </span>
+                            @else
+                                <span class="help-block">
+                                    Bitte geben Sie zur Verifizierung Ihrer Identität hier ihr derzeitiges Passwort ein.
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    @endcannot
 
 
                     <div class="form-group">

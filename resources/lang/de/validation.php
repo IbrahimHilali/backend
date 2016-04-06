@@ -79,6 +79,7 @@ return [
     'timezone'             => ':attribute muss eine gültige Zeitzone sein.',
     'unique'               => ':attribute ist schon vergeben.',
     'url'                  => 'Das Format von :attribute ist ungültig.',
+    'correct_password'     => 'Das eingegebene Passwort stimmt nicht mit dem des Nutzers überein.',
 
     /*
     |--------------------------------------------------------------------------

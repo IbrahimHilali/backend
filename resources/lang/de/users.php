@@ -20,6 +20,7 @@ return [
     'created_at' => 'hinzugefügt',
     'updated_at' => 'Zuletzt geändert',
 
+    'current_password' => 'Derzeitiges Kennwort',
     'password' => 'Passwort',
     'password_confirmation' => 'Passwort bestätigen',
     'api_only' => 'Nur API-Zugriff',
