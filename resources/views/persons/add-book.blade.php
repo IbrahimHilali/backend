@@ -12,7 +12,7 @@
 
                 <form action="{{ route('persons.add-book', [$person->id]) }}" class="form-horizontal"
                       method="GET">
-                    <div class="button-bar row">
+                    <div class="row">
                         <label class="col-sm-2 control-label">Buch suchen</label>
                         <div class="col-sm-10">
                             <div class="input-group">
@@ -45,13 +45,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('book') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Buch</label>
                         <div class="col-sm-10">
                             <div class="list-group">
                                 @foreach($books->items() as $book)
                                     <input class="check-helper" name="book" value="{{ $book->id }}" type="radio"
-                                           style="display: none;" id="book-{{ $book->id }}">
+                                           style="display: none;" id="book-{{ $book->id }}" {{ checked(old('book'), $book->id) }}>
                                     <label class="list-group-item text-center"
                                            for="book-{{ $book->id }}">
                                         {{ $book->title }}
@@ -72,6 +72,25 @@
                                     </label>
                                 @endforeach
                             </div>
+
+                            @if ($errors->has('book'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('book') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('page') ? ' has-error' : '' }}">
+                        <label class="col-sm-2 control-label">Seite</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="page"
+                                   value="{{ old('page') }}">
+
+                            @if ($errors->has('page'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('page') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 

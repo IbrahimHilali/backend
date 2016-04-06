@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddBookToPersonRequest;
 use Grimm\Book;
 use Grimm\BookPersonAssociation;
 use Grimm\Person;
@@ -35,7 +36,7 @@ class BooksPersonController extends Controller
     {
         $searchTitle = $request->get('search');
 
-        if($searchTitle) {
+        if ($searchTitle) {
             /** @var LengthAwarePaginator $books */
             $books = Book::searchByTitle($searchTitle)->paginate(10);
 
@@ -53,12 +54,28 @@ class BooksPersonController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param AddBookToPersonRequest $request
      * @param Person $person
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function personStoreBook(Request $request, Person $person)
+    public function personStoreBook(AddBookToPersonRequest $request, Person $person)
     {
-        var_dump($request->all());
+        $association = new BookPersonAssociation();
+
+        $association->page = $request->input('page');
+        $association->page_to = $request->input('page_to');
+        $association->line = $request->input('line');
+        $association->page_description = $request->input('page_description');
+
+        $association->person()->associate($person);
+        $association->book()->associate($request->input('book'));
+
+        $association->save();
+
+        return redirect()
+            ->route('persons.book', [$association->id])
+            ->with('success', 'Verknüpfung erstellt');
     }
 
     /**
@@ -75,18 +92,16 @@ class BooksPersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Book $book
-     * @param Person $person
+     * @param BookPersonAssociation $association
      * @return \Illuminate\Http\Response
+     * @internal param Book $book
      */
-    public function show(Book $book, Person $person)
+    public function show(BookPersonAssociation $association)
     {
-        /** @var BookPersonAssociation $association */
-        $association = BookPersonAssociation::query()
-            ->with('book', 'person')
-            ->where('book_id', $book->id)
-            ->where('person_id', $person->id)
-            ->first();
+        $association->load([
+            'book',
+            'person'
+        ]);
 
         // TODO: fancy gallery with scan of pages
 

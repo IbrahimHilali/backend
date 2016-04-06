@@ -140,7 +140,7 @@
                             <td>{{ $personAssociation->line }}</td>
                             <td>{{ $personAssociation->page_description }}</td>
                             <td>
-                                <a href="{{ route('books.person', ['book' => $book->id, 'person' => $personAssociation->person->id]) }}"
+                                <a href="{{ route('persons.book', [$personAssociation->id]) }}"
                                    data-toggle="tooltip" data-title="Verknüpfung">
                                     <span class="fa fa-link"></span>
                                 </a>
