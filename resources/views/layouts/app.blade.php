@@ -15,7 +15,6 @@
     <!-- Styles -->
     {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 <body id="app-layout">
@@ -68,7 +67,9 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{ route('users.show', [Auth::user()->id]) }}"><i class="fa fa-btn fa-user"></i> Profil</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>
                         </ul>
                     </li>
                 @endif
@@ -83,11 +84,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
