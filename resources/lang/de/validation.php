@@ -110,10 +110,24 @@ return [
     */
 
     'attributes' => [
+        'last_name' => 'Der Nachname',
+        'first_name' => 'Der Vorname',
+        'birth_date' => 'Das Geburtsdatum',
+        'death_date' => 'Das Todesdatum',
+        'bio_data'   => 'Die biographischen Daten',
+        'bio_data_source' => 'Die Quelle der biogr. Daten',
+        'add_data' => 'Die zusätzlichen Daten',
+        'source' => 'Die Quelle',
         'book' => 'Buch',
         'page' => 'Seite',
         'page_to' => '"Seite bis"',
         'line' => 'Zeile',
+        'title' => 'Der Titel',
+        'short_title' => 'Der Kurztitel',
+        'year' => 'Das Jahr',
+        'volume' => 'Der Band',
+        'volume_irregular' => 'Der Zusatzband',
+        'edition' => 'Die Edition',
     ],
 
 ];
