@@ -115,6 +115,10 @@ class UsersController extends Controller
             $users->roles()->sync($request->get('roles'));
         }
 
+        if ($request->has('api_only')) {
+            $users->api_only = $request->get('api_only');
+        }
+
         $users->save();
 
         return redirect()->route('users.show', [$users->id])->with('success', 'Die Nutzerdaten wurden erfolgreich aktualisiert!');
