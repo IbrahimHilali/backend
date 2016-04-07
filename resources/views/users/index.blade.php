@@ -25,14 +25,9 @@
                         <a href="#roles" aria-controls="roles" role="tab"
                            data-toggle="tab">{{ trans('users.roles.title') }}</a>
                     </li>
-                    {{-- <li role="presentation">
-                        <a href="#permissions" aria-controls="permissions" role="tab"
-                           data-toggle="tab">{{ trans('users.permissions') }}</a>
-                    </li>--}}
                 </ul>
             </div>
             <div class="col-md-12 list-content">
-                @include('info')
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="users">
                         {{ $users->links() }}
@@ -102,14 +97,6 @@
 
                         {{ $roles->links() }}
                     </div>
-
-                    {{-- <div role="tabpanel" class="tab-pane" id="permissions">
-                        <ul class="list-group">
-                            @foreach($permissions as $permission)
-                                <li class="list-group-item">{{ trans($permission->name) }}</li>
-                            @endforeach
-                        </ul>
-                    </div> --}}
                 </div>
             </div>
         </div>

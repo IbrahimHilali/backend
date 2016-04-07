@@ -8,8 +8,6 @@
                                 class="fa fa-caret-left"></i></a> Buch hinzufügen</h1>
             </div>
             <div class="col-md-12 page-content">
-                @include('info')
-
                 <form action="{{ route('persons.add-book', [$person->id]) }}" class="form-horizontal"
                       method="GET">
                     <div class="row">

@@ -9,7 +9,6 @@
                     , {{ $person->first_name }}</h1>
             </div>
             <div class="col-md-12 page-content">
-                @include('info')
                 <form action="{{ route('persons.update', ['persons' => $person->id]) }}" class="form-horizontal"
                       method="POST">
                     {{ method_field('PUT') }}

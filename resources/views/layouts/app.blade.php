@@ -77,7 +77,7 @@
         </div>
     </div>
 </nav>
-
+@include('info')
 @yield('content')
 
         <!-- JavaScripts -->
@@ -93,10 +93,13 @@
             var confirm = window.confirm("Soll dieser Datensatz wirklich gelöscht werden?");
             return confirm;
         });
+
+        window.setTimeout(function() {
+            $('.alert').alert('close');
+        }, 2000);
     });
 </script>
 
 @yield('scripts')
-{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>

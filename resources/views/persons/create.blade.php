@@ -8,7 +8,6 @@
                                 class="fa fa-caret-left"></i></a> Person erstellen</h1>
             </div>
             <div class="col-md-12 page-content">
-                @include('info')
                 <form action="{{ route('persons.store') }}" class="form-horizontal"
                       method="POST">
                     {{ csrf_field() }}

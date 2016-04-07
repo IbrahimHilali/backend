@@ -5889,4 +5889,14 @@ body {
   .button-box a {
     display: block; }
 
+.alert-container {
+  width: 400px;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 999; }
+
 /*# sourceMappingURL=app.css.map */
