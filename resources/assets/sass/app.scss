@@ -176,8 +176,12 @@ body {
 }
 
 .button-box {
+  display: flex;
+  justify-content: center;
   div {
     text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   a {

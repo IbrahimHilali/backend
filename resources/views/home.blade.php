@@ -41,28 +41,22 @@
                     <div class="panel-body">
                         <div class="row button-box">
                             @can('letters.store')
-                            <div class="col-md-4">
+                            <div>
                                 <a href="{{ url('/') }}"><i class="fa fa-envelope-o fa-4x"></i>
                                 <h5>Brief anlegen</h5></a>
                             </div>
-                            @else
-                                <div class="col-md-2"></div>
                             @endcan
                             @can('people.store')
-                            <div class="col-md-4">
+                            <div>
                                 <a href="{{ route('persons.create') }}"><i class="fa fa-users fa-4x"></i>
                                 <h5>Neue Person</h5></a>
                             </div>
-                            @else
-                                <div class="col-md-2"></div>
                             @endcan
                             @can('books.store')
-                            <div class="col-md-4">
+                            <div>
                                 <a href="{{ route('books.create') }}"><i class="fa fa-book fa-4x"></i>
                                 <h5>Neues Buch</h5></a>
                             </div>
-                            @else
-                                <div class="col-md-2"></div>
                             @endcan
                         </div>
                     </div>

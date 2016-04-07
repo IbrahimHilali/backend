@@ -16,4 +16,9 @@ return [
     'failed'   => 'Diese Zugangsdaten wurden nicht in unserer Datenbank gefunden.',
     'throttle' => 'Zu viele Login Versuche. Versuchen Sie es bitte in :seconds Sekunden.',
 
+    'email' => 'E-Mail Adresse',
+    'password' => 'Passwort',
+    'remember-me' => 'Angemeldet bleiben',
+    'forgot-password' => 'Passwort vergessen?'
+
 ];

@@ -5871,10 +5871,18 @@ body {
   background-color: #337ab7;
   border: 1px solid #2e6da4; }
 
-.button-box div {
-  text-align: center; }
-
-.button-box a {
-  display: block; }
+.button-box {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .button-box div {
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px; }
+  .button-box a {
+    display: block; }
 
 /*# sourceMappingURL=app.css.map */
