@@ -274,10 +274,12 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="books">
                         <div class="add-button">
+                            @can('books.assign')
                             <a href="{{ route('persons.add-book', [$person->id]) }}" role="button"
                                class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i> Buch hinzufügen
                             </a>
+                            @endcan
                         </div>
                         <table class="table table-responsive">
                             <thead>
@@ -341,7 +343,8 @@
 
                     <div class="panel-body">
                         <p>
-                        <form id="danger-zone" action="{{ route('persons.destroy', ['id' => $person->id]) }}" method="post"
+                        <form id="danger-zone" action="{{ route('persons.destroy', ['id' => $person->id]) }}"
+                              method="post"
                               class="form-inline">
                             {{ csrf_field() }}
                             {{ method_field('delete') }}

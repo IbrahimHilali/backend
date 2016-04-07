@@ -13,7 +13,7 @@ class AddBookToPersonRequest extends Request
      */
     public function authorize()
     {
-        return \Gate::allows('people.update');
+        return \Gate::allows('books.assign');
     }
 
     /**
