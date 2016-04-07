@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyUserRequest;
 use App\Http\Requests\IndexUserRequest;
 use App\Http\Requests\ShowUserRequest;
 use App\Http\Requests\StoreUserRequest;
@@ -122,11 +123,14 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param DestroyUserRequest $request
+     * @param User $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DestroyUserRequest $request, User $users)
     {
-        //
+        $users->delete();
+
+        return redirect()->route('users.index')->with('success', 'Der Benutzer wurde erfolgreich gelöscht!');
     }
 }

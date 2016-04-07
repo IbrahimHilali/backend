@@ -21,7 +21,7 @@ body {
 }
 
 .page {
-  box-shadow: 7px 2px 3px -3px lighten(rgba(201,201,201,1), 10%);
+  box-shadow: 7px 2px 3px -3px lighten(rgba(201, 201, 201, 1), 10%);
   margin-bottom: 20px;
 }
 
@@ -130,7 +130,7 @@ body {
     position: absolute;
     right: 0;
     top: 5px;
-    border-radius:1px;
+    border-radius: 1px;
   }
 
   input {
@@ -145,7 +145,7 @@ body {
     height: 30px;
     line-height: 18px;
     padding: 0 2px 0 2px;
-    border-radius:1px;
+    border-radius: 1px;
   }
 }
 
@@ -173,4 +173,14 @@ body {
   color: $btn-primary-color;
   background-color: $btn-primary-bg;
   border: 1px solid $btn-primary-border;
+}
+
+.button-box {
+  div {
+    text-align: center;
+  }
+
+  a {
+    display: block;
+  }
 }

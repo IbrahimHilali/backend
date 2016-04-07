@@ -3,7 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+
+        </div>
+        <div class="row">
+            <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">Letzte Änderungen</div>
 
@@ -29,6 +32,59 @@
                                 </li>
                             @endforeach
                         </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Schnellstart</div>
+                    <div class="panel-body">
+                        <div class="row button-box">
+                            @can('letters.store')
+                            <div class="col-md-4">
+                                <a href="{{ url('/') }}"><i class="fa fa-envelope-o fa-4x"></i>
+                                <h5>Brief anlegen</h5></a>
+                            </div>
+                            @else
+                                <div class="col-md-2"></div>
+                            @endcan
+                            @can('people.store')
+                            <div class="col-md-4">
+                                <a href="{{ route('persons.create') }}"><i class="fa fa-users fa-4x"></i>
+                                <h5>Neue Person</h5></a>
+                            </div>
+                            @else
+                                <div class="col-md-2"></div>
+                            @endcan
+                            @can('books.store')
+                            <div class="col-md-4">
+                                <a href="{{ route('books.create') }}"><i class="fa fa-book fa-4x"></i>
+                                <h5>Neues Buch</h5></a>
+                            </div>
+                            @else
+                                <div class="col-md-2"></div>
+                            @endcan
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Zahlen und Fakten</div>
+
+                    <div class="panel-body">
+                        <div class="row button-box">
+                            <div class="col-md-4">
+                                <h2>0</h2>
+                                <h4>Briefe</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <h2>{{ \Grimm\Person::count() }}</h2>
+                                <h4>Personen</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <h2>{{ \Grimm\Book::count() }}</h2>
+                                <h4>Bücher</h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

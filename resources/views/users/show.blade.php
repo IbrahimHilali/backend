@@ -109,10 +109,12 @@
 
                     @cannot('users.store')
                     <div class="form-group{{ $errors->has('current_password') ? ' has-error' : '' }}">
-                        <label for="inputCurrentPassword" class="col-sm-2 control-label">{{ trans('users.current_password') }}</label>
+                        <label for="inputCurrentPassword"
+                               class="col-sm-2 control-label">{{ trans('users.current_password') }}</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputCurrentPassword" name="current_password"
-                                    placeholder="{{ trans('users.current_password') }}">
+                            <input type="password" class="form-control" id="inputCurrentPassword"
+                                   name="current_password"
+                                   placeholder="{{ trans('users.current_password') }}">
 
                             @if ($errors->has('current_password'))
                                 <span class="help-block">
@@ -140,6 +142,32 @@
                         </div>
                     </div>
                 </form>
+
+                @can('users.delete')
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Gefahrenzone</h1>
+                            </div>
+
+                            <div class="panel-body">
+                                <p>
+                                <form action="{{ route('users.destroy', [$user->id]) }}" method="post"
+                                      class="form-inline">
+                                    {{ csrf_field() }}
+                                    {{ method_field('delete') }}
+                                    <button class="btn btn-danger">
+                                        <span class="fa fa-trash"></span>
+                                        {{ trans('users.delete') }}
+                                    </button>
+                                </form>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endcan
             </div>
         </div>
     </div>

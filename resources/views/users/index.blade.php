@@ -32,6 +32,7 @@
                 </ul>
             </div>
             <div class="col-md-12 list-content">
+                @include('info')
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="users">
                         {{ $users->links() }}
