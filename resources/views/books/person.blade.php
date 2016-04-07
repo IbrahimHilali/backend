@@ -52,8 +52,10 @@
                                     @if($association->page_to)
                                         - {{ $association->page_to }}
                                     @endif
-                                    <br>
-                                    Zeile {{ $association->line }}
+                                    @if($association->line)
+                                        <br>
+                                        Zeile {{ $association->line }}
+                                    @endif
                                 </td>
                             </tr>
                             <tr>

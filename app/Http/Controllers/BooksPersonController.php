@@ -64,9 +64,9 @@ class BooksPersonController extends Controller
         $association = new BookPersonAssociation();
 
         $association->page = $request->input('page');
-        $association->page_to = $request->input('page_to');
-        $association->line = $request->input('line');
-        $association->page_description = $request->input('page_description');
+        $association->page_to = $request->input('page_to') ?: null;
+        $association->line = $request->input('line') ?: null;
+        $association->page_description = $request->input('page_description') ?: null;
 
         $association->person()->associate($person);
         $association->book()->associate($request->input('book'));
