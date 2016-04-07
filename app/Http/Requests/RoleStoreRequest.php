@@ -41,9 +41,9 @@ class RoleStoreRequest extends Request
 
         $role->save();
 
-        $role->users()->sync($this->input('users'));
+        $role->users()->sync($this->input('users', []));
 
-        $role->permissions()->sync($this->input('permissions'));
+        $role->permissions()->sync($this->input('permissions', []));
 
         return $role->id;
     }
