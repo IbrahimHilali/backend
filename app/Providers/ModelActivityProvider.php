@@ -64,7 +64,7 @@ class ModelActivityProvider extends ServiceProvider
     {
         $this->log($model, [
             'action' => 'updating',
-            'before' => $model,
+            'before' => $this->getBeforeFromModel($model),
             'after' => $model->getDirty(),
         ]);
     }
