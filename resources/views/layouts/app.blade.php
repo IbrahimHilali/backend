@@ -88,6 +88,11 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover({html: true});
+
+        $('#danger-zone').submit(function(ev) {
+            var confirm = window.confirm("Soll dieser Datensatz wirklich gelöscht werden?");
+            return confirm;
+        });
     });
 </script>
 

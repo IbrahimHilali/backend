@@ -4,7 +4,8 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1>{{ trans('users.roles.create') }}</h1>
+                <h1><a class="prev-link" href="{{ route('users.index') }}#roles"><i
+                                class="fa fa-caret-left"></i></a> {{ trans('users.roles.create') }}</h1>
             </div>
             <div class="col-md-12 page-content">
                 <form class="form-horizontal" action="{{ route('roles.store') }}" method="post">
@@ -59,10 +60,10 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-floppy-disk"></span> {{ trans('form.save') }}
+                                <span class="fa fa-floppy-o"></span> {{ trans('form.save') }}
                             </button>
 
-                            <a href="{{ route('users.index') }}" role="button" class="btn btn-default">
+                            <a href="{{ route('users.index') }}#roles" role="button" class="btn btn-link">
                                 {{ trans('form.abort') }}
                             </a>
                         </div>

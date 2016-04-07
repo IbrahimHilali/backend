@@ -24,4 +24,6 @@ return [
     'password' => 'Passwort',
     'password_confirmation' => 'Passwort bestätigen',
     'api_only' => 'Nur API-Zugriff',
+
+    'store_success' => 'Der Benutzer wurde erfolgreich angelegt!',
 ];

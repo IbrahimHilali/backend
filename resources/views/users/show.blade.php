@@ -136,7 +136,7 @@
                                 <span class="fa fa-floppy-o"></span> {{ trans('form.save') }}
                             </button>
 
-                            <a href="{{ route('users.index') }}" role="button" class="btn btn-default">
+                            <a href="{{ route('users.index') }}" role="button" class="btn btn-link">
                                 {{ trans('form.abort') }}
                             </a>
                         </div>
@@ -153,7 +153,7 @@
 
                             <div class="panel-body">
                                 <p>
-                                <form action="{{ route('users.destroy', [$user->id]) }}" method="post"
+                                <form id="danger-zone" action="{{ route('users.destroy', [$user->id]) }}" method="post"
                                       class="form-inline">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}

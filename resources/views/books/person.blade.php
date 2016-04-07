@@ -25,9 +25,9 @@
                                     {{ $association->person->id }}
                                 </td>
                                 <td class="text-center" style="width: 20%; vertical-align: middle" rowspan="3">
-                                    <span class="fa fa-user"></span>
-                                    <span class="fa fa-refresh"></span>
-                                    <span class="fa fa-book"></span>
+                                    <span class="fa fa-user fa-2x"></span>
+                                    <span class="fa fa-refresh fa-2x"></span>
+                                    <span class="fa fa-book fa-2x"></span>
                                 </td>
                                 <td class="text-center" style="width: 40%;">
                                     {{ $association->book->id }}

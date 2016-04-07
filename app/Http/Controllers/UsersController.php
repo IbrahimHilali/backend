@@ -29,9 +29,7 @@ class UsersController extends Controller
 
         $roles = Role::query()->paginate(50);
 
-        $permissions = Permission::orderBy('name', 'asc')->paginate(50);
-
-        return view('users.index', compact('users', 'roles', 'permissions'));
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
@@ -62,9 +60,11 @@ class UsersController extends Controller
 
         $user->save();
 
-        $user->roles()->sync($request->get('roles'));
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->get('roles'));
+        }
 
-        redirect()->route('user.show', [$user->id])->with('success', trans('user.store_success'));
+        return redirect()->route('users.show', [$user->id])->with('success', trans('users.store_success'));
     }
 
     /**

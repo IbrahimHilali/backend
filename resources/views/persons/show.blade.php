@@ -341,7 +341,7 @@
 
                     <div class="panel-body">
                         <p>
-                        <form action="{{ route('persons.destroy', ['id' => $person->id]) }}" method="post"
+                        <form id="danger-zone" action="{{ route('persons.destroy', ['id' => $person->id]) }}" method="post"
                               class="form-inline">
                             {{ csrf_field() }}
                             {{ method_field('delete') }}

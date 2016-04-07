@@ -160,7 +160,7 @@
 
                             <div class="panel-body">
                                 <p>
-                                <form action="{{ route('books.destroy', ['id' => $book->id]) }}" method="post" class="form-inline">
+                                <form id="danger-zone" action="{{ route('books.destroy', ['id' => $book->id]) }}" method="post" class="form-inline">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
                                     <button class="btn btn-danger">

@@ -40,7 +40,7 @@
                         <label class="col-sm-2 control-label">Geburtsdatum</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="birth_date"
-                                   value="{{ old('birth_date', '') }}">
+                                   value="{{ old('birth_date', '') }}" placeholder="Format: 24.01.1781">
                             @if ($errors->has('birth_date'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('birth_date') }}</strong>
@@ -52,7 +52,7 @@
                         <label class="col-sm-2 control-label">Todesdatum</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="death_date"
-                                   value="{{ old('death_date', '') }}">
+                                   value="{{ old('death_date', '') }}" placeholder="Format: 24.01.1781">
                             @if ($errors->has('death_date'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('death_date') }}</strong>
