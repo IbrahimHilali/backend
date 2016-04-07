@@ -4,7 +4,8 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1>Buchdaten</h1>
+                <h1><a class="prev-link" href="{{ referrer_url('last_book_index', route('books.index')) }}"><i
+                                class="fa fa-caret-left"></i></a> Buchdaten</h1>
             </div>
             <div class="col-md-12 list-content">
                 <div class="panel-body">

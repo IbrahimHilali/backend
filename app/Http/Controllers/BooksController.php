@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
+use App\Http\Requests\IndexBookRequest;
 use Grimm\Book;
 use Illuminate\Http\Request;
 
@@ -16,15 +17,25 @@ class BooksController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param IndexBookRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexBookRequest $request)
     {
-        $books = Book::orderBy('title')
-            ->orderBy('volume')
-            ->orderBy('volume_irregular')
-            ->orderBy('edition')
-            ->paginate(150);
+
+        if ($request->has('title')) {
+            $books = Book::searchByTitle($request->get('title'));
+        } else {
+            $books = Book::query();
+        }
+
+        $books = $this->prepareCollection('last_book_index', $books, $request,
+            function ($builder, $orderByKey, $direction) {
+                $builder->orderBy('title')->orderBy('volume')
+                    ->orderBy('volume_irregular')
+                    ->orderBy('edition');
+                return 'identification';
+            }, 20);
 
         return view('books.index', compact('books'));
     }

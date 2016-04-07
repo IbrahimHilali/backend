@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyUserRequest;
 use App\Http\Requests\IndexUserRequest;
+use App\Http\Requests\ShowUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Grimm\Permission;
 use Grimm\Role;
 use Grimm\User;
@@ -59,21 +62,25 @@ class UsersController extends Controller
 
         $user->save();
 
+        $user->roles()->sync($request->get('roles'));
+
         redirect()->route('user.show', [$user->id])->with('success', trans('user.store_success'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param ShowUserRequest $request
+     * @param User $users
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ShowUserRequest $request, User $users)
     {
         /** @var User $user */
-        $user = User::query()->findOrFail($id);
+        $user = $users;
+        $roles = Role::all();
 
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'roles'));
     }
 
     /**
@@ -90,23 +97,40 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param UpdateUserRequest $request
+     * @param User $users
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $users)
     {
-        //
+        $users->name = $request->get('name');
+        $users->email = $request->get('email');
+
+        if ($request->has('password')) {
+            $users->password = bcrypt($request->get('password'));
+        }
+
+        if ($request->has('roles')) {
+            $users->roles()->sync($request->get('roles'));
+        }
+
+        $users->save();
+
+        return redirect()->route('users.show', [$users->id])->with('success', 'Die Nutzerdaten wurden erfolgreich aktualisiert!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param DestroyUserRequest $request
+     * @param User $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DestroyUserRequest $request, User $users)
     {
-        //
+        $users->delete();
+
+        return redirect()->route('users.index')->with('success', 'Der Benutzer wurde erfolgreich gelöscht!');
     }
 }

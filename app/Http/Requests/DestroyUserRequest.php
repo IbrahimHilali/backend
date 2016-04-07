@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use Gate;
 
-class StoreUserRequest extends Request
+class DestroyUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class StoreUserRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->can('users.store');
+        return $this->user()->can('users.delete');
     }
 
     /**
@@ -25,11 +24,7 @@ class StoreUserRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:4|confirmed',
-            'api_only' => 'required|boolean',
-            'roles.*' => 'exists:roles,id',
+            //
         ];
     }
 }

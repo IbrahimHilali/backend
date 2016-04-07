@@ -50,14 +50,27 @@ class BackupStatusReader
 
     public function statusLabel()
     {
+        if ($this->lastBackupIsOld()) {
+            return 'warning';
+        }
+
         if ($this->lastBackupStatus() == 'success') {
             return 'success';
         }
+
         return ($this->lastBackupStatus() == 'fail') ? 'danger' : 'default';
     }
 
     public function lastBackupName()
     {
         return $this->redis->get('last_backup_name');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function lastBackupIsOld()
+    {
+        return Carbon::now()->diffInDays($this->lastSuccessfulBackup()) > 3;
     }
 }
