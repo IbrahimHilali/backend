@@ -15,5 +15,6 @@ return [
         'store' => 'Um ein neues Buch anzulegen, wird dieses Recht benötigt.',
         'update' => 'Zur Aktualisierung der Daten eines existierenden Buchs muss ein Nutzer dieses Recht haben.',
         'delete' => 'Nur ein Nutzer mit diesem Recht kann Bücher löschen',
+        'assign' => 'Mit diesem Recht kann ein Nutzer ein Buch einer Person zuordnen.',
     ],
 ];
