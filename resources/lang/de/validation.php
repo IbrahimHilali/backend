@@ -109,7 +109,10 @@ return [
     */
 
     'attributes' => [
-        //
+        'book' => 'Buch',
+        'page' => 'Seite',
+        'page_to' => '"Seite bis"',
+        'line' => 'Zeile',
     ],
 
 ];
