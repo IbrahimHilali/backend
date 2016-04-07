@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DestroyPersonEvent;
+use App\Events\StorePersonEvent;
+use App\Events\UpdatePersonEvent;
 use App\Http\Requests\DestroyPersonRequest;
 use App\Http\Requests\IndexPersonRequest;
 use App\Http\Requests\StorePersonRequest;
@@ -52,7 +55,7 @@ class PersonsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StorePersonRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StorePersonRequest $request)
@@ -60,6 +63,8 @@ class PersonsController extends Controller
         $person = new Person();
 
         $this->updatePersonModel($request, $person);
+        
+        event(new StorePersonEvent($person, $request->user()));
 
         return redirect()->route('persons.show', [$person->id])->with('success',
             'Die Person wurde erfolgreich erstellt!');
@@ -110,6 +115,9 @@ class PersonsController extends Controller
     public function update(UpdatePersonDataRequest $request, Person $persons)
     {
         $this->updatePersonModel($request, $persons);
+
+        event(new UpdatePersonEvent($persons, $request->user()));
+
         return redirect()->route('persons.show', ['persons' => $persons->id])->with('success',
             'Eintrag erfolgreich aktualisiert!');
     }
@@ -124,6 +132,8 @@ class PersonsController extends Controller
     public function destroy(DestroyPersonRequest $request, Person $persons)
     {
         $persons->delete();
+
+        event(new DestroyPersonEvent($persons, $request->user()));
 
         return redirect()->route('persons.index')->with('success', 'Die Person wurde erfolgreich gelöscht!');
     }

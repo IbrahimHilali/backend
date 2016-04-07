@@ -14,7 +14,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('layouts.app', function($view) {
+        view()->composer('partials.backup-link', function($view) {
             $view->with('backup', app(BackupStatusReader::class));
         });
     }

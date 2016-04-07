@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DestroyBookEvent;
+use App\Events\StoreBookEvent;
+use App\Events\UpdateBookEvent;
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Http\Requests\IndexBookRequest;
@@ -60,6 +63,8 @@ class BooksController extends Controller
     {
         $book = $request->persist();
 
+        event(new StoreBookEvent($book, $request->user()));
+
         return redirect()
             ->route('books.show', ['id' => $book->id])
             ->with('success', trans('books.save'));
@@ -106,6 +111,8 @@ class BooksController extends Controller
     {
         $request->persist($books);
 
+        event(new UpdateBookEvent($books, $request->user()));
+
         return redirect()
             ->route('books.show', ['id' => $books->id])
             ->with('success', 'Saved changes');
@@ -114,15 +121,18 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Book $books
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Book $books)
+    public function destroy(Request $request, Book $books)
     {
         $books->personAssociations()->delete();
 
         $books->delete();
+
+        event(new DestroyBookEvent($books, $request->user()));
 
         return redirect()
             ->route('books.index')
