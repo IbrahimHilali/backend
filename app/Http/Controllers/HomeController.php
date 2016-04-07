@@ -21,15 +21,18 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $latestPeopleCreated = Person::latest()->take(5)->get();
-        $latestBooksCreated = Book::latest()->take(5)->get();
+        $take = max(min((int)$request->get('take', 4), 50), 0);
 
-        $latestPeopleUpdated = Person::orderBy('updated_at', 'desc')->take(5)->get();
-        $latestBooksUpdated = Book::orderBy('updated_at', 'desc')->take(5)->get();
+        $latestPeopleCreated = Person::latest()->take($take)->get();
+        $latestBooksCreated = Book::latest()->take($take)->get();
+
+        $latestPeopleUpdated = Person::orderBy('updated_at', 'desc')->take($take)->get();
+        $latestBooksUpdated = Book::orderBy('updated_at', 'desc')->take($take)->get();
 
         return view(
             'home',

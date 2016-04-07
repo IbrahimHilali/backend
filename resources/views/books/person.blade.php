@@ -9,14 +9,16 @@
             <div class="col-md-12 page-content">
                 <div class="row">
                     <div class="col-md-9">
-                        <p>
-                            Seite {{ $association->page }} - {{ $association->page_to }}<br>
-                            Zeile {{ $association->line }}
-                        </p>
-                        <p>
-                            {{ $association->page_description }}
-                        </p>
                         <table class="table table-responsive">
+                            <tr>
+                                <th class="text-center">
+                                    Person
+                                </th>
+                                <td></td>
+                                <th class="text-center">
+                                    Buch
+                                </th>
+                            </tr>
                             <tr>
                                 <td class="text-center" style="width: 40%;">
                                     <a href="{{ route('persons.show', [$association->person->id]) }}">
@@ -43,6 +45,21 @@
                             <tr>
                                 <td class="text-center">{{ $association->person->first_name }}</td>
                                 <td class="text-center">{{ $association->book->short_title }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    Seite {{ $association->page }}
+                                    @if($association->page_to)
+                                        - {{ $association->page_to }}
+                                    @endif
+                                    <br>
+                                    Zeile {{ $association->line }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    {{ $association->page_description }}
+                                </td>
                             </tr>
                         </table>
                     </div>

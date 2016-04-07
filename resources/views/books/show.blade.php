@@ -98,12 +98,11 @@
                             <div class="col-sm-10 col-sm-offset-2">
                                 @can('books.update')
                                 <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-save"></span>
+                                    <span class="fa fa-floppy-o"></span>
                                     Speichern
                                 </button>
 
-                                <button type="reset" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-refresh"></span>
+                                <button type="reset" class="btn btn-link">
                                     Änderungen zurücksetzen
                                 </button>
                                 @endcan

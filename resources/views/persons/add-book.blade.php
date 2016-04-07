@@ -87,27 +87,31 @@
                             <input class="form-control" name="page"
                                    value="{{ old('page') }}">
 
-                            @if ($errors->has('page'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('page') }}</strong>
-                                </span>
-                            @endif
                         </div>
                         <label class="col-sm-1 control-label" style="text-align: center;">bis</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="page_to"
                                    value="{{ old('page_to') }}">
+                        </div>
+                        <label class="col-sm-2 control-label">Zeile</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" name="line"
+                                   value="{{ old('line') }}">
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('page') || $errors->has('page_to') || $errors->has('line') ? ' has-error' : '' }}">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            @if ($errors->has('page'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('page') }}</strong>
+                                </span>
+                            @endif
 
                             @if ($errors->has('page_to'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('page_to') }}</strong>
                                 </span>
                             @endif
-                        </div>
-                        <label class="col-sm-2 control-label">Zeile</label>
-                        <div class="col-sm-3">
-                            <input class="form-control" name="line"
-                                   value="{{ old('line') }}">
 
                             @if ($errors->has('line'))
                                 <span class="help-block">
