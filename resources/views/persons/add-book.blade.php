@@ -51,7 +51,8 @@
                             <div class="list-group">
                                 @foreach($books->items() as $book)
                                     <input class="check-helper" name="book" value="{{ $book->id }}" type="radio"
-                                           style="display: none;" id="book-{{ $book->id }}" {{ checked(old('book'), $book->id) }}>
+                                           style="display: none;"
+                                           id="book-{{ $book->id }}" {{ checked(old('book'), $book->id) }}>
                                     <label class="list-group-item text-center"
                                            for="book-{{ $book->id }}">
                                         {{ $book->title }}
@@ -80,9 +81,9 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group{{ $errors->has('page') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('page') || $errors->has('page_to') || $errors->has('line') ? ' has-error' : '' }}">
                         <label class="col-sm-2 control-label">Seite</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-2">
                             <input class="form-control" name="page"
                                    value="{{ old('page') }}">
 
@@ -92,8 +93,55 @@
                                 </span>
                             @endif
                         </div>
+                        <label class="col-sm-1 control-label" style="text-align: center;">bis</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="page_to"
+                                   value="{{ old('page_to') }}">
+
+                            @if ($errors->has('page_to'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('page_to') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <label class="col-sm-2 control-label">Zeile</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" name="line"
+                                   value="{{ old('line') }}">
+
+                            @if ($errors->has('line'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('line') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('page_description') ? ' has-error' : '' }}">
+                        <label class="col-sm-2 control-label">Notiz</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="page_description"
+                                   value="{{ old('page_description') }}">
+
+                            @if ($errors->has('page_description'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('page_description') }}</strong>
+                                </span>
+                            @endif
+                        </div>
                     </div>
 
+                    <div class="button-bar row">
+                        <div class="col-sm-10 col-md-offset-2">
+                            <button type="submit" class="btn btn-primary">Speichern</button>
+                            <a href="{{ route('persons.show', [$person->id]) }}#books"
+                               class="btn btn-link">Abbrechen</a>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
+
+                <div class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Nachname</label>
                         <div class="col-sm-10">
@@ -129,15 +177,7 @@
                                    value="{{ $person->bio_data }}" readonly>
                         </div>
                     </div>
-
-                    <div class="button-bar row">
-                        <div class="col-sm-10 col-md-offset-2">
-                            <button type="submit" class="btn btn-primary">Speichern</button>
-                            <a href="{{ referrer_url('last_person_index', route('persons.index')) }}"
-                               class="btn btn-link">Abbrechen</a>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

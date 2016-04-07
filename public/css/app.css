@@ -5866,6 +5866,10 @@ body {
   right: 15px;
   margin-top: 5px; }
 
+.action-column {
+  width: 120px;
+  text-align: center; }
+
 .check-helper:checked + * {
   color: #fff;
   background-color: #337ab7;

@@ -18,21 +18,31 @@
                         </p>
                         <table class="table table-responsive">
                             <tr>
-                                <td style="text-align: center; width: 40%;">{{ $association->person->id }}</td>
-                                <td style="text-align: center; width: 20%; vertical-align: middle" rowspan="3">
+                                <td class="text-center" style="width: 40%;">
+                                    <a href="{{ route('persons.show', [$association->person->id]) }}">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </a>
+                                    {{ $association->person->id }}
+                                </td>
+                                <td class="text-center" style="width: 20%; vertical-align: middle" rowspan="3">
                                     <span class="fa fa-user"></span>
                                     <span class="fa fa-refresh"></span>
                                     <span class="fa fa-book"></span>
                                 </td>
-                                <td style="text-align: center; width: 40%;">{{ $association->book->id }}</td>
+                                <td class="text-center" style="width: 40%;">
+                                    {{ $association->book->id }}
+                                    <a href="{{ route('books.show', [$association->book->id]) }}">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
-                                <td style="text-align: center">{{ $association->person->last_name }}</td>
-                                <td style="text-align: center">{{ $association->book->title }}</td>
+                                <td class="text-center">{{ $association->person->last_name }}</td>
+                                <td class="text-center">{{ $association->book->title }}</td>
                             </tr>
                             <tr>
-                                <td style="text-align: center">{{ $association->person->first_name }}</td>
-                                <td style="text-align: center">{{ $association->book->short_title }}</td>
+                                <td class="text-center">{{ $association->person->first_name }}</td>
+                                <td class="text-center">{{ $association->book->short_title }}</td>
                             </tr>
                         </table>
                     </div>
