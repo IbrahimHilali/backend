@@ -13,6 +13,9 @@
                             Seite {{ $association->page }} - {{ $association->page_to }}<br>
                             Zeile {{ $association->line }}
                         </p>
+                        <p>
+                            {{ $association->page_description }}
+                        </p>
                         <table class="table table-responsive">
                             <tr>
                                 <td style="text-align: center; width: 40%;">{{ $association->person->id }}</td>
