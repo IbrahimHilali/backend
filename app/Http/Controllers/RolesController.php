@@ -91,9 +91,9 @@ class RolesController extends Controller
     {
         $roles->name = $request->input('name');
 
-        $roles->users()->sync($request->input('users'));
+        $roles->users()->sync($request->input('users', []));
 
-        $roles->permissions()->sync($request->input('permissions'));
+        $roles->permissions()->sync($request->input('permissions', []));
 
         $roles->save();
 
