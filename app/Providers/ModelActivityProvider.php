@@ -27,6 +27,10 @@ class ModelActivityProvider extends ServiceProvider
             $this->logUpdating($model);
         });
 
+        Person::created(function (Model $model) {
+            $this->logCreating($model);
+        });
+
         Person::updating(function (Model $model) {
             $this->logUpdating($model);
         });
