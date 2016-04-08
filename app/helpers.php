@@ -9,18 +9,26 @@ if (!function_exists('sort_link')) {
     function sort_link($url, $key)
     {
         $currentSort = request()->get('order-by', 'name');
+        $otherParams = request()->except(['order-by', 'direction']);
 
         if ($currentSort != $key) {
             $queryParams = ['order-by' => $key, 'direction' => 0];
         } else {
             $direction = intval(request()->get('direction', 0));
             if ($direction == 1) {
-                return url($url);
+                $queryParams = [];
+            } else {
+                $queryParams = ['order-by' => $key, 'direction' => 1 - $direction];
             }
-            $queryParams = ['order-by' => $key, 'direction' => 1 - $direction];
         }
 
-        return url($url) . '?' . http_build_query($queryParams);
+        $queryParams = $queryParams + $otherParams;
+
+        if (count($queryParams) > 0) {
+            return url($url) . '?' . http_build_query($queryParams);
+        } else {
+            return url($url);
+        }
     }
 }
 
