@@ -38,10 +38,10 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('birth_date') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label">Geburtsdatum</label>
+                        <label class="col-sm-2 control-label">Geburtsjahr</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="birth_date"
-                                   value="{{ old('birth_date', (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "") }}">
+                                   value="{{ old('birth_date', $person->birth_date) }}">
                             @if ($errors->has('birth_date'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('birth_date') }}</strong>
@@ -50,10 +50,10 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('death_date') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label">Todesdatum</label>
+                        <label class="col-sm-2 control-label">Todesjahr</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="death_date"
-                                   value="{{ old('death_date', (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "") }}">
+                                   value="{{ old('death_date', $person->death_date) }}">
                             @if ($errors->has('death_date'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('death_date') }}</strong>
