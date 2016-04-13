@@ -19,12 +19,16 @@ class ModelActivityProvider extends ServiceProvider
      */
     public function boot()
     {
-        Book::created(function(Model $model) {
+        Book::created(function (Model $model) {
             $this->logCreating($model);
         });
 
         Book::updating(function (Model $model) {
             $this->logUpdating($model);
+        });
+
+        Book::deleting(function (Model $model) {
+            $this->logDeleting($model);
         });
 
         Person::created(function (Model $model) {
@@ -33,6 +37,10 @@ class ModelActivityProvider extends ServiceProvider
 
         Person::updating(function (Model $model) {
             $this->logUpdating($model);
+        });
+
+        Person::deleting(function (Model $model) {
+            $this->logDeleting($model);
         });
     }
 
@@ -70,6 +78,14 @@ class ModelActivityProvider extends ServiceProvider
             'action' => 'updating',
             'before' => $this->getBeforeFromModel($model),
             'after' => $model->getDirty(),
+        ]);
+    }
+
+    protected function logDeleting(Model $model)
+    {
+        $this->log($model, [
+            'action' => 'deleting',
+            'before' => $model->getOriginal(),
         ]);
     }
 

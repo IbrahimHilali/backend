@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "289db4832c2b718b97cfb600e89cebb8",
-    "content-hash": "91e0d194ce2af957f01ad50a56123c52",
+    "hash": "ecb24997de2d515a5eb3b3b76812f312",
+    "content-hash": "e20e9bb0807abfd7554e8731986ae896",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -226,16 +226,16 @@
         },
         {
             "name": "grimmdevelop/models",
-            "version": "0.4.1",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrimmDevelop/models.git",
-                "reference": "418ed7dda57227b346c5e319ba5127a27c76c58f"
+                "reference": "dc8e089682bb930b2de43ee481b1379033ee85bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/418ed7dda57227b346c5e319ba5127a27c76c58f",
-                "reference": "418ed7dda57227b346c5e319ba5127a27c76c58f",
+                "url": "https://api.github.com/repos/GrimmDevelop/models/zipball/dc8e089682bb930b2de43ee481b1379033ee85bf",
+                "reference": "dc8e089682bb930b2de43ee481b1379033ee85bf",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                     "email": "davbohn@gmail.com"
                 }
             ],
-            "time": "2016-04-05 12:25:27"
+            "time": "2016-04-13 12:21:43"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -623,16 +623,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.18.2",
+            "version": "1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09"
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
-                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5f56ed5212dc509c8dc8caeba2715732abb32dbf",
+                "reference": "5f56ed5212dc509c8dc8caeba2715732abb32dbf",
                 "shasum": ""
             },
             "require": {
@@ -697,7 +697,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-04-02 13:12:58"
+            "time": "2016-04-12 18:29:35"
         },
         {
             "name": "mtdowling/cron-expression",

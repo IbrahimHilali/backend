@@ -148,17 +148,8 @@ class PersonsController extends Controller
         $person->last_name = $request->get('last_name');
         $person->first_name = $request->get('first_name');
 
-        if ($request->has('birth_date')) {
-            $person->birth_date = new Carbon($request->get('birth_date'));
-        } else {
-            $person->birth_date = null;
-        }
-
-        if ($request->has('death_date')) {
-            $person->death_date = new Carbon($request->get('death_date'));
-        } else {
-            $person->death_date = null;
-        }
+        $person->birth_date = $request->get('birth_date');
+        $person->death_date = $request->get('death_date');
 
         $person->bio_data = $request->get('bio_data');
         $person->bio_data_source = $request->get('bio_data_source');

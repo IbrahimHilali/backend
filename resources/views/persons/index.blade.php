@@ -39,8 +39,6 @@
                         <th><a href="{{ sort_link('persons', 'is_organization') }}"><i class="fa fa-user"></i> / <i class="fa fa-building"></i> {!! sort_arrow('is_organization') !!}</a></th>
                         <th><a href="{{ sort_link('persons', 'source') }}">Quelle {!! sort_arrow('source') !!}</a></th>
                         <th><a href="{{ sort_link('persons', 'bio_data') }}">Biogr. Daten {!! sort_arrow('bio_data') !!}</a></th>
-                        {{--<th><a href="{{ sort_link('persons', 'birth_date') }}"><span class="fa fa-asterisk"></span> {!! sort_arrow('birth_date') !!}</a></th>
-                        <th><a href="{{ sort_link('persons', 'death_date') }}">&#10013; {!! sort_arrow('death_date') !!}</a></th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -55,8 +53,6 @@
                                     <i class="fa fa-building" data-toggle="tooltip" data-placement="top" title="Organisation (Uni o.ä.)"></i>
                             @endif</td>
                             <td>{{ $person->source }}</td>
-                            {{-- <td>{{ (!is_null($person->birth_date)) ? $person->birth_date->format('d.m.Y') : "?" }}</td>
-                            <td>{{ (!is_null($person->death_date)) ? $person->death_date->format('d.m.Y') : "?" }}</td> --}}
                             <td>{{ $person->bio_data }}</td>
                         </tr>
                     @empty

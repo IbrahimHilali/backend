@@ -36,10 +36,10 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('birth_date') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label">Geburtsdatum</label>
+                        <label class="col-sm-2 control-label">Geburtsjahr</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="birth_date"
-                                   value="{{ old('birth_date', '') }}" placeholder="Format: 24.01.1781">
+                                   value="{{ old('birth_date', '') }}">
                             @if ($errors->has('birth_date'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('birth_date') }}</strong>
@@ -48,10 +48,10 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('death_date') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label">Todesdatum</label>
+                        <label class="col-sm-2 control-label">Todesjahr</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="death_date"
-                                   value="{{ old('death_date', '') }}" placeholder="Format: 24.01.1781">
+                                   value="{{ old('death_date', '') }}">
                             @if ($errors->has('death_date'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('death_date') }}</strong>
@@ -63,8 +63,8 @@
                         <label class="col-sm-2 control-label">Biographische Daten</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="bio_data"
-                                   value="{{ old('bio_data', '') }}">
-                            @if ($errors->has('bio_data'))
+                            value="{{ old('bio_data', '') }}">
+                        @if ($errors->has('bio_data'))
                                 <span class="help-block">
                                             <strong>{{ $errors->first('bio_data') }}</strong>
                                         </span>

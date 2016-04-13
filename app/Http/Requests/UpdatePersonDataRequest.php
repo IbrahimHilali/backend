@@ -27,8 +27,8 @@ class UpdatePersonDataRequest extends Request
         return [
             'last_name' => 'required',
             'first_name' => 'string',
-            'birth_date' => 'date',
-            'death_date' => 'date',
+            'birth_date' => 'string',
+            'death_date' => 'string',
             'bio_data'  => 'string',
             'is_organization' => 'required|boolean',
             'auto_generated' => 'required|boolean'
