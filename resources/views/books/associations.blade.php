@@ -13,13 +13,13 @@
                     <div class="form-group">
                         <label for="bookTitle" class="col-sm-2 control-label">Buchtitel:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" readonly value="{{ $book->title }}">
+                            <p class="form-control-static">{{ $book->title }}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="bookTitle" class="col-sm-2 control-label">Kurztitel:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" readonly value="{{ $book->short_title }}">
+                            <p class="form-control-static">{{ $book->short_title }}</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -36,7 +36,6 @@
                         </div>
                     </div>
                 </form>
-                <h3>Prototyp</h3>
                 <table class="table table-striped">
                     <thead>
                         <tr>
