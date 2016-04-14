@@ -108,6 +108,12 @@ class BooksPersonController extends Controller
         return view('books.person', compact('association'));
     }
 
+    public function showBook(Book $books)
+    {
+        $books->load(['personAssociations', 'personAssociations.person']);
+        return view('books.associations', ['book' => $books]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
