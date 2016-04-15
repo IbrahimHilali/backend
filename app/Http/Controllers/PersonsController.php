@@ -37,7 +37,7 @@ class PersonsController extends Controller
             function ($builder, $orderByKey, $direction) {
                 $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
                 return 'name';
-            }, 20);
+            }, 75);
 
         return view('persons.index', compact('persons'));
     }

@@ -38,7 +38,7 @@ class BooksController extends Controller
                     ->orderBy('volume_irregular')
                     ->orderBy('edition');
                 return 'identification';
-            }, 20);
+            }, 50);
 
         return view('books.index', compact('books'));
     }
