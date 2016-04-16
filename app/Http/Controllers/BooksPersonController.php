@@ -124,6 +124,10 @@ class BooksPersonController extends Controller
         ]);
         */
 
+        // Take the latest 15 persons and sort them afterwards.
+        // We need to touch a person if an association is added.
+        // Other wise, the persons updated_at timestamp is not updated and sorting won't work.
+
         /** @var Collection $persons */
         $persons = Person::query()
             ->with([
