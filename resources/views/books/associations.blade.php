@@ -38,60 +38,42 @@
                 </form>
                 <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Vorkommen</th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Vorkommen</th>
+                    </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Mustermann, Max</td>
-                        <td>
-                            <p data-toggle="collapse" data-target="#associations-1" aria-expanded="false" class="collapsed collapse-head">5 Vorkommen, erstes auf Seite 10</p>
-                            <table class="table collapse" id="associations-1">
-                                <tbody>
-                                <tr>
-                                    <td>Seite 10 - 11</td>
-                                    <td>Zeile 19</td>
-                                </tr>
-                                <tr>
-                                    <td>Seite 12 - 15</td>
-                                    <td>Zeile 17</td>
-                                </tr>
-                                <tr>
-                                    <td>Seite 16</td>
-                                    <td>Zeile 17</td>
-                                </tr>
-                                <tr>
-                                    <td>Seite 27</td>
-                                    <td>Zeile 17</td>
-                                </tr>
-                                <tr>
-                                    <td>Seite 38</td>
-                                    <td>Zeile 17</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Musterfrau, Erika</td>
-                        <td>
-                            <p data-toggle="collapse" data-target="#associations-2" aria-expanded="false" class="collapsed collapse-head">2 Vorkommen, erstes auf Seite 10</p>
-                            <table class="table collapse" id="associations-2">
-                                <tbody>
-                                <tr>
-                                    <td>Seite 10 - 11</td>
-                                    <td>Zeile 19</td>
-                                </tr>
-                                <tr>
-                                    <td>Seite 12 - 15</td>
-                                    <td>Zeile 17</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
+                    @foreach($persons as $person)
+                        <tr>
+                            <td>{{ $person->last_name }}, {{ $person->first_name }}</td>
+                            <td>
+                                <p data-toggle="collapse" data-target="#associations-{{ $person->id }}" aria-expanded="false"
+                                   class="collapsed collapse-head">
+                                    {{ count($associations[$person->id]) }} Vorkommen, erstes auf Seite {{ $associations[$person->id][0]->page }}
+                                </p>
+                                <table class="table collapse" id="associations-{{ $person->id }}">
+                                    <tbody>
+                                    @foreach($associations[$person->id] as $association)
+                                        <tr>
+                                            <td>
+                                                Seite {{ $association->page }}
+                                                @if($association->page_to)
+                                                    - {{ $association->page_to }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($association->line)
+                                                    Zeile {{ $association->line }}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

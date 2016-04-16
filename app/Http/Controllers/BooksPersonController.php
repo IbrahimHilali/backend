@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 
 class BooksPersonController extends Controller
 {
@@ -110,8 +111,28 @@ class BooksPersonController extends Controller
 
     public function showBook(Book $books)
     {
-        $books->load(['personAssociations', 'personAssociations.person']);
-        return view('books.associations', ['book' => $books]);
+        $books->load([
+            'personAssociations' => function ($query) {
+                return $query->orderBy('page')
+                    ->orderBy('line');
+            },
+            'personAssociations.person' => function ($query) {
+                return $query->orderBy('last_name')
+                    ->orderBy('first_name');
+            }
+        ]);
+
+        /** @var Collection $persons */
+        $persons = $books->personAssociations->map(function (BookPersonAssociation $association) {
+            return $association->person;
+        })->unique();
+
+        $associations = [];
+        foreach ($books->personAssociations as $association) {
+            $associations[$association->person_id][] = $association;
+        }
+
+        return view('books.associations', ['book' => $books, 'persons' => $persons, 'associations' => $associations]);
     }
 
     /**
