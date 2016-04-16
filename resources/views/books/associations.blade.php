@@ -50,11 +50,11 @@
                             <td>
                                 <p data-toggle="collapse" data-target="#associations-{{ $person->id }}" aria-expanded="false"
                                    class="collapsed collapse-head">
-                                    {{ count($associations[$person->id]) }} Vorkommen, erstes auf Seite {{ $associations[$person->id][0]->page }}
+                                    {{ $person->bookAssociations->count() }} Vorkommen, erstes auf Seite {{ $person->bookAssociations[0]->page }}
                                 </p>
                                 <table class="table collapse" id="associations-{{ $person->id }}">
                                     <tbody>
-                                    @foreach($associations[$person->id] as $association)
+                                    @foreach($person->bookAssociations as $association)
                                         <tr>
                                             <td>
                                                 Seite {{ $association->page }}

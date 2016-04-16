@@ -111,6 +111,7 @@ class BooksPersonController extends Controller
 
     public function showBook(Book $books)
     {
+        /*
         $books->load([
             'personAssociations' => function ($query) {
                 return $query->orderBy('page')
@@ -121,18 +122,36 @@ class BooksPersonController extends Controller
                     ->orderBy('first_name');
             }
         ]);
+        */
 
         /** @var Collection $persons */
-        $persons = $books->personAssociations->map(function (BookPersonAssociation $association) {
-            return $association->person;
-        })->unique();
+        $persons = Person::query()
+            ->with([
+                'bookAssociations' => function ($query) {
+                    return $query->orderBy('page')
+                        ->orderBy('line');
+                }
+            ])
+            ->whereHas('bookAssociations',
+                function ($query) use ($books) {
+                    $query->where('book_id', $books->id);
+                }
+            )
+            ->latest()
+            ->take(15)
+            ->get();
 
-        $associations = [];
-        foreach ($books->personAssociations as $association) {
-            $associations[$association->person_id][] = $association;
-        }
+        $persons = $persons->sort(function (Person $personA, Person $personB) {
+            $lastNameOrder = strcmp($personA->last_name, $personB->last_name);
 
-        return view('books.associations', ['book' => $books, 'persons' => $persons, 'associations' => $associations]);
+            if ($lastNameOrder == 0) {
+                return strcmp($personA->first_name, $personB->first_name);
+            }
+
+            return $lastNameOrder;
+        });
+
+        return view('books.associations', ['book' => $books, 'persons' => $persons]);
     }
 
     /**
