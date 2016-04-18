@@ -204,3 +204,20 @@ body {
   margin-right: auto;
   z-index: 999;
 }
+
+p.collapse-head {
+  cursor: pointer;
+  &::after {
+    content: ' \25BC';
+    font-size: $font-size-small;
+  }
+  &.collapsed {
+    &::after {
+      content: ' \25B2';
+    }
+  }
+}
+
+table.collapse.in {
+  display: table;
+}

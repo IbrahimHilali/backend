@@ -108,7 +108,11 @@
                         </div>
                     </form>
                 </div>
-
+                <div class="add-button">
+                    <a href="{{ route('books.associations.index', [$book->id]) }}" class="btn btn-primary btn-sm">
+                        <i class="fa fa-plus"></i> Person hinzufügen
+                    </a>
+                </div>
                 <table class="table table-responsive">
                     <thead>
                     <tr>

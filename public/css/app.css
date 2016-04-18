@@ -5899,4 +5899,15 @@ body {
   margin-right: auto;
   z-index: 999; }
 
+p.collapse-head {
+  cursor: pointer; }
+  p.collapse-head::after {
+    content: ' \25BC';
+    font-size: 12px; }
+  p.collapse-head.collapsed::after {
+    content: ' \25B2'; }
+
+table.collapse.in {
+  display: table; }
+
 /*# sourceMappingURL=app.css.map */

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 
 class BooksPersonController extends Controller
 {
@@ -106,6 +107,55 @@ class BooksPersonController extends Controller
         // TODO: fancy gallery with scan of pages
 
         return view('books.person', compact('association'));
+    }
+
+    public function showBook(Book $books)
+    {
+        /*
+        $books->load([
+            'personAssociations' => function ($query) {
+                return $query->orderBy('page')
+                    ->orderBy('line');
+            },
+            'personAssociations.person' => function ($query) {
+                return $query->orderBy('last_name')
+                    ->orderBy('first_name');
+            }
+        ]);
+        */
+
+        // Take the latest 15 persons and sort them afterwards.
+        // We need to touch a person if an association is added.
+        // Other wise, the persons updated_at timestamp is not updated and sorting won't work.
+
+        /** @var Collection $persons */
+        $persons = Person::query()
+            ->with([
+                'bookAssociations' => function ($query) {
+                    return $query->orderBy('page')
+                        ->orderBy('line');
+                }
+            ])
+            ->whereHas('bookAssociations',
+                function ($query) use ($books) {
+                    $query->where('book_id', $books->id);
+                }
+            )
+            ->latest()
+            ->take(15)
+            ->get();
+
+        $persons = $persons->sort(function (Person $personA, Person $personB) {
+            $lastNameOrder = strcmp($personA->last_name, $personB->last_name);
+
+            if ($lastNameOrder == 0) {
+                return strcmp($personA->first_name, $personB->first_name);
+            }
+
+            return $lastNameOrder;
+        });
+
+        return view('books.associations', ['book' => $books, 'persons' => $persons]);
     }
 
     /**
