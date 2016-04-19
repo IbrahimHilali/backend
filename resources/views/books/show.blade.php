@@ -40,7 +40,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
                             <label class="col-sm-2 control-label" for="inputYear">Jahr</label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="year" id="inputYear"
@@ -52,7 +52,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="form-group{{ $errors->has('volume') ? ' has-error' : '' }}">
                             <label class="col-sm-2 control-label" for="inputVolume">Band</label>
                             <div class="col-sm-10">
