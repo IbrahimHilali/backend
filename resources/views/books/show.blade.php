@@ -92,6 +92,46 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('source') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputSource">Herkunft</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" name="source" id="inputSource"
+                                       value="{{ old('source', $book->source) }}">
+
+                                @if ($errors->has('source'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('source') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('notes') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label" for="inputNotes">Notizen</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="notes" id="inputNotes" cols="30" rows="10">{{ old('notes', $book->notes) }}</textarea>
+
+                                @if ($errors->has('notes'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('notes') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('grimm') ? ' has-error' : '' }}">
+                            <label class="col-sm-2 control-label">Grimmwerk</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="grimm" id="grimm1"
+                                           value="0" {{ checked(old('grimm', $book->grimm), 0) }}>
+                                    Nein
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="grimm" id="grimm2"
+                                           value="1" {{ checked(old('grimm', $book->grimm), 1) }}>
+                                    Ja
+                                </label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-10 col-sm-offset-2">
                                 @can('books.update')

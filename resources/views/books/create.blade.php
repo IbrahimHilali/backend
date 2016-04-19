@@ -5,7 +5,7 @@
         <div class="row page">
             <div class="col-md-12 page-title">
                 <h1><a class="prev-link" href="{{ referrer_url('last_book_index', route('books.index')) }}"><i
-                                class="fa fa-caret-left"></i></a> Buchdaten</h1>
+                                class="fa fa-caret-left"></i></a> Buch hinzufügen</h1>
             </div>
             <div class="col-md-12 page-content">
 
@@ -89,6 +89,46 @@
                                             <strong>{{ $errors->first('edition') }}</strong>
                                         </span>
                             @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('source') ? ' has-error' : '' }}">
+                        <label class="col-sm-2 control-label" for="inputSource">Herkunft</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="source" id="inputSource"
+                                   value="{{ old('source') }}">
+
+                            @if ($errors->has('source'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('source') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('notes') ? ' has-error' : '' }}">
+                        <label class="col-sm-2 control-label" for="inputNotes">Notizen</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="notes" id="inputNotes" cols="30" rows="10">{{ old('notes') }}</textarea>
+
+                            @if ($errors->has('notes'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('notes') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group{{ $errors->has('grimm') ? ' has-error' : '' }}">
+                        <label class="col-sm-2 control-label">Grimmwerk</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" name="grimm" id="grimm1"
+                                       value="0" {{ checked(old('grimm', 0), 0) }}>
+                                Nein
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="grimm" id="grimm2"
+                                       value="1" {{ checked(old('grimm', 0), 1) }}>
+                                Ja
+                            </label>
                         </div>
                     </div>
                     <div class="form-group">

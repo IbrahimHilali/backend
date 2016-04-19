@@ -33,7 +33,7 @@
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th><a href="{{ sort_link('books', 'id') }}"># {!! sort_arrow('id') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'title') }}">Titel  {!! sort_arrow('title') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'short_title') }}">Kurztitel  {!! sort_arrow('short_title') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'year') }}">Jahr  {!! sort_arrow('year') !!}</a></th>

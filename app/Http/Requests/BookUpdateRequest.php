@@ -27,11 +27,14 @@ class BookUpdateRequest extends Request
     {
         return [
             'title' => 'required|min:3',
-            'short_title' => 'max:20',
+            'short_title' => 'max:255',
             'year' => 'numeric|max:9999',
             'volume' => 'numeric|min:1',
             'volume_irregular' => 'numeric|min:1',
             'edition' => 'numeric|min:1',
+            'source' => 'string',
+            'notes' => 'string',
+            'grimm' => 'boolean',
         ];
     }
 
@@ -39,6 +42,7 @@ class BookUpdateRequest extends Request
      * Persists changes to the database
      *
      * @param Book $book
+     *
      * @return bool
      */
     public function persist(Book $book)
@@ -51,6 +55,10 @@ class BookUpdateRequest extends Request
         $book->edition = (int)$this->input('edition') ?: null;
 
         $book->year = (int)$this->input('year') ?: null;
+
+        $book->source = $this->input('source');
+        $book->notes = $this->input('notes');
+        $book->grimm = (bool)$this->input('grimm');
 
         return $book->save();
     }
