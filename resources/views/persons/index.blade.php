@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                     @forelse($persons->items() as $person)
-                        <tr onclick="location.href='{{ route('persons.show', ['id' => $person->id]) }}'" style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif">
+                        <tr id="person-{{ $person->id }}" onclick="location.href='{{ route('persons.show', ['id' => $person->id]) }}'" style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif">
                             {{--<td>{{ $person->id }}</td>--}}
                             <td>{{ $person->last_name }}</td>
                             <td>{{ $person->first_name }}</td>

@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                     @foreach($books->items() as $book)
-                        <tr onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'"
+                        <tr id="book-{{ $book->id }}" onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'"
                             style="cursor: pointer;">
                             <td>{{ $book->id }}</td>
                             <td>{{ $book->title }}</td>

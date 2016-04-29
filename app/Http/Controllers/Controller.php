@@ -19,7 +19,8 @@ class Controller extends BaseController
         Builder $builder,
         Request $request,
         $unknownFieldCallback = null,
-        $pageSize = null
+        $pageSize = null,
+        $customUrlFields = []
     ) {
         $orderByKey = $request->get('order-by');
         $direction = ($request->get('direction', 0)) ? 'desc' : 'asc';
@@ -37,7 +38,7 @@ class Controller extends BaseController
 
         $paginator = $builder->paginate($pageSize);
 
-        $this->preserveIndexSet($collectionName, $orderByKey, $request, $paginator);
+        $this->preserveIndexSet($collectionName, $orderByKey, $request, $paginator, $customUrlFields);
 
         return $paginator;
     }
@@ -49,14 +50,10 @@ class Controller extends BaseController
      * @internal param $persons
      * @internal param $orderByKey
      */
-    protected function preserveIndexSet($collectionName, $orderByKey, Request $request, LengthAwarePaginator $paginator)
+    protected function preserveIndexSet($collectionName, $orderByKey, Request $request, LengthAwarePaginator $paginator, $custom=[])
     {
         session([
-            $collectionName => [
-                'page' => $paginator->currentPage(),
-                'order-by' => $orderByKey,
-                'direction' => $request->get('direction', 0)
-            ]
+            $collectionName => $request->all()
         ]);
     }
 }

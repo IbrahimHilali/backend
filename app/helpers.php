@@ -90,7 +90,7 @@ if (!function_exists('selected_if')) {
 }
 
 if (!function_exists('referrer_url')) {
-    function referrer_url($key, $dest)
+    function referrer_url($key, $dest, $hashtag='')
     {
         $params = session($key);
         if (!$params) {
@@ -99,6 +99,6 @@ if (!function_exists('referrer_url')) {
 
         $params = http_build_query($params);
 
-        return $dest . '?' . $params;
+        return $dest . '?' . $params . $hashtag;
     }
 }

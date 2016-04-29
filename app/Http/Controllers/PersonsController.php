@@ -27,8 +27,10 @@ class PersonsController extends Controller
      */
     public function index(IndexPersonRequest $request)
     {
+        $customData = [];
         if ($request->has('name')) {
             $persons = Person::searchByName($request->get('name'));
+            $customData['name'] = $request->get('name');
         } else {
             $persons = Person::query();
         }
