@@ -36,8 +36,10 @@ class PersonsController extends Controller
         }
 
         $persons = $this->prepareCollection('last_person_index', $persons, $request,
-            function ($builder, $orderByKey, $direction) {
-                $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
+            function ($builder, $orderByKey, $direction) use ($customData) {
+                if (!array_key_exists('name', $customData)) {
+                    $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
+                }
                 return 'name';
             }, 75);
 
