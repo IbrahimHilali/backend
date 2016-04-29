@@ -94,7 +94,7 @@ if (!function_exists('referrer_url')) {
     {
         $params = session($key);
         if (!$params) {
-            return $dest;
+            return $dest . $hashtag;
         }
 
         $params = http_build_query($params);
