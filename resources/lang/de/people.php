@@ -7,6 +7,8 @@ return [
     'store' => 'Person hinzufügen',
     'update' => 'Person bearbeiten',
     'delete' => 'Person löschen',
+
+    'id' => 'ID',
     'last_name' => 'Nachname',
     'first_name' => 'Vorname',
     'birth_date' => 'Geboren',
@@ -17,4 +19,6 @@ return [
     'source' => 'Herkunft',
     'is_organization' => 'Organisation',
     'auto_generated' => 'Generiert',
+    'created_at' => 'Erstellt am',
+    'updated_at' => 'Zuletzt geändert',
 ];
