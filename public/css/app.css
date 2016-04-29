@@ -5851,6 +5851,22 @@ body {
     padding: 0 2px 0 2px;
     border-radius: 1px; }
 
+.table tr:target {
+  -webkit-animation: target-fade 2s 1;
+  animation: target-fade 2s 1; }
+
+@-webkit-keyframes target-fade {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1); }
+  100% {
+    background-color: transparent; } }
+
+@keyframes target-fade {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1); }
+  100% {
+    background-color: transparent; } }
+
 .search:hover input, .search input:focus, .search.active input {
   width: 200px;
   margin-left: 0px; }
