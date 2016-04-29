@@ -17,5 +17,8 @@ return [
     'edition' => 'Edition',
     'created_at' => 'erstellt am',
     'updated_at' => 'geändert am',
-    'id' => 'Id'
+    'id' => 'ID',
+    'source' => 'Herkunft',
+    'grimm' => 'Grimmwerk',
+    'notes' => 'Notizen',
 ];

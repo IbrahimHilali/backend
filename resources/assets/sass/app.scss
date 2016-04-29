@@ -10,7 +10,7 @@ $pagination-active-bg: darken($pagination-bg, 30%);
 $pagination-disabled-bg: $pagination-bg;
 $pagination-active-border: darken($pagination-bg, 40%);
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 body {
   font-family: 'Lato', sans-serif;
@@ -53,7 +53,6 @@ body {
 
   .pagination {
     border-radius: 0;
-    margin: 0;
     padding: 0;
     display: block;
     margin: 0 auto;
@@ -126,7 +125,6 @@ body {
   line-height: 22px;
 
   .btn {
-    //height: 30px;
     position: absolute;
     right: 0;
     top: 5px;
@@ -135,7 +133,7 @@ body {
 
   input {
     position: absolute;
-    width: 0px;
+    width: 0;
     float: Left;
     margin-left: 210px;
     -webkit-transition: all 0.7s ease-in-out;
@@ -160,7 +158,7 @@ body {
 
 .search:hover input, .search input:focus, .search.active input {
   width: 200px;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .empty-list {
@@ -175,7 +173,6 @@ body {
   position: absolute;
   right: 15px;
   margin-top: 5px;
-  //top: 5px;
 }
 
 .action-column {

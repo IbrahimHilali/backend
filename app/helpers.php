@@ -102,3 +102,23 @@ if (!function_exists('referrer_url')) {
         return $dest . '?' . $params . $hashtag;
     }
 }
+
+if (!function_exists('model_type')) {
+    function model_type($model, $pluralize=true) {
+        $reflection = new ReflectionClass($model);
+        $type = strtolower(last(explode('\\', $reflection->getShortName())));
+
+        if ($pluralize) {
+            return str_plural($type);
+        }
+
+        return $type;
+    }
+}
+
+if (!function_exists('field_name')) {
+    function field_name($field, $model) {
+        $langFile = (is_string($model)) ? $model : model_type($model);
+        return trans($langFile . '.' . $field);
+    }
+}

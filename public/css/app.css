@@ -5785,7 +5785,6 @@ body {
   border-right: 1px solid #dfdfdf; }
   .pagination-container .pagination {
     border-radius: 0;
-    margin: 0;
     padding: 0;
     display: block;
     margin: 0 auto; }
@@ -5842,7 +5841,7 @@ body {
     border-radius: 1px; }
   .search input {
     position: absolute;
-    width: 0px;
+    width: 0;
     float: Left;
     margin-left: 210px;
     transition: all 0.7s ease-in-out;
@@ -5869,7 +5868,7 @@ body {
 
 .search:hover input, .search input:focus, .search.active input {
   width: 200px;
-  margin-left: 0px; }
+  margin-left: 0; }
 
 .empty-list {
   text-align: center; }

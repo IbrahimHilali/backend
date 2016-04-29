@@ -13,124 +13,17 @@
                       method="post">
                     {{ csrf_field() }}
 
-                    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputTitle">Titel</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="title" id="inputTitle"
-                                   value="{{ old('title') }}">
+                    @include('partials.form.field', ['field' => 'title', 'model' => 'books'])
+                    @include('partials.form.field', ['field' => 'short_title', 'model' => 'books'])
+                    {{-- @include('partials.form.field', ['field' => 'year', 'model' => 'books]) --}}
+                    @include('partials.form.field', ['field' => 'volume', 'model' => 'books'])
+                    @include('partials.form.field', ['field' => 'volume_irregular', 'model' => 'books'])
+                    @include('partials.form.field', ['field' => 'edition', 'model' => 'books'])
+                    @include('partials.form.field', ['field' => 'source', 'model' => 'books'])
 
-                            @if ($errors->has('title'))
-                                <span class="help-block">
-                                            <strong>{{ $errors->first('title') }}</strong>
-                                        </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group{{ $errors->has('short_title') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputShortTitle">Kurztitel</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="short_title" id="inputShortTitle"
-                                   value="{{ old('short_title') }}">
+                    @include('partials.form.textarea', ['field' => 'notes', 'model' => 'books'])
+                    @include('partials.form.boolean', ['field' => 'grimm', 'model' => 'books'])
 
-                            @if ($errors->has('short_title'))
-                                <span class="help-block">
-                                            <strong>{{ $errors->first('short_title') }}</strong>
-                                        </span>
-                            @endif
-                        </div>
-                    </div>
-                    {{-- <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputYear">Jahr</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="year" id="inputYear"
-                                   value="{{ old('year') }}">
-
-                            @if ($errors->has('year'))
-                                <span class="help-block">
-                                            <strong>{{ $errors->first('year') }}</strong>
-                                        </span>
-                            @endif
-                        </div>
-                    </div> --}}
-                    <div class="form-group{{ $errors->has('volume') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputVolume">Band</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="volume" id="inputVolume"
-                                   value="{{ old('volume') }}">
-
-                            @if ($errors->has('volume'))
-                                <span class="help-block">
-                                            <strong>{{ $errors->first('volume') }}</strong>
-                                        </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group{{ $errors->has('volume_irregular') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputVolumeIrregular">Zusatzband</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="volume_irregular" id="inputVolumeIrregular"
-                                   value="{{ old('volume_irregular') }}">
-
-                            @if ($errors->has('volume_irregular'))
-                                <span class="help-block">
-                                            <strong>{{ $errors->first('volume_irregular') }}</strong>
-                                        </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group{{ $errors->has('edition') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputEdition">Edition</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="edition" id="inputEdition"
-                                   value="{{ old('edition') }}">
-
-                            @if ($errors->has('edition'))
-                                <span class="help-block">
-                                            <strong>{{ $errors->first('edition') }}</strong>
-                                        </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group{{ $errors->has('source') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputSource">Herkunft</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name="source" id="inputSource"
-                                   value="{{ old('source') }}">
-
-                            @if ($errors->has('source'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('source') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group{{ $errors->has('notes') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="inputNotes">Notizen</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" name="notes" id="inputNotes" cols="30" rows="10">{{ old('notes') }}</textarea>
-
-                            @if ($errors->has('notes'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('notes') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group{{ $errors->has('grimm') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label">Grimmwerk</label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="grimm" id="grimm1"
-                                       value="0" {{ checked(old('grimm', 0), 0) }}>
-                                Nein
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="grimm" id="grimm2"
-                                       value="1" {{ checked(old('grimm', 0), 1) }}>
-                                Ja
-                            </label>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-2">
                             @can('books.store')
