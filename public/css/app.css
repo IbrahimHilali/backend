@@ -5925,4 +5925,28 @@ p.collapse-head {
 table.collapse.in {
   display: table; }
 
+.letters-container {
+  background: #35495D;
+  text-align: center;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .letters-container .letters {
+    padding: 0 25px;
+    margin: 0 auto;
+    list-style: none; }
+    .letters-container .letters:before, .letters-container .letters:after {
+      content: " ";
+      display: table; }
+    .letters-container .letters:after {
+      clear: both; }
+    .letters-container .letters li {
+      float: left; }
+      .letters-container .letters li.active a {
+        text-decoration: underline; }
+      .letters-container .letters li a {
+        display: inline-block;
+        padding: 10px;
+        color: #fff; }
+
 /*# sourceMappingURL=app.css.map */

@@ -35,6 +35,10 @@ class PersonsController extends Controller
             $persons = Person::query();
         }
 
+        if($request->has('letter')) {
+            $persons->byLetter($request->get('letter'));
+        }
+
         $persons = $this->prepareCollection('last_person_index', $persons, $request,
             function ($builder, $orderByKey, $direction) use ($customData) {
                 if (!array_key_exists('name', $customData)) {

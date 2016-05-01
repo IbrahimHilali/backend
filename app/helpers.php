@@ -67,6 +67,23 @@ if (!function_exists('checked')) {
     }
 }
 
+if (!function_exists('active')) {
+    /**
+     * @param $field
+     * @param $value
+     * @return string
+     */
+    function active($field, $value)
+    {
+
+        if ($field == $value) {
+            return ' class="active"';
+        }
+
+        return '';
+    }
+}
+
 if (!function_exists('checked_if')) {
     /**
      * @param $condition

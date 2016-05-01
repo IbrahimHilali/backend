@@ -227,3 +227,35 @@ p.collapse-head {
 table.collapse.in {
   display: table;
 }
+
+.letters-container {
+  background: #35495D;
+  text-align: center;
+  display: flex;
+
+  .letters {
+    @include clearfix;
+
+    padding: 0 25px;
+    margin: 0 auto;
+
+    list-style: none;
+
+    li {
+      float: left;
+
+      &.active {
+
+        a {
+          text-decoration: underline;
+        }
+      }
+
+      a {
+        display: inline-block;
+        padding: 10px;
+        color: #fff;
+      }
+    }
+  }
+}
