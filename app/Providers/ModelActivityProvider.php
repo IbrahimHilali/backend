@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Activity;
-use Auth;
+use Grimm\Activity;
 use Grimm\Book;
 use Grimm\Person;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +18,10 @@ class ModelActivityProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (app()->runningInConsole()) {
+            return;
+        }
+
         Book::created(function (Model $model) {
             $this->logCreating($model);
         });
@@ -60,7 +63,7 @@ class ModelActivityProvider extends ServiceProvider
             'model_id' => $model->id,
             'model_type' => get_class($model),
             'log' => $log,
-            'user_id' => Auth::user()->id,
+            'user_id' => auth()->user()->id,
         ]);
     }
 
