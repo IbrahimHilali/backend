@@ -5943,10 +5943,13 @@ table.collapse.in {
     .letters-container .letters li {
       float: left; }
       .letters-container .letters li.active a {
-        text-decoration: underline; }
+        background: #22303d; }
       .letters-container .letters li a {
         display: inline-block;
+        text-decoration: none;
         padding: 10px;
         color: #fff; }
+        .letters-container .letters li a:hover {
+          background: #2c3c4d; }
 
 /*# sourceMappingURL=app.css.map */

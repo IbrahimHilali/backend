@@ -247,14 +247,19 @@ table.collapse.in {
       &.active {
 
         a {
-          text-decoration: underline;
+          background: darken(#35495D, 10%);
         }
       }
 
       a {
         display: inline-block;
+        text-decoration: none;
         padding: 10px;
         color: #fff;
+
+        &:hover {
+          background: darken(#35495D, 5%);
+        }
       }
     }
   }
