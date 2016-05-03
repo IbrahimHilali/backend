@@ -19,5 +19,5 @@ return [
     'people.update',
     'people.delete',
 
-    'admin.publish',
+    'admin.deployment',
 ];

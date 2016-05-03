@@ -13,9 +13,11 @@ use App\Import\Persons\Parser\BioDataParser;
 use App\Import\Persons\Parser\InheritanceParser;
 use App\Import\Persons\Parser\NameParser;
 use App\Import\Persons\Parser\PersonPrintParser;
+use App\Sync\DeploymentService;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use App\Import\Persons\Parser\RestFieldParser as PersonRestFieldParser;
+use Spatie\Valuestore\Valuestore;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,31 +39,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(PersonConverter::class, function () {
-            $converter = new PersonConverter();
-
-            $converter->registerParsers([
-                new NameParser(),
-                new BioDataParser(app(BioDataExtractor::class)),
-                new PersonPrintParser(),
-                new InheritanceParser(),
-                new PersonRestFieldParser(),
-            ]);
-
-            return $converter;
-        });
-
-        $this->app->singleton(BookConverter::class, function () {
-            $converter = new BookConverter();
-
-            $converter->registerParsers([
-                new TitleParser(),
-                new YearParser(),
-                new SourceParser(),
-                new GrimmParser(),
-            ]);
-
-            return $converter;
+        $this->app->singleton(DeploymentService::class, function() {
+            return new DeploymentService(Valuestore::make(storage_path('app/deployment.json')));
         });
     }
 }

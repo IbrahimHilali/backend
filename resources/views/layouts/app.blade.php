@@ -56,7 +56,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         @can('admin.publish')
-                        <li><a href="{{ route('admin.publish.index') }}">{{ trans('admin.publish') }}</a></li>
+                        <li><a href="{{ route('admin.deployment.index') }}">{{ trans('admin.publish') }}</a></li>
                         @endcan
                     </ul>
                 </li>

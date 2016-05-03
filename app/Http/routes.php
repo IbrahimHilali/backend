@@ -54,7 +54,7 @@ $this->group(['middleware' => 'web'], function () {
         $this->get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
         $this->post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
 
-        $this->get('admin/publish', ['as' => 'admin.publish.index', 'uses' => 'ElasticSyncController@index']);
+        $this->get('admin/publish', ['as' => 'admin.deployment.index', 'uses' => 'DeploymentController@index']);
     });
     
 });

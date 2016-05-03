@@ -148,9 +148,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
+        Cviebrock\LaravelElasticsearch\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewComposerServiceProvider::class,
         App\Providers\ModelActivityProvider::class,
+        App\Providers\ImportServiceProvider::class,
 
     ],
 

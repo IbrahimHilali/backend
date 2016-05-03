@@ -2,5 +2,5 @@
 
 return [
     'admin' => 'Verwaltung',
-    'publish' => 'Öffentlichen Datenbestand aktualisieren',
+    'deployment' => 'Öffentlichen Datenbestand aktualisieren',
 ];

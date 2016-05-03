@@ -18,6 +18,6 @@ return [
         'assign' => 'Mit diesem Recht kann ein Nutzer ein Buch einer Person zuordnen.',
     ],
     'admin' => [
-        'publish' => 'Der Benutzer kann die Aktualisierung des öffentlichen Datenbestands anstoßen.',
+        'deployment' => 'Der Benutzer kann die Aktualisierung des öffentlichen Datenbestands anstoßen.',
     ],
 ];
