@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Sync\DeploymentService;
+use App\Deployment\DeploymentService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;

@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Deployment\DeploymentService;
+use Cviebrock\LaravelElasticsearch\Manager;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,23 +13,36 @@ class UpdateElasticsearchIndex extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    protected $deployUntil;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $deployUntil The latest possible entry date
      */
-    public function __construct()
+    public function __construct($deployUntil)
     {
-        //
+        $this->deployUntil = $deployUntil;
     }
 
     /**
      * Execute the job.
      *
-     * @return void
+     * @param DeploymentService $deployment
+     * @param Manager           $elasticSearch
      */
-    public function handle()
+    public function handle(DeploymentService $deployment, Manager $elasticSearch)
     {
-        //
+        if ($deployment->blank()) {
+            $this->deployBlankPersons($elasticSearch);
+        }
+    }
+
+    /**
+     * @param Manager $elasticsearch
+     */
+    private function deployBlankPersons(Manager $elasticsearch)
+    {
+
     }
 }

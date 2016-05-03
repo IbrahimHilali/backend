@@ -55,8 +55,8 @@
                         {{ trans('admin.admin') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        @can('admin.publish')
-                        <li><a href="{{ route('admin.deployment.index') }}">{{ trans('admin.publish') }}</a></li>
+                        @can('admin.deployment')
+                        <li><a href="{{ route('admin.deployment.index') }}">{{ trans('admin.deployment') }}</a></li>
                         @endcan
                     </ul>
                 </li>

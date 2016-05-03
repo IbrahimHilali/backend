@@ -2,21 +2,9 @@
 
 namespace App\Providers;
 
-use App\Import\Books\Converter\BookConverter;
-use App\Import\Books\Parser\GrimmParser;
-use App\Import\Books\Parser\SourceParser;
-use App\Import\Books\Parser\TitleParser;
-use App\Import\Books\Parser\YearParser;
-use App\Import\Persons\BioDataExtractor;
-use App\Import\Persons\Converter\PersonConverter;
-use App\Import\Persons\Parser\BioDataParser;
-use App\Import\Persons\Parser\InheritanceParser;
-use App\Import\Persons\Parser\NameParser;
-use App\Import\Persons\Parser\PersonPrintParser;
-use App\Sync\DeploymentService;
+use App\Deployment\DeploymentService;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
-use App\Import\Persons\Parser\RestFieldParser as PersonRestFieldParser;
 use Spatie\Valuestore\Valuestore;
 
 class AppServiceProvider extends ServiceProvider

@@ -129,4 +129,21 @@ class Person extends Model
 
         return $query->where($field, 'like', $letter . '%');
     }
+
+    public function scopeFullInfo($query)
+    {
+        return $query->with([
+            'information' => function($query) {
+                $query->whereHas('code', function($q) {
+                    $q->where('internal', false);
+                });
+            },
+            'information.code' => function ($query) {
+                $query->where('person_codes.internal', false);
+            },
+            'prints',
+            'inheritances',
+            'bookAssociations'
+        ]);
+    }
 }
