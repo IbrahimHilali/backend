@@ -18,4 +18,6 @@ return [
     'people.store',
     'people.update',
     'people.delete',
+
+    'admin.publish',
 ];

@@ -23,7 +23,7 @@
 |
 */
 
-Route::group(['middleware' => 'web'], function () {
+$this->group(['middleware' => 'web'], function () {
 
     // Authentication Routes...
     $this->get('login', 'Auth\AuthController@showLoginForm');
@@ -35,29 +35,31 @@ Route::group(['middleware' => 'web'], function () {
     $this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
     $this->post('password/reset', 'Auth\PasswordController@reset');
 
-    Route::group(['middleware' => 'auth'], function () {
-        Route::get('/', function () {
+    $this->group(['middleware' => 'auth'], function () {
+        $this->get('/', function () {
             return redirect('home');
         });
 
-        Route::get('/home', 'HomeController@index');
+        $this->get('/home', 'HomeController@index');
 
-        Route::resource('books', 'BooksController');
-        Route::resource('persons', 'PersonsController', ['except' => ['edit']]);
+        $this->resource('books', 'BooksController');
+        $this->resource('persons', 'PersonsController', ['except' => ['edit']]);
         
-        Route::resource('users', 'UsersController');
-        Route::resource('roles', 'RolesController', ['except' => ['edit']]);
+        $this->resource('users', 'UsersController');
+        $this->resource('roles', 'RolesController', ['except' => ['edit']]);
 
-        Route::get('books/{books}/associations', ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
+        $this->get('books/{books}/associations', ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
 
-        Route::get('persons/book/{association}', ['as' => 'persons.book', 'uses' => 'BooksPersonController@show']);
-        Route::get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
-        Route::post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
+        $this->get('persons/book/{association}', ['as' => 'persons.book', 'uses' => 'BooksPersonController@show']);
+        $this->get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
+        $this->post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
+
+        $this->get('admin/publish', ['as' => 'admin.publish.index', 'uses' => 'ElasticSyncController@index']);
     });
     
 });
 
-Route::group(['middleware' => 'api'], function() {
-    Route::resource('persons.prints', 'PersonPrintController', ['except' => ['edit']]);
-    Route::resource('persons.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
+$this->group(['middleware' => 'api'], function() {
+    $this->resource('persons.prints', 'PersonPrintController', ['except' => ['edit']]);
+    $this->resource('persons.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
 });
