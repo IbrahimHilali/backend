@@ -5,7 +5,8 @@ new Vue({
     el: '#deployment',
 
     data: {
-        messages: []
+        messages: [],
+        started: false
     },
 
     ready() {
@@ -33,10 +34,23 @@ new Vue({
                 this.messages.push({
                     type: "start"
                 });
-                console.log('Job pushed');
+                this.started = true;
             }).fail((response) => {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');
             });
+        }
+    },
+
+    computed: {
+        personProgress() {
+            return this.messages.filter((val) =>
+                val.type == 'update' && val.entity == 'Grimm\\Person'
+            ).slice(-1)[0].amount || 0;
+        },
+        bookProgress() {
+            return this.messages.filter((val) =>
+                val.type == 'update' && val.entity == 'Grimm\\Book'
+            ).slice(-1)[0].amount || 0;
         }
     }
 });

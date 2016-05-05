@@ -17,6 +17,10 @@ class BookTransformer extends TransformerAbstract
         'personAssociations',
     ];
 
+    protected $defaultIncludes = [
+        'personAssociations',
+    ];
+
     /**
      * Transforms a single item into a new one
      *
@@ -27,9 +31,6 @@ class BookTransformer extends TransformerAbstract
     public function transform($item)
     {
         return [
-            'links' => [
-                'self' => route('v1.books.show', ['id' => $item->id]),
-            ],
             'id' => (int)$item->id,
             'title' => $item->title,
             'short_title' => $item->short_title,

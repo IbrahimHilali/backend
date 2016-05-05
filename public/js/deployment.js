@@ -13928,7 +13928,8 @@ new _vue2.default({
     el: '#deployment',
 
     data: {
-        messages: []
+        messages: [],
+        started: false
     },
 
     ready: function ready() {
@@ -13961,10 +13962,23 @@ new _vue2.default({
                 _this2.messages.push({
                     type: "start"
                 });
-                console.log('Job pushed');
+                _this2.started = true;
             }).fail(function (response) {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');
             });
+        }
+    },
+
+    computed: {
+        personProgress: function personProgress() {
+            return this.messages.filter(function (val) {
+                return val.type == 'update' && val.entity == 'Grimm\\Person';
+            }).slice(-1)[0].amount || 0;
+        },
+        bookProgress: function bookProgress() {
+            return this.messages.filter(function (val) {
+                return val.type == 'update' && val.entity == 'Grimm\\Book';
+            }).slice(-1)[0].amount || 0;
         }
     }
 });

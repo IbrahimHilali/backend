@@ -23,13 +23,13 @@
                     <p>Die Daten werden derzeit aktualisiert, weshalb derzeit keine Änderungen veröffentlicht werden
                         können.</p>
                 @endif
-                <ul>
-                    <li v-for="message in messages">
-                        <span v-if="message.type == 'update'">Bereits @{{ message.amount }}
-                            Einträge freigegeben</span>
-                        <span v-if="message.type == 'start'">Freigabe gestartet</span>
-                    </li>
-                </ul>
+                <div v-if="started">
+                    <p>@{{ personProgress }} Personen freigegeben</p>
+                    <p>@{{ bookProgress }} Bücher freigegeben</p>
+                </div>
+                <div v-if="done">
+                    <p>Veröffentlichung abgeschlossen!</p>
+                </div>
             </div>
         </div>
     </div>
