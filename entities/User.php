@@ -4,6 +4,9 @@ namespace Grimm;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property mixed id
+ */
 class User extends Authenticatable
 {
 

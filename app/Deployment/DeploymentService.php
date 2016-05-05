@@ -53,4 +53,18 @@ class DeploymentService
     {
         return $this->valuestore->get('deployment-running', false);
     }
+
+    public function setInProgress($status=true)
+    {
+        return $this->valuestore->put('deployment-running', $status);
+    }
+
+    public function setLast($time = null)
+    {
+        if ($time === null) {
+            $time = Carbon::now();
+        }
+
+        return $this->valuestore->put('last-deployment', $time->toIso8601String());
+    }
 }

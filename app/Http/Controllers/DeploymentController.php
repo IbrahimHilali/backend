@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class DeploymentController extends Controller
 {
@@ -18,8 +19,16 @@ class DeploymentController extends Controller
         return view('admin.deployment.index', compact('deployment'));
     }
 
-    public function triggerDeployment()
+    public function triggerDeployment(DeploymentService $deployment)
     {
-        $this->dispatch(new UpdateElasticsearchIndex(Carbon::now()));
+        if ($deployment->inProgress()) {
+            throw new MethodNotAllowedHttpException();
+        }
+
+        $deployment->setInProgress();
+
+        $this->dispatch(new UpdateElasticsearchIndex(Carbon::now(), auth()->user()));
+
+        return response()->json(['action' => 'ok']);
     }
 }
