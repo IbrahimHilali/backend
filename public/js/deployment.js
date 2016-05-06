@@ -13929,7 +13929,10 @@ new _vue2.default({
 
     data: {
         messages: [],
-        started: false
+        started: false,
+        done: false,
+        books: 0,
+        people: 0
     },
 
     ready: function ready() {
@@ -13950,6 +13953,11 @@ new _vue2.default({
                 amount: message.amount
             });
         });
+
+        this.pusherChannel.bind('App\\Events\\DeploymentDone', function (message) {
+            _this.done = true;
+            _this.started = false;
+        });
     },
 
 
@@ -13962,6 +13970,8 @@ new _vue2.default({
                 _this2.messages.push({
                     type: "start"
                 });
+                _this2.books = response.data.books;
+                _this2.people = response.data.people;
                 _this2.started = true;
             }).fail(function (response) {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');

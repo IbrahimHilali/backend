@@ -24,8 +24,18 @@
                         können.</p>
                 @endif
                 <div v-if="started">
-                    <p>@{{ personProgress }} Personen freigegeben</p>
-                    <p>@{{ bookProgress }} Bücher freigegeben</p>
+                    <h4>Personen</h4>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" :aria-valuenow="personProgress" aria-valuemin="0" style="width: 100%;">
+                            @{{ personProgress }} / @{{ people }}
+                        </div>
+                    </div>
+                    <h4>Bücher</h4>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" :aria-valuenow="personProgress" aria-valuemin="0" style="width: 100%;">
+                            @{{ bookProgress }} / @{{ books }}
+                        </div>
+                    </div>
                 </div>
                 <div v-if="done">
                     <p>Veröffentlichung abgeschlossen!</p>

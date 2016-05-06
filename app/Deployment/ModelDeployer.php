@@ -37,11 +37,11 @@ class ModelDeployer
         return $this;
     }
 
-    public function deploy(Builder $builder, $transformer, callable $progressCallback)
+    public function deploy(Builder $builder, $type, $transformer, callable $progressCallback)
     {
         $this->progress = 0;
 
-        $builder->chunk($this->chunkSize, function ($rows) use ($transformer, $progressCallback) {
+        $builder->chunk($this->chunkSize, function ($rows) use ($transformer, $progressCallback, $type) {
             $params = ['body' => []];
 
             foreach ($rows as $row) {
@@ -49,7 +49,7 @@ class ModelDeployer
                 $params['body'][] = [
                     'index' => [
                         '_index' => 'grimm',
-                        '_type' => 'person',
+                        '_type' => $type,
                         '_id' => $row->id,
                     ],
                 ];

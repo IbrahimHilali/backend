@@ -71,11 +71,11 @@ class UpdateElasticsearchIndex extends Job implements ShouldQueue
 
         $elasticIndexService->createIndex('grimm', $mappings);
 
-        $people = $deployer->deploy(Person::fullInfo(), $personTransformer, function ($progress) {
+        $people = $deployer->deploy(Person::fullInfo(), 'person', $personTransformer, function ($progress) {
             event(new DeployProgress($progress, Person::class, $this->initiator));
         });
 
-        $books = $deployer->deploy(Book::with('personAssociations'), $bookTransformer, function ($progress) {
+        $books = $deployer->deploy(Book::with('personAssociations'), 'book', $bookTransformer, function ($progress) {
             event(new DeployProgress($progress, Book::class, $this->initiator));
         });
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Deployment\DeploymentService;
 use App\Jobs\UpdateElasticsearchIndex;
 use Carbon\Carbon;
+use Grimm\Book;
+use Grimm\Person;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -29,6 +31,6 @@ class DeploymentController extends Controller
 
         $this->dispatch(new UpdateElasticsearchIndex(Carbon::now(), auth()->user()));
 
-        return response()->json(['action' => 'ok']);
+        return response()->json(['data' => ['action' => 'ok', 'books' => Book::count(), 'people' => Person::count()]]);
     }
 }

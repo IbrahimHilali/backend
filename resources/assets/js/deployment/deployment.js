@@ -6,7 +6,10 @@ new Vue({
 
     data: {
         messages: [],
-        started: false
+        started: false,
+        done: false,
+        books: 0,
+        people: 0
     },
 
     ready() {
@@ -25,6 +28,11 @@ new Vue({
                 amount: message.amount
             });
         });
+
+        this.pusherChannel.bind('App\\Events\\DeploymentDone', (message) => {
+            this.done = true;
+            this.started = false;
+        });
     },
 
     methods: {
@@ -34,6 +42,8 @@ new Vue({
                 this.messages.push({
                     type: "start"
                 });
+                this.books = response.data.books;
+                this.people = response.data.people;
                 this.started = true;
             }).fail((response) => {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');
