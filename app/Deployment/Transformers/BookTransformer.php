@@ -54,4 +54,38 @@ class BookTransformer extends TransformerAbstract
     {
         return $this->collection($book->personAssociations, new BookPersonAssociationTransformer);
     }
+
+    public function mappings()
+    {
+        return [
+            'book' => [
+                'properties' => [
+                    'id' => [
+                        'type' => 'long',
+                    ],
+                    'grimmwerk' => [
+                        'type' => 'boolean',
+                    ],
+                    'notes' => [
+                        'type' => 'string',
+                    ],
+                    'short_title' => [
+                        'type' => 'string',
+                    ],
+                    'title' => [
+                        'type' => 'string',
+                    ],
+                    'volume' => [
+                        'type' => 'long',
+                    ],
+                    'volume_irregular' => [
+                        'type' => 'long',
+                    ],
+                    'edition' => [
+                        'type' => 'string',
+                    ],
+                ],
+            ],
+        ];
+    }
 }

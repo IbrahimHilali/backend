@@ -98,4 +98,67 @@ class PersonTransformer extends TransformerAbstract
     {
         return $this->collection($person->bookAssociations, new BookPersonAssociationTransformer);
     }
+
+    public function mappings()
+    {
+        return [
+            'person' => [
+                'properties' => [
+                    'first_name' => [
+                        'type' => 'string',
+                        'copy_to' => 'name',
+                    ],
+                    'last_name' => [
+                        'type' => 'string',
+                        'copy_to' => 'name',
+                        'boost' => 2,
+                    ],
+                    'name' => [
+                        'type' => 'string',
+                    ],
+                    'add_bio_data' => [
+                        'type' => 'string',
+                    ],
+                    'auto_generated' => [
+                        'type' => 'boolean',
+                    ],
+                    'bio_data' => [
+                        'type' => 'string',
+                    ],
+                    'bio_data_source' => [
+                        'type' => 'string',
+                    ],
+                    'birth_date' => [
+                        'type' => 'string',
+                    ],
+                    'death_date' => [
+                        'type' => 'string',
+                    ],
+                    'id' => [
+                        'type' => 'long',
+                    ],
+                    'inheritances' => [
+                        'properties' => [
+                            'entry' => [
+                                'type' => 'string',
+                            ],
+                        ],
+                    ],
+                    'is_organization' => [
+                        'type' => 'boolean',
+                    ],
+                    'prints' => [
+                        'properties' => [
+                            'entry' => [
+                                'type' => 'string',
+                            ],
+                        ],
+                    ],
+                    'source' => [
+                        'type' => 'string',
+                    ],
+                ],
+            ],
+        ];
+    }
 }

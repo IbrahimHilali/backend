@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Deployment\ElasticIndexService;
+use App\Deployment\ModelDeployer;
 use App\Deployment\PlainArraySerializer;
 use App\Deployment\Transformers\BookTransformer;
 use App\Deployment\Transformers\PersonTransformer;
@@ -10,15 +12,12 @@ use App\Events\DeployProgress;
 use App\Jobs\Job;
 use App\Deployment\DeploymentService;
 use Carbon\Carbon;
-use Cviebrock\LaravelElasticsearch\Manager;
 use Grimm\Book;
 use Grimm\Person;
 use Grimm\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use League\Fractal\Manager as FractalManager;
-use League\Fractal\Resource\Item;
 
 class UpdateElasticsearchIndex extends Job implements ShouldQueue
 {
@@ -48,85 +47,41 @@ class UpdateElasticsearchIndex extends Job implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param DeploymentService $deployment
-     * @param Manager           $elasticSearch
-     * @param FractalManager    $fractal
+     * @param DeploymentService   $deployment
+     * @param ModelDeployer       $deployer
+     *
+     * @param ElasticIndexService $elasticIndexService
      */
-    public function handle(DeploymentService $deployment, Manager $elasticSearch, FractalManager $fractal)
-    {
-        $fractal->setSerializer(new PlainArraySerializer());
+    public function handle(
+        DeploymentService $deployment,
+        ModelDeployer $deployer,
+        ElasticIndexService $elasticIndexService
+    ) {
 
-        if ($deployment->blank()) {
-            $people = $this->deployBlankPeople($elasticSearch, $fractal, $this->initiator);
-            $books = $this->deployBlankBooks($elasticSearch, $fractal, $this->initiator);
-            
-            event(new DeploymentDone($this->initiator, $people, $books));
+        $deployer->setSerializer(new PlainArraySerializer());
+
+        if (!$deployment->blank()) {
+            $elasticIndexService->dropIndex('grimm');
         }
+
+        $personTransformer = new PersonTransformer();
+        $bookTransformer = new BookTransformer();
+
+        $mappings = array_merge($personTransformer->mappings(), $bookTransformer->mappings());
+
+        $elasticIndexService->createIndex('grimm', $mappings);
+
+        $people = $deployer->deploy(Person::fullInfo(), $personTransformer, function ($progress) {
+            event(new DeployProgress($progress, Person::class, $this->initiator));
+        });
+
+        $books = $deployer->deploy(Book::with('personAssociations'), $bookTransformer, function ($progress) {
+            event(new DeployProgress($progress, Book::class, $this->initiator));
+        });
+
+        event(new DeploymentDone($this->initiator, $people, $books));
         $deployment->setInProgress(false);
         $deployment->setLast();
     }
 
-    /**
-     * @param Manager        $elasticsearch
-     * @param FractalManager $fractal
-     * @param User           $initiator
-     *
-     * @return int
-     */
-    private function deployBlankPeople(Manager $elasticsearch, FractalManager $fractal, User $initiator)
-    {
-        $this->progress = 0;
-        Person::fullInfo()->chunk(200, function ($persons) use ($elasticsearch, $fractal, $initiator) {
-            $params = ['body' => []];
-            $personTransformer = new PersonTransformer();
-            foreach ($persons as $person) {
-                // Metadata
-                $params['body'][] = [
-                    'index' => [
-                        '_index' => 'grimm',
-                        '_type' => 'person',
-                        '_id' => $person->id,
-                    ],
-                ];
-                $item = new Item($person, $personTransformer);
-
-                $params['body'][] = $fractal->createData($item)->toArray();
-            }
-
-            $elasticsearch->bulk($params);
-
-            $this->progress = $this->progress + count($persons);
-
-            event(new DeployProgress($this->progress, Person::class, $initiator));
-        });
-        return $this->progress;
-    }
-
-    private function deployBlankBooks(Manager $elasticsearch, FractalManager $fractal, User $initiator)
-    {
-        // TODO: this is nearly the same as the method before. Should be possible to refactor and maybe to extract
-        $this->progress = 0;
-        Book::with('personAssociations')->chunk(200, function ($books) use ($elasticsearch, $fractal, $initiator) {
-            $params = ['body' => []];
-            $bookTransformer = new BookTransformer();
-            foreach ($books as $book) {
-                $params['body'][] = [
-                    'index' => [
-                        '_index' => 'grimm',
-                        '_type' => 'book',
-                        '_id' => $book->id,
-                    ],
-                ];
-                $item = new Item($book, $bookTransformer);
-
-                $params['body'][] = $fractal->createData($item)->toArray();
-            }
-
-            $elasticsearch->bulk($params);
-
-            $this->progress = $this->progress + count($books);
-            event(new DeployProgress($this->progress, Book::class, $initiator));
-        });
-        return $this->progress;
-    }
 }
