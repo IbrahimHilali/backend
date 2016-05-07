@@ -23,6 +23,8 @@ class DeploymentController extends Controller
 
     public function triggerDeployment(DeploymentService $deployment)
     {
+        $this->authorize('admin.deployment');
+
         if ($deployment->inProgress()) {
             throw new MethodNotAllowedHttpException();
         }
@@ -32,5 +34,11 @@ class DeploymentController extends Controller
         $this->dispatch(new UpdateElasticsearchIndex(Carbon::now(), auth()->user()));
 
         return response()->json(['data' => ['action' => 'ok', 'books' => Book::count(), 'people' => Person::count()]]);
+    }
+
+    public function status(DeploymentService $deployment)
+    {
+        $this->authorize('admin.deployment');
+        return response()->json(['data' => $deployment->status()]);
     }
 }

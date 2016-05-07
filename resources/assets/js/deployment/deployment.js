@@ -9,19 +9,20 @@ new Vue({
         started: false,
         done: false,
         books: 0,
-        people: 0
+        people: 0,
+        last: null,
+        blank: false
     },
 
     ready() {
         this.pusher = new Pusher(PUSHER_KEY, {
             cluster: PUSHER_CLUSTER
         });
-        var channel = 'user.' + USER_ID;
-        this.pusherChannel = this.pusher.subscribe('user.' + USER_ID);
-        console.log("Subscribed to", channel);
+
+        let channel = 'user.' + USER_ID;
+        this.pusherChannel = this.pusher.subscribe(channel);
 
         this.pusherChannel.bind('App\\Events\\DeployProgress', (message) => {
-            console.log(message.type, message.amount);
             this.messages.push({
                 type: "update",
                 entity: message.type,
@@ -32,6 +33,12 @@ new Vue({
         this.pusherChannel.bind('App\\Events\\DeploymentDone', (message) => {
             this.done = true;
             this.started = false;
+        });
+
+        $.get(BASE_URL + '/status').done((response) => {
+            this.started = response.data.inProgress;
+            this.last = new Date(response.data.last);
+            this.blank = response.data.blank;
         });
     },
 
@@ -54,13 +61,13 @@ new Vue({
     computed: {
         personProgress() {
             return this.messages.filter((val) =>
-                val.type == 'update' && val.entity == 'Grimm\\Person'
-            ).slice(-1)[0].amount || 0;
+                    val.type == 'update' && val.entity == 'Grimm\\Person'
+                ).slice(-1)[0].amount || 0;
         },
         bookProgress() {
             return this.messages.filter((val) =>
-                val.type == 'update' && val.entity == 'Grimm\\Book'
-            ).slice(-1)[0].amount || 0;
+                    val.type == 'update' && val.entity == 'Grimm\\Book'
+                ).slice(-1)[0].amount || 0;
         }
     }
 });

@@ -13932,7 +13932,9 @@ new _vue2.default({
         started: false,
         done: false,
         books: 0,
-        people: 0
+        people: 0,
+        last: null,
+        blank: false
     },
 
     ready: function ready() {
@@ -13941,12 +13943,11 @@ new _vue2.default({
         this.pusher = new _pusherJs2.default(PUSHER_KEY, {
             cluster: PUSHER_CLUSTER
         });
+
         var channel = 'user.' + USER_ID;
-        this.pusherChannel = this.pusher.subscribe('user.' + USER_ID);
-        console.log("Subscribed to", channel);
+        this.pusherChannel = this.pusher.subscribe(channel);
 
         this.pusherChannel.bind('App\\Events\\DeployProgress', function (message) {
-            console.log(message.type, message.amount);
             _this.messages.push({
                 type: "update",
                 entity: message.type,
@@ -13957,6 +13958,12 @@ new _vue2.default({
         this.pusherChannel.bind('App\\Events\\DeploymentDone', function (message) {
             _this.done = true;
             _this.started = false;
+        });
+
+        $.get(BASE_URL + '/status').done(function (response) {
+            _this.started = response.data.inProgress;
+            _this.last = new Date(response.data.last);
+            _this.blank = response.data.blank;
         });
     },
 

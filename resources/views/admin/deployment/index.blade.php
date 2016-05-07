@@ -11,28 +11,25 @@
                     sondern müssen zunächst veröffentlicht werden.</p>
                 <p>Drücken Sie dazu auf den Button mit der Aufschrift "Änderungen jetzt veröffentlichen", um diese
                     freizugeben.</p>
-                @if (!$deployment->inProgress())
-                    <button class="btn btn-success pull-right" @click="deploy($event)">Änderungen jetzt
-                    veröffentlichen</button>
-                    <h3>Änderungen</h3>
-                    @if($deployment->last() === null)
-                        <p>Es wurden noch keine Änderungen veröffentlicht!</p>
-                    @endif
-                @else
-                    <h3>Veröffentlichung wird durchgeführt</h3>
-                    <p>Die Daten werden derzeit aktualisiert, weshalb derzeit keine Änderungen veröffentlicht werden
-                        können.</p>
+                <button class="btn btn-success pull-right" @click="deploy($event)" :disabled="started"><i
+                        class="fa fa-circle-o-notch fa-btn fa-spin" v-if="started"></i> Änderungen jetzt
+                veröffentlichen</button>
+                <h3>Änderungen</h3>
+                @if($deployment->last() === null)
+                    <p>Es wurden noch keine Änderungen veröffentlicht!</p>
                 @endif
                 <div v-if="started">
                     <h4>Personen</h4>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar" :aria-valuenow="personProgress" aria-valuemin="0" style="width: 100%;">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar"
+                             :aria-valuenow="personProgress" aria-valuemin="0" style="width: 100%;">
                             @{{ personProgress }} / @{{ people }}
                         </div>
                     </div>
                     <h4>Bücher</h4>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar" :aria-valuenow="personProgress" aria-valuemin="0" style="width: 100%;">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar"
+                             :aria-valuenow="personProgress" aria-valuemin="0" style="width: 100%;">
                             @{{ bookProgress }} / @{{ books }}
                         </div>
                     </div>

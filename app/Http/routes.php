@@ -63,4 +63,5 @@ $this->group(['middleware' => 'api'], function() {
     $this->resource('persons.prints', 'PersonPrintController', ['except' => ['edit']]);
     $this->resource('persons.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
     $this->post('admin/publish/trigger', ['as' => 'admin.deployment.trigger', 'uses' => 'DeploymentController@triggerDeployment']);
+    $this->get('admin/publish/status', ['as' => 'admin.deployment.status', 'uses' => 'DeploymentController@status']);
 });

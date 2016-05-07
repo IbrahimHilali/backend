@@ -47,6 +47,7 @@ class DeploymentService
 
     /**
      * Check if there is a deployment running
+     *
      * @return bool
      */
     public function inProgress()
@@ -54,7 +55,7 @@ class DeploymentService
         return $this->valuestore->get('deployment-running', false);
     }
 
-    public function setInProgress($status=true)
+    public function setInProgress($status = true)
     {
         return $this->valuestore->put('deployment-running', $status);
     }
@@ -66,5 +67,14 @@ class DeploymentService
         }
 
         return $this->valuestore->put('last-deployment', $time->toIso8601String());
+    }
+
+    public function status()
+    {
+        return [
+            'blank' => $this->blank(),
+            'inProgress' => $this->inProgress(),
+            'last' => ($this->last() !== null) ? $this->last()->toRfc822String() : null,
+        ];
     }
 }
