@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class PersonsController extends Controller
 {
@@ -35,7 +37,10 @@ class PersonsController extends Controller
             $persons = Person::query();
         }
 
-        if($request->has('letter')) {
+        $firstLetter = Str::substr($request->get('letter'), 0, 1);
+        $secondLetter = Str::substr($request->get('letter'), 1, 1);
+
+        if ($request->has('letter')) {
             $persons->byLetter($request->get('letter'));
         }
 
@@ -45,9 +50,20 @@ class PersonsController extends Controller
                     $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
                 }
                 return 'name';
-            }, 75);
+            }, 200);
 
-        return view('persons.index', compact('persons'));
+        $characters = Person::query()->toBase()->selectRaw('DISTINCT(SUBSTRING(last_name, 1, 2)) as first_two_characters')->orderBy('first_two_characters')->get();
+
+        $navigationLetters = [];
+
+        foreach ($characters as $character) {
+            if ($split = preg_split('//u', $character->first_two_characters, null, PREG_SPLIT_NO_EMPTY)) {
+                list($first, $second) = $split;
+                $navigationLetters[$first][] = $second;
+            }
+        }
+
+        return view('persons.index', compact('persons', 'navigationLetters', 'firstLetter', 'secondLetter'));
     }
 
     /**
@@ -71,7 +87,7 @@ class PersonsController extends Controller
         $person = new Person();
 
         $this->updatePersonModel($request, $person);
-        
+
         event(new StorePersonEvent($person, $request->user()));
 
         return redirect()->route('persons.show', [$person->id])->with('success',
