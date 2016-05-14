@@ -55,6 +55,8 @@ $this->group(['middleware' => 'web'], function () {
         $this->post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
 
         $this->get('admin/publish', ['as' => 'admin.deployment.index', 'uses' => 'DeploymentController@index']);
+
+        $this->get('history/since', ['as' => 'history.since', 'uses' => 'HistoryController@since']);
     });
     
 });
@@ -64,4 +66,6 @@ $this->group(['middleware' => 'api'], function() {
     $this->resource('persons.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
     $this->post('admin/publish/trigger', ['as' => 'admin.deployment.trigger', 'uses' => 'DeploymentController@triggerDeployment']);
     $this->get('admin/publish/status', ['as' => 'admin.deployment.status', 'uses' => 'DeploymentController@status']);
+
+
 });
