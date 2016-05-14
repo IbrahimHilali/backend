@@ -11,7 +11,8 @@ new Vue({
         books: 0,
         people: 0,
         last: null,
-        blank: false
+        blank: false,
+        blankStarted: false
     },
 
     ready() {
@@ -55,6 +56,18 @@ new Vue({
             }).fail((response) => {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');
             });
+        },
+
+        blankify(event) {
+            event.preventDefault();
+            this.blankStarted = true;
+            $.post(BASE_URL + '/blankify').done((response) => {
+                alert('Der Index wurde geleert!');
+                this.blankStarted = false;
+            }).fail((response) => {
+                alert('Der Index konnte nicht geleert werden');
+                this.blankStarted = false;
+            })
         }
     },
 

@@ -2,10 +2,11 @@
 
 namespace App\Deployment\Transformers;
 
+use App\Deployment\MappingProvider;
 use Grimm\Book;
 use League\Fractal\TransformerAbstract;
 
-class BookTransformer extends TransformerAbstract
+class BookTransformer extends TransformerAbstract implements MappingProvider
 {
 
     /**

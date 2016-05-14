@@ -67,7 +67,7 @@ class UpdateElasticsearchIndex extends Job implements ShouldQueue
         $personTransformer = new PersonTransformer();
         $bookTransformer = new BookTransformer();
 
-        $mappings = array_merge($personTransformer->mappings(), $bookTransformer->mappings());
+        $mappings = $elasticIndexService->mappingsFromProvider([$personTransformer, $bookTransformer]);
 
         $elasticIndexService->createIndex('grimm', $mappings);
 

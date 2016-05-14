@@ -11,13 +11,17 @@
                     sondern müssen zunächst veröffentlicht werden.</p>
                 <p>Drücken Sie dazu auf den Button mit der Aufschrift "Änderungen jetzt veröffentlichen", um diese
                     freizugeben.</p>
-                <button class="btn btn-success pull-right" @click="deploy($event)" :disabled="started"><i
-                        class="fa fa-circle-o-notch fa-btn fa-spin" v-if="started"></i> Änderungen jetzt
-                veröffentlichen</button>
+                <div class="pull-right">
+                    <button class="btn btn-danger" @click="blankify($event)" :disabled="blankStarted">
+                        <i class="fa fa-circle-o-notch fa-btn fa-spin" v-if="blankStarted"></i>
+                        Veröffentlichung zurücksetzen
+                    </button>
+                    <button class="btn btn-success" @click="deploy($event)" :disabled="started"><i
+                            class="fa fa-circle-o-notch fa-btn fa-spin" v-if="started"></i> Änderungen jetzt
+                    veröffentlichen</button>
+                </div>
                 <h3>Änderungen</h3>
-                @if($deployment->last() === null)
-                    <p>Es wurden noch keine Änderungen veröffentlicht!</p>
-                @endif
+                <p v-if="blank">Es wurden noch keine Änderungen veröffentlicht!</p>
                 <div v-if="started">
                     <h4>Personen</h4>
                     <div class="progress">

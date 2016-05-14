@@ -13934,7 +13934,8 @@ new _vue2.default({
         books: 0,
         people: 0,
         last: null,
-        blank: false
+        blank: false,
+        blankStarted: false
     },
 
     ready: function ready() {
@@ -13982,6 +13983,19 @@ new _vue2.default({
                 _this2.started = true;
             }).fail(function (response) {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');
+            });
+        },
+        blankify: function blankify(event) {
+            var _this3 = this;
+
+            event.preventDefault();
+            this.blankStarted = true;
+            $.post(BASE_URL + '/blankify').done(function (response) {
+                alert('Der Index wurde geleert!');
+                _this3.blankStarted = false;
+            }).fail(function (response) {
+                alert('Der Index konnte nicht geleert werden');
+                _this3.blankStarted = false;
             });
         }
     },
