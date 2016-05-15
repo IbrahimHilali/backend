@@ -54,7 +54,7 @@ class BookUpdateRequest extends Request
         $book->volume_irregular = (int)$this->input('volume_irregular') ?: null;
         $book->edition = (int)$this->input('edition') ?: null;
 
-        $book->year = (int)$this->input('year') ?: null;
+        //$book->year = (int)$this->input('year') ?: null;
 
         $book->source = $this->input('source');
         $book->notes = $this->input('notes');

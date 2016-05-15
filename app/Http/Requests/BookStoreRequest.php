@@ -28,7 +28,7 @@ class BookStoreRequest extends Request
         return [
             'title' => 'required|min:3',
             'short_title' => 'max:255',
-            'year' => 'numeric|max:9999',
+            //'year' => 'numeric|max:9999',
             'volume' => 'numeric|min:1',
             'volume_irregular' => 'numeric|min:1',
             'edition' => 'numeric|min:1',
@@ -54,7 +54,7 @@ class BookStoreRequest extends Request
         $book->volume_irregular = (int)$this->input('volume_irregular') ?: null;
         $book->edition = (int)$this->input('edition') ?: null;
 
-        $book->year = (int)$this->input('year') ?: null;
+        //$book->year = (int)$this->input('year') ?: null;
 
         $book->source = $this->input('source');
         $book->notes = $this->input('notes');

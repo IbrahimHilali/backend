@@ -88,7 +88,7 @@
 
                     <div class="panel-body">
                         <ul class="list-group">
-                            @foreach(App\Activity::latest()->take(25)->get() as $activity)
+                            @foreach(Grimm\Activity::latest()->take(25)->get() as $activity)
                                 <li class="list-group-item" data-toggle="collapse"
                                     data-target="#activity-{{ $activity->id }}">
                                     @include('logs.actions.' . $activity->log['action'])

@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace Grimm;
 
-use Grimm\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**

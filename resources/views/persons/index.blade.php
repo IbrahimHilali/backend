@@ -31,13 +31,34 @@
             </div>
             <div class="col-md-12 letters-container">
                 <ul class="letters">
-                    @foreach(range('A', 'Z') as $letter)
-                        <li {!! active(request()->get('letter'), $letter) !!}>
+                    @foreach($navigationLetters as $letter => $_)
+                        <li {!! active($firstLetter, $letter) !!}>
                             <a href="{{ url('persons') }}?letter={{ $letter }}">{{ $letter }}</a>
                         </li>
                     @endforeach
+                    @if($firstLetter)
+                        <li>
+                            <a href="{{ url('persons') }}">&times;</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
+            @if($firstLetter)
+                <div class="col-md-12 letters-container">
+                    <ul class="letters">
+                        @foreach($navigationLetters[$firstLetter] as $letter)
+                            <li {!! active($secondLetter, $letter) !!}>
+                                <a href="{{ url('persons') }}?letter={{ $firstLetter . $letter }}">{{ $firstLetter . $letter }}</a>
+                            </li>
+                        @endforeach
+                        @if($secondLetter)
+                            <li>
+                                <a href="{{ url('persons') }}?letter={{ $firstLetter }}">&times;</a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 pagination-container">
                 {{ $persons->appends(Request::except('page'))->links() }}
             </div>

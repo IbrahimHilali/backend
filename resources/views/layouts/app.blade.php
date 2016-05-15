@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
 
 </head>
@@ -50,6 +49,18 @@
                 @can('users.*')
                 <li><a href="{{ route('users.index') }}">{{ trans('users.users') }}</a></li>
                 @endcan
+                @can('admin.*')
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ trans('admin.admin') }} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        @can('admin.deployment')
+                        <li><a href="{{ route('admin.deployment.index') }}">{{ trans('admin.deployment') }}</a></li>
+                        @endcan
+                    </ul>
+                </li>
+                @endcan
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -63,11 +74,12 @@
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            {{ auth()->user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('users.show', [Auth::user()->id]) }}"><i class="fa fa-btn fa-user"></i> Profil</a></li>
+                            <li><a href="{{ route('users.show', [auth()->user()->id]) }}"><i
+                                            class="fa fa-btn fa-user"></i> Profil</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>
                         </ul>
@@ -89,12 +101,12 @@
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover({html: true});
 
-        $('#danger-zone').submit(function(ev) {
+        $('#danger-zone').submit(function (ev) {
             var confirm = window.confirm("Soll dieser Datensatz wirklich gelöscht werden?");
             return confirm;
         });
 
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             $('.alert').alert('close');
         }, 2000);
     });

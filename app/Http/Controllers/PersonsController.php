@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class PersonsController extends Controller
 {
@@ -35,7 +37,10 @@ class PersonsController extends Controller
             $persons = Person::query();
         }
 
-        if($request->has('letter')) {
+        $firstLetter = Str::substr($request->get('letter'), 0, 1);
+        $secondLetter = Str::substr($request->get('letter'), 1, 1);
+
+        if ($request->has('letter')) {
             $persons->byLetter($request->get('letter'));
         }
 
@@ -45,9 +50,20 @@ class PersonsController extends Controller
                     $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
                 }
                 return 'name';
-            }, 75);
+            }, 200);
 
-        return view('persons.index', compact('persons'));
+        $characters = Person::query()->toBase()->selectRaw('DISTINCT(SUBSTRING(last_name, 1, 2)) as first_two_characters')->orderBy('first_two_characters')->get();
+
+        $navigationLetters = [];
+
+        foreach ($characters as $character) {
+            if ($split = preg_split('//u', $character->first_two_characters, null, PREG_SPLIT_NO_EMPTY)) {
+                list($first, $second) = $split;
+                $navigationLetters[$first][] = $second;
+            }
+        }
+
+        return view('persons.index', compact('persons', 'navigationLetters', 'firstLetter', 'secondLetter'));
     }
 
     /**
@@ -71,7 +87,7 @@ class PersonsController extends Controller
         $person = new Person();
 
         $this->updatePersonModel($request, $person);
-        
+
         event(new StorePersonEvent($person, $request->user()));
 
         return redirect()->route('persons.show', [$person->id])->with('success',
@@ -154,17 +170,17 @@ class PersonsController extends Controller
     private function updatePersonModel($request, Person $person)
     {
         $person->last_name = $request->get('last_name');
-        $person->first_name = $request->get('first_name');
+        $person->first_name = $request->get('first_name') ?: null;
 
-        $person->birth_date = $request->get('birth_date');
-        $person->death_date = $request->get('death_date');
+        $person->birth_date = $request->get('birth_date') ?: null;
+        $person->death_date = $request->get('death_date') ?: null;
 
-        $person->bio_data = $request->get('bio_data');
-        $person->bio_data_source = $request->get('bio_data_source');
+        $person->bio_data = $request->get('bio_data') ?: null;
+        $person->bio_data_source = $request->get('bio_data_source') ?: null;
 
-        $person->add_bio_data = $request->get('add_bio_data');
+        $person->add_bio_data = $request->get('add_bio_data') ?: null;
 
-        $person->source = $request->get('source');
+        $person->source = $request->get('source') ?: null;
 
         $person->is_organization = $request->get('is_organization');
 
