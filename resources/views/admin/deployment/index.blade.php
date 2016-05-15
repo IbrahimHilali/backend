@@ -13,8 +13,8 @@
                     freizugeben.</p>
                 <div class="pull-right">
                     <button class="btn btn-danger" @click="blankify($event)" :disabled="blankStarted">
-                        <i class="fa fa-circle-o-notch fa-btn fa-spin" v-if="blankStarted"></i>
-                        Veröffentlichung zurücksetzen
+                    <i class="fa fa-circle-o-notch fa-btn fa-spin" v-if="blankStarted"></i>
+                    Veröffentlichung zurücksetzen
                     </button>
                     <button class="btn btn-success" @click="deploy($event)" :disabled="started"><i
                             class="fa fa-circle-o-notch fa-btn fa-spin" v-if="started"></i> Änderungen jetzt
@@ -24,7 +24,37 @@
                 <p v-if="blank">Es wurden noch keine Änderungen veröffentlicht!</p>
                 <div class="changes" v-if="!blank && history != []">
                     <h4>Personen</h4>
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr v-for="entity in history['Grimm\\Person']">
+                            <td v-if="!entity.entity.trashed">
+                                <a :href="entity.entity.links.self">
+                                    @{{ entity.entity.first_name }} @{{ entity.entity.last_name }}
+                                </a>
+                            </td>
+                            <td v-if="entity.entity.trashed">
+                                @{{ entity.entity.first_name }} @{{ entity.entity.last_name }} (Gelöscht)
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                     @{{ history["Grimm\\Person"] | json }}
+                    <h4>Bücher</h4>
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr v-for="entity in history['Grimm\\Book']">
+                            <td v-if="!entity.entity.trashed">
+                                <a :href="entity.entity.links.self">
+                                    @{{ entity.entity.short_title }}
+                                </a>
+                            </td>
+                            <td v-if="entity.entity.trashed">
+                                @{{ entity.entity.short_title }} (Gelöscht)
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    @{{ history["Grimm\\Books"] | json }}
                 </div>
                 <div v-if="started">
                     <h4>Personen</h4>
