@@ -54,7 +54,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    @{{ history["Grimm\\Books"] | json }}
+                    @{{ history["Grimm\\Book"] | json }}
                 </div>
                 <div v-if="started">
                     <h4>Personen</h4>
