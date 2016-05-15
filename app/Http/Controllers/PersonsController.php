@@ -170,17 +170,17 @@ class PersonsController extends Controller
     private function updatePersonModel($request, Person $person)
     {
         $person->last_name = $request->get('last_name');
-        $person->first_name = $request->get('first_name');
+        $person->first_name = $request->get('first_name') ?: null;
 
-        $person->birth_date = $request->get('birth_date');
-        $person->death_date = $request->get('death_date');
+        $person->birth_date = $request->get('birth_date') ?: null;
+        $person->death_date = $request->get('death_date') ?: null;
 
-        $person->bio_data = $request->get('bio_data');
-        $person->bio_data_source = $request->get('bio_data_source');
+        $person->bio_data = $request->get('bio_data') ?: null;
+        $person->bio_data_source = $request->get('bio_data_source') ?: null;
 
-        $person->add_bio_data = $request->get('add_bio_data');
+        $person->add_bio_data = $request->get('add_bio_data') ?: null;
 
-        $person->source = $request->get('source');
+        $person->source = $request->get('source') ?: null;
 
         $person->is_organization = $request->get('is_organization');
 
