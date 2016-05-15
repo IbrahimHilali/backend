@@ -47,15 +47,17 @@ class HistoryTranspiler
      */
     public function transpileEntry(Activity $activity)
     {
-        $this->registerEntity($activity->model_type);
-        $this->registerModel($activity);
+        $type = $this->historyEntityTransformer->getType($activity);
+
+        $this->registerEntity($type);
+        $this->registerModel($activity, $type);
 
         $data = $activity->log;
 
         $action = $data['action'];
         $method = $action . 'Activity';
 
-        return call_user_func([$this, $method], $data, $activity->model_type, $activity->model_id);
+        return call_user_func([$this, $method], $data, $type, $activity->model_id);
     }
 
     /**
@@ -137,12 +139,18 @@ class HistoryTranspiler
         }
     }
 
-    private function registerModel(Activity $activity)
+    /**
+     * Add a new entity of a given type, i.e. compile the entity info!
+     *
+     * @param Activity $activity
+     * @param          $type
+     */
+    private function registerModel(Activity $activity, $type)
     {
-        if (!isset($this->history[$activity->model_type][$activity->model_id])) {
-            $this->history[$activity->model_type][$activity->model_id] = [
+        if (!isset($this->history[$type][$activity->model_id])) {
+            $this->history[$type][$activity->model_id] = [
                 'entity' => $this->historyEntityTransformer->presentEntity($activity),
-                'history' => []
+                'history' => [],
             ];
         }
     }

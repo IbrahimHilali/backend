@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         });
         
         $this->app->singleton(HistoryEntityTransformer::class, function () {
-            return (new HistoryEntityTransformer())->addPresenters([new PersonPresenter(), new BookPresenter()]);
+            return new HistoryEntityTransformer([new PersonPresenter(), new BookPresenter()]);
         });
     }
 }
