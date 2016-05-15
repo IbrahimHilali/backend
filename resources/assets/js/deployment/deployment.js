@@ -12,7 +12,8 @@ new Vue({
         people: 0,
         last: null,
         blank: false,
-        blankStarted: false
+        blankStarted: false,
+        history: []
     },
 
     ready() {
@@ -40,6 +41,11 @@ new Vue({
             this.started = response.data.inProgress;
             this.last = new Date(response.data.last);
             this.blank = response.data.blank;
+            if (!this.blank) {
+                $.get(HISTORY_URL, {date: this.last.toISOString()}).done((response) => {
+                    this.history = response.data.history;
+                });
+            }
         });
     },
 

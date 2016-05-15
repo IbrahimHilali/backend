@@ -9,6 +9,16 @@ class HistoryTranspiler
 {
 
     protected $history = [];
+    /**
+     * @var HistoryEntityTransformer
+     */
+    private $historyEntityTransformer;
+
+    public function __construct(HistoryEntityTransformer $historyEntityTransformer)
+    {
+
+        $this->historyEntityTransformer = $historyEntityTransformer;
+    }
 
     /**
      * Convert a collection of history entries into a displayable log
@@ -38,6 +48,7 @@ class HistoryTranspiler
     public function transpileEntry(Activity $activity)
     {
         $this->registerEntity($activity->model_type);
+        $this->registerModel($activity);
 
         $data = $activity->log;
 
@@ -73,7 +84,7 @@ class HistoryTranspiler
     {
         $this->ensureLastHistoryElementIsUpdating($type, $id);
 
-        $updatingEntry = &$this->history[$type][$id][count($this->history[$type][$id]) - 1];
+        $updatingEntry = &$this->history[$type][$id]['history'][count($this->history[$type][$id]['history']) - 1];
 
         foreach ($data['after'] as $field => $afterValue) {
             if (!isset($updatingEntry['data'][$field])) {
@@ -95,7 +106,7 @@ class HistoryTranspiler
      */
     protected function creatingActivity($data, $type, $id)
     {
-        $this->history[$type][$id][] = $data;
+        $this->history[$type][$id]['history'][] = $data;
     }
 
     /**
@@ -107,7 +118,7 @@ class HistoryTranspiler
      */
     protected function deletingActivity($data, $type, $id)
     {
-        $this->history[$type][$id][] = $data;
+        $this->history[$type][$id]['history'][] = $data;
     }
 
     /**
@@ -118,10 +129,20 @@ class HistoryTranspiler
      */
     protected function ensureLastHistoryElementIsUpdating($type, $id)
     {
-        if (!isset($this->history[$type][$id]) || last($this->history[$type][$id])['action'] !== 'updating') {
-            $this->history[$type][$id][] = [
+        if (empty($this->history[$type][$id]['history']) || last($this->history[$type][$id]['history'])['action'] !== 'updating') {
+            $this->history[$type][$id]['history'][] = [
                 'action' => 'updating',
                 'data' => [],
+            ];
+        }
+    }
+
+    private function registerModel(Activity $activity)
+    {
+        if (!isset($this->history[$activity->model_type][$activity->model_id])) {
+            $this->history[$activity->model_type][$activity->model_id] = [
+                'entity' => $this->historyEntityTransformer->presentEntity($activity),
+                'history' => []
             ];
         }
     }

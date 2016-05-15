@@ -13935,7 +13935,8 @@ new _vue2.default({
         people: 0,
         last: null,
         blank: false,
-        blankStarted: false
+        blankStarted: false,
+        history: []
     },
 
     ready: function ready() {
@@ -13965,6 +13966,11 @@ new _vue2.default({
             _this.started = response.data.inProgress;
             _this.last = new Date(response.data.last);
             _this.blank = response.data.blank;
+            if (!_this.blank) {
+                $.get(HISTORY_URL, { date: _this.last.toISOString() }).done(function (response) {
+                    _this.history = response.data.history;
+                });
+            }
         });
     },
 

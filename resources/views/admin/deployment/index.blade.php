@@ -22,6 +22,10 @@
                 </div>
                 <h3>Änderungen</h3>
                 <p v-if="blank">Es wurden noch keine Änderungen veröffentlicht!</p>
+                <div class="changes" v-if="!blank && history != []">
+                    <h4>Personen</h4>
+                    @{{ history["Grimm\\Person"] | json }}
+                </div>
                 <div v-if="started">
                     <h4>Personen</h4>
                     <div class="progress">
@@ -49,6 +53,7 @@
 @section('scripts')
     <script>
         var BASE_URL = "{{ route('admin.deployment.index') }}";
+        var HISTORY_URL = "{{ route('history.since') }}";
         var PUSHER_KEY = "{{ config('broadcasting.connections.pusher.key') }}";
         var PUSHER_CLUSTER = "{{ config('broadcasting.connections.pusher.options.cluster') }}";
         var USER_ID = "{{ auth()->user()->id }}";

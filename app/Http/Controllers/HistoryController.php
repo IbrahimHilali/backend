@@ -18,11 +18,18 @@ class HistoryController extends Controller
         $date = new Carbon($request->get('date', date('d.m.Y')));
 
         /** @var Collection $activities */
-        $activities = Activity::query()->orderBy('model_type', 'model_id', 'created_at')->where('created_at', '>=',
+        $activities = Activity::query()->with(['model' => function($q) {
+            $q->withTrashed();
+        }])->orderBy('model_type', 'model_id', 'created_at')->where('created_at', '>=',
             $date)->get();
 
         $history = $historyTranspiler->transpileCollection($activities);
 
-        return response()->json($history);
+        return response()->json([
+            'data' => [
+                'since' => $date->toRfc822String(),
+                'history' => $history
+            ]
+        ]);
     }
 }
