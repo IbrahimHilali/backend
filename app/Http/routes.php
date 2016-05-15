@@ -57,6 +57,10 @@ $this->group(['middleware' => 'web'], function () {
         $this->get('admin/publish', ['as' => 'admin.deployment.index', 'uses' => 'DeploymentController@index']);
 
         $this->get('history/since', ['as' => 'history.since', 'uses' => 'HistoryController@since']);
+
+        $this->get('phpinfo', function() {
+            phpinfo();
+        });
     });
 
 });
