@@ -7,6 +7,7 @@ use App\History\HistoryEntityTransformer;
 use App\History\Presenters\BookPresenter;
 use App\History\Presenters\PersonPresenter;
 use Carbon\Carbon;
+use Grimm\Person;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Valuestore\Valuestore;
 
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Carbon::setLocale(config('app.locale'));
+        Person::$unknownName = trans('people.unknownName');
     }
 
     /**

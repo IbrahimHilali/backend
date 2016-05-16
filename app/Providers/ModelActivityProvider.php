@@ -45,6 +45,10 @@ class ModelActivityProvider extends ServiceProvider
         Person::deleting(function (Model $model) {
             $this->logDeleting($model);
         });
+
+        Person::restored(function (Model $model) {
+            $this->logRestoring($model);
+        });
     }
 
     /**
@@ -92,8 +96,17 @@ class ModelActivityProvider extends ServiceProvider
         ]);
     }
 
+    protected function logRestoring(Model $model)
+    {
+        $this->log($model, [
+            'action' => 'restoring',
+            'after' => $model->getOriginal()
+        ]);
+    }
+
     protected function getBeforeFromModel(Model $model)
     {
         return array_intersect_key($model->getOriginal(), $model->getDirty());
     }
+
 }

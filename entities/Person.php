@@ -2,32 +2,35 @@
 
 namespace Grimm;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 /**
- * @property integer id
- * @property string last_name
- * @property string first_name
- * @property string birth_date
- * @property string death_date
- * @property string bio_data
- * @property string bio_data_source
- * @property string add_bio_data
- * @property boolean is_organization
- * @property boolean auto_generated
- * @property string source
+ * @property integer                 id
+ * @property string                  last_name
+ * @property string                  first_name
+ * @property string                  birth_date
+ * @property string                  death_date
+ * @property string                  bio_data
+ * @property string                  bio_data_source
+ * @property string                  add_bio_data
+ * @property boolean                 is_organization
+ * @property boolean                 auto_generated
+ * @property string                  source
  *
- * @property PersonInformation[] information
- * @property PersonPrint[] prints
- * @property PersonInheritance[] inheritances
+ * @property PersonInformation[]     information
+ * @property PersonPrint[]           prints
+ * @property PersonInheritance[]     inheritances
  * @property BookPersonAssociation[] bookAssociations
  */
 class Person extends Model
 {
 
-    use SoftDeletes;
+    use SoftDeletes, CollectPrefixes;
+
+    public static $unknownName = 'unknown';
 
     protected $table = 'persons';
 
@@ -51,6 +54,10 @@ class Person extends Model
         'deleted_at',
     ];
 
+    protected $prefixable = [
+        'last_name',
+    ];
+
     /**
      * Returns the full name of person and/or organization
      *
@@ -58,12 +65,10 @@ class Person extends Model
      */
     public function fullName()
     {
-        if ($this->is_organization) {
-            return $this->last_name ?: 'unknown';
-        }
+        $name = $this->last_name ?: static::$unknownName;
 
-        if ($this->first_name == '') {
-            return $this->last_name ?: 'unknown';
+        if ($this->is_organization || $this->first_name == '') {
+            return $name;
         }
 
         return $this->last_name . ', ' . $this->first_name;
@@ -103,8 +108,10 @@ class Person extends Model
 
     /**
      * Search for a person by name
-     * @param  $query The query object
-     * @param  string $name The name searched for
+     *
+     * @param         $query The query object
+     * @param  string $name  The name searched for
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearchByName($query, $name)
@@ -114,27 +121,29 @@ class Person extends Model
 
     /**
      * Scope all persons using a letter
-     * @param $query
-     * @param $letter
+     *
+     * @param        $query
+     * @param        $letter
      * @param string $field
+     *
      * @return mixed
      */
-    public function scopeByLetter($query, $letter, $field = 'last_name')
+    public function scopeByLetter(Builder $query, $letter, $field = 'last_name')
     {
         $letter = Str::lower($letter);
 
-        if(!in_array($letter, range('a', 'z'))) {
+        if (!in_array($letter, range('a', 'z'))) {
 
         }
 
         return $query->where($field, 'like', $letter . '%');
     }
 
-    public function scopeFullInfo($query)
+    public function scopeFullInfo(Builder $query)
     {
         return $query->with([
-            'information' => function($query) {
-                $query->whereHas('code', function($q) {
+            'information' => function ($query) {
+                $query->whereHas('code', function ($q) {
                     $q->where('internal', false);
                 });
             },
@@ -143,7 +152,7 @@ class Person extends Model
             },
             'prints',
             'inheritances',
-            'bookAssociations'
+            'bookAssociations',
         ]);
     }
 }

@@ -5,16 +5,16 @@
         <div class="row page">
             <div class="col-md-12 page-title">
                 <div class="button-container">
-                    <div class="search {{ Request::has('name') ? 'active' : '' }}">
+                    <div class="search {{ request()->has('name') ? 'active' : '' }}">
                         <form action="{{ url('persons') }}" method="get">
                             <input type="text" class="form-control input-sm" name="name" maxlength="64"
-                                   placeholder="Suche" value="{{ Request::has('name') ? Request::get('name') : '' }}"/>
+                                   placeholder="Suche" value="{{ request('name') ?: '' }}"/>
                             <button id="search-btn" type="submit" class="btn btn-primary btn-sm"><i
                                         class="fa fa-search"></i></button>
 
                         </form>
                     </div>
-                    @if(Request::has('name'))
+                    @if(request()->has('name'))
                         <div class="reset-search">
                             <a href="{{ url('persons') }}" class="btn btn-default btn-sm"><i
                                         class="fa fa-times"></i></a>
@@ -60,7 +60,7 @@
                 </div>
             @endif
             <div class="col-md-12 pagination-container">
-                {{ $persons->appends(Request::except('page'))->links() }}
+                {{ $persons->appends(request()->except('page'))->links() }}
             </div>
             <div class="col-md-12 list-content">
                 <table class="table table-responsive table-hover">
@@ -68,11 +68,11 @@
                     <tr>
                         {{--<th><a href="{{ sort_link('persons', 'id') }}"># {!! sort_arrow('id') !!}</a></th>--}}
                         <th>
-                            <a href="{{ sort_link('persons', 'last_name') }}">Nachname {!! sort_arrow('last_name') !!}</a>
+                            <a href="{{ sort_link('persons', 'last_name') }}">Name {!! sort_arrow('last_name') !!}</a>
                         </th>
-                        <th>
+                        {{-- <th>
                             <a href="{{ sort_link('persons', 'first_name') }}">Vorname {!! sort_arrow('first_name') !!}</a>
-                        </th>
+                        </th> --}}
                         <th><a href="{{ sort_link('persons', 'is_organization') }}"><i class="fa fa-user"></i> / <i
                                         class="fa fa-building"></i> {!! sort_arrow('is_organization') !!}</a></th>
                         <th><a href="{{ sort_link('persons', 'source') }}">Quelle {!! sort_arrow('source') !!}</a></th>
@@ -84,10 +84,10 @@
                     @forelse($persons->items() as $person)
                         <tr id="person-{{ $person->id }}"
                             onclick="location.href='{{ route('persons.show', ['id' => $person->id]) }}'"
-                            style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif">
+                            style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif @if($person->trashed()) bg-danger @endif">
                             {{--<td>{{ $person->id }}</td>--}}
-                            <td>{{ $person->last_name }}</td>
-                            <td>{{ $person->first_name }}</td>
+                            <td>{{ $person->fullName() }}</td>
+                            {{-- <td>{{ $person->first_name }}</td>--}}
                             <td>@if(!$person->is_organization)
                                     <i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="Mensch"></i>
                                 @else
@@ -109,7 +109,7 @@
             </div>
             <div class="col-md-12 pagination-container">
                 <div class="pagination-container">
-                    {{ $persons->appends(Request::except('page'))->links() }}
+                    {{ $persons->appends(request()->except('page'))->links() }}
                 </div>
             </div>
         </div>

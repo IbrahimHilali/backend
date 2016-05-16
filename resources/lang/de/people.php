@@ -8,6 +8,8 @@ return [
     'update' => 'Person bearbeiten',
     'delete' => 'Person löschen',
 
+    'unknownName' => 'Unbekannt',
+
     'id' => 'ID',
     'last_name' => 'Nachname',
     'first_name' => 'Vorname',

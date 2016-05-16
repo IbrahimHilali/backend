@@ -52,12 +52,12 @@ class PersonsController extends Controller
                 return 'name';
             }, 200);
 
-        $characters = Person::query()->toBase()->selectRaw('DISTINCT(SUBSTRING(last_name, 1, 2)) as first_two_characters')->orderBy('first_two_characters')->get();
+        $characters = Person::prefixesOfLength('last_name', 2)->get();
 
         $navigationLetters = [];
 
         foreach ($characters as $character) {
-            if ($split = preg_split('//u', $character->first_two_characters, null, PREG_SPLIT_NO_EMPTY)) {
+            if ($split = preg_split('//u', $character->prefix, null, PREG_SPLIT_NO_EMPTY)) {
                 list($first, $second) = $split;
                 $navigationLetters[$first][] = $second;
             }
@@ -167,7 +167,7 @@ class PersonsController extends Controller
      * @param $request
      * @param Person $person
      */
-    private function updatePersonModel($request, Person $person)
+    private function updatePersonModel(Request $request, Person $person)
     {
         $person->last_name = $request->get('last_name');
         $person->first_name = $request->get('first_name') ?: null;
