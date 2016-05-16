@@ -9,14 +9,11 @@ use App\Http\Requests\DestroyPersonRequest;
 use App\Http\Requests\IndexPersonRequest;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonDataRequest;
-use Carbon\Carbon;
 use Grimm\Person;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class PersonsController extends Controller
 {
@@ -31,20 +28,20 @@ class PersonsController extends Controller
     {
         $customData = [];
         if ($request->has('name')) {
-            $persons = Person::searchByName($request->get('name'));
+            $people = Person::searchByName($request->get('name'));
             $customData['name'] = $request->get('name');
         } else {
-            $persons = Person::query();
+            $people = Person::query();
         }
 
-        $firstLetter = Str::substr($request->get('letter'), 0, 1);
-        $secondLetter = Str::substr($request->get('letter'), 1, 1);
 
-        if ($request->has('letter')) {
-            $persons->byLetter($request->get('letter'));
+        if ($request->has('prefix')) {
+            $people->byPrefix($request->get('prefix'));
         }
 
-        $persons = $this->prepareCollection('last_person_index', $persons, $request,
+        $this->preparePrefixDisplay($request, Person::prefixesOfLength('last_name', 2)->get());
+
+        $people = $this->prepareCollection('last_person_index', $people, $request,
             function ($builder, $orderByKey, $direction) use ($customData) {
                 if (!array_key_exists('name', $customData)) {
                     $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
@@ -52,18 +49,7 @@ class PersonsController extends Controller
                 return 'name';
             }, 200);
 
-        $characters = Person::prefixesOfLength('last_name', 2)->get();
-
-        $navigationLetters = [];
-
-        foreach ($characters as $character) {
-            if ($split = preg_split('//u', $character->prefix, null, PREG_SPLIT_NO_EMPTY)) {
-                list($first, $second) = $split;
-                $navigationLetters[$first][] = $second;
-            }
-        }
-
-        return view('persons.index', compact('persons', 'navigationLetters', 'firstLetter', 'secondLetter'));
+        return view('persons.index', compact('people'));
     }
 
     /**

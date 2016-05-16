@@ -26,6 +26,7 @@
                 </div>
                 <h1>Bücherdatenbank</h1>
             </div>
+            @include('partials.prefixSelection', ['route' => 'books'])
             <div class="col-md-12 pagination-container">
                 {{ $books->appends(Request::except('page'))->links() }}
             </div>

@@ -29,38 +29,9 @@
                 </div>
                 <h1>Personendatenbank</h1>
             </div>
-            <div class="col-md-12 letters-container">
-                <ul class="letters">
-                    @foreach($navigationLetters as $letter => $_)
-                        <li {!! active($firstLetter, $letter) !!}>
-                            <a href="{{ url('persons') }}?letter={{ $letter }}">{{ $letter }}</a>
-                        </li>
-                    @endforeach
-                    @if($firstLetter)
-                        <li>
-                            <a href="{{ url('persons') }}">&times;</a>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-            @if($firstLetter)
-                <div class="col-md-12 letters-container">
-                    <ul class="letters">
-                        @foreach($navigationLetters[$firstLetter] as $letter)
-                            <li {!! active($secondLetter, $letter) !!}>
-                                <a href="{{ url('persons') }}?letter={{ $firstLetter . $letter }}">{{ $firstLetter . $letter }}</a>
-                            </li>
-                        @endforeach
-                        @if($secondLetter)
-                            <li>
-                                <a href="{{ url('persons') }}?letter={{ $firstLetter }}">&times;</a>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            @endif
+            @include('partials.prefixSelection', ['route' => 'persons'])
             <div class="col-md-12 pagination-container">
-                {{ $persons->appends(request()->except('page'))->links() }}
+                {{ $people->appends(request()->except('page'))->links() }}
             </div>
             <div class="col-md-12 list-content">
                 <table class="table table-responsive table-hover">
@@ -81,7 +52,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($persons->items() as $person)
+                    @forelse($people->items() as $person)
                         <tr id="person-{{ $person->id }}"
                             onclick="location.href='{{ route('persons.show', ['id' => $person->id]) }}'"
                             style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif @if($person->trashed()) bg-danger @endif">
@@ -109,7 +80,7 @@
             </div>
             <div class="col-md-12 pagination-container">
                 <div class="pagination-container">
-                    {{ $persons->appends(request()->except('page'))->links() }}
+                    {{ $people->appends(request()->except('page'))->links() }}
                 </div>
             </div>
         </div>

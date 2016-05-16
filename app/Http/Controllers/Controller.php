@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -55,5 +56,26 @@ class Controller extends BaseController
         session([
             $collectionName => $request->all()
         ]);
+    }
+
+    protected function preparePrefixDisplay(Request $request, $prefixes)
+    {
+        $firstCharacter = Str::substr($request->get('prefix'), 0, 1);
+        $secondCharacter = Str::substr($request->get('prefix'), 1, 1);
+
+        $characters = $prefixes;
+
+        $navigationPrefixes = [];
+
+        foreach ($characters as $character) {
+            if ($split = preg_split('//u', $character->prefix, null, PREG_SPLIT_NO_EMPTY)) {
+                list($first, $second) = $split;
+                $navigationPrefixes[$first][] = $second;
+            }
+        }
+
+        view()->composer('partials.prefixSelection', function ($view) use ($firstCharacter, $secondCharacter, $navigationPrefixes) {
+            $view->with(compact('firstCharacter', 'secondCharacter', 'navigationPrefixes'));
+        });
     }
 }

@@ -119,26 +119,6 @@ class Person extends Model
         return $query->whereRaw('match(first_name, last_name) against (? in boolean mode)', [$name]);
     }
 
-    /**
-     * Scope all persons using a letter
-     *
-     * @param        $query
-     * @param        $letter
-     * @param string $field
-     *
-     * @return mixed
-     */
-    public function scopeByLetter(Builder $query, $letter, $field = 'last_name')
-    {
-        $letter = Str::lower($letter);
-
-        if (!in_array($letter, range('a', 'z'))) {
-
-        }
-
-        return $query->where($field, 'like', $letter . '%');
-    }
-
     public function scopeFullInfo(Builder $query)
     {
         return $query->with([

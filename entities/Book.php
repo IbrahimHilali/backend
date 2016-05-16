@@ -2,32 +2,38 @@
 
 namespace Grimm;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
- * @property integer id
- * @property string title
- * @property string short_title
- * @property integer volume
- * @property integer volume_irregular
- * @property string edition
- * @property integer year
- * @property boolean grimm
- * @property string notes
- * @property string source
+ * @property integer                 id
+ * @property string                  title
+ * @property string                  short_title
+ * @property integer                 volume
+ * @property integer                 volume_irregular
+ * @property string                  edition
+ * @property integer                 year
+ * @property boolean                 grimm
+ * @property string                  notes
+ * @property string                  source
  * @property BookPersonAssociation[] personAssociations
  */
-class Book extends Model {
+class Book extends Model
+{
 
-    use SoftDeletes;
+    use SoftDeletes, CollectPrefixes;
 
     protected $table = 'books';
 
     protected $fillable = [
-        'title', 'short_title',
-        'volume', 'volume_irregular',
-        'edition', 'year',
+        'title',
+        'short_title',
+        'volume',
+        'volume_irregular',
+        'edition',
+        'year',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -37,6 +43,11 @@ class Book extends Model {
         'volume' => 'integer',
         'volume_irregular' => 'integer',
         'year' => 'integer',
+    ];
+
+    protected $prefixable = [
+        'short_title',
+        'title',
     ];
 
     public function addPersonOccurrence(Person $person, $page = null, $pageTo = null, $description = null, $line = null)
@@ -64,11 +75,13 @@ class Book extends Model {
 
     /**
      * Search for a book by title
-     * @param  $query The query object
-     * @param $title The title searched for
-     * @return \Illuminate\Database\Eloquent\Builder
+     *
+     * @param Builder     $query The query object
+     * @param             $title The title searched for
+     *
+     * @return Builder
      */
-    public function scopeSearchByTitle($query, $title)
+    public function scopeSearchByTitle(Builder $query, $title)
     {
         return $query->whereRaw('match(title, short_title) against (? in boolean mode)', [$title]);
     }
