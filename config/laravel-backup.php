@@ -51,7 +51,7 @@ return [
              */
             'disks' => [
                 'local',
-                //'s3'
+                's3',
             ],
         ],
     ],
@@ -107,7 +107,7 @@ return [
     'monitorBackups' => [
         [
             'name' => env('APP_URL'),
-            'disks' => ['local'],
+            'disks' => ['local', 's3'],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],
@@ -136,11 +136,11 @@ return [
          * Slack requires the installation of the maknz/slack package.
          */
         'events' => [
-            'whenBackupWasSuccessful'     => ['log'],
-            'whenCleanupWasSuccessful'    => ['log'],
-            'whenHealthyBackupWasFound'   => ['log'],
-            'whenBackupHasFailed'         => ['log', 'mail'],
-            'whenCleanupHasFailed'        => ['log', 'mail'],
+            'whenBackupWasSuccessful' => ['log'],
+            'whenCleanupWasSuccessful' => ['log'],
+            'whenHealthyBackupWasFound' => ['log'],
+            'whenBackupHasFailed' => ['log', 'mail'],
+            'whenCleanupHasFailed' => ['log', 'mail'],
             'whenUnhealthyBackupWasFound' => ['log', 'mail'],
         ],
 
@@ -149,27 +149,27 @@ return [
          */
         'mail' => [
             'from' => 'your@email.com',
-            'to'   => 'your@email.com',
+            'to' => 'your@email.com',
         ],
 
         /*
          * Here you can specify how messages should be sent to Slack.
          */
         'slack' => [
-            'channel'  => '#backups',
+            'channel' => '#backups',
             'username' => 'Backup bot',
-            'icon'     => ':robot:',
+            'icon' => ':robot:',
         ],
 
         /*
          * Here you can specify how messages should be sent to Pushover.
          */
         'pushover' => [
-            'token'  => env('PUSHOVER_APP_TOKEN'),
-            'user'   => env('PUSHOVER_USER_KEY'),
+            'token' => env('PUSHOVER_APP_TOKEN'),
+            'user' => env('PUSHOVER_USER_KEY'),
             'sounds' => [
-                'success' => env('PUSHOVER_SOUND_SUCCESS','pushover'),
-                'error'   => env('PUSHOVER_SOUND_ERROR','siren'),
+                'success' => env('PUSHOVER_SOUND_SUCCESS', 'pushover'),
+                'error' => env('PUSHOVER_SOUND_ERROR', 'siren'),
             ],
         ],
     ]
