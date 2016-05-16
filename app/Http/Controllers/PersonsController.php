@@ -39,7 +39,7 @@ class PersonsController extends Controller
             $people->byPrefix($request->get('prefix'));
         }
 
-        $this->preparePrefixDisplay($request, Person::prefixesOfLength('last_name', 2)->get());
+        $this->preparePrefixDisplay($request->get('prefix'), Person::prefixesOfLength('last_name', 2)->get());
 
         $people = $this->prepareCollection('last_person_index', $people, $request,
             function ($builder, $orderByKey, $direction) use ($customData) {
@@ -102,17 +102,6 @@ class PersonsController extends Controller
         ])->findOrFail($id);
 
         return view('persons.show', compact('person'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

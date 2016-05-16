@@ -36,10 +36,10 @@ class BooksController extends Controller
             $books->byPrefix($request->get('prefix'), 'short_title');
         }
 
-        $this->preparePrefixDisplay($request, Book::prefixesOfLength('short_title', 2)->get());
+        $this->preparePrefixDisplay($request->get('prefix'), Book::prefixesOfLength('short_title', 2)->get());
 
         $books = $this->prepareCollection('last_book_index', $books, $request,
-            function ($builder, $orderByKey, $direction) {
+            function ($builder) {
                 $builder->orderBy('title')->orderBy('volume')
                     ->orderBy('volume_irregular')
                     ->orderBy('edition');

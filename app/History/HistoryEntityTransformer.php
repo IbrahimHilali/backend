@@ -12,7 +12,7 @@ class HistoryEntityTransformer
      *
      * @param array $entityPresenters
      */
-    public function __construct(array $entityPresenters=[])
+    public function __construct(array $entityPresenters = [])
     {
         $this->addPresenters($entityPresenters);
     }

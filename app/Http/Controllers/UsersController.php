@@ -7,7 +7,6 @@ use App\Http\Requests\IndexUserRequest;
 use App\Http\Requests\ShowUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Grimm\Permission;
 use Grimm\Role;
 use Grimm\User;
 use Illuminate\Http\Request;

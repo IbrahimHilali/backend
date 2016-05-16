@@ -42,7 +42,7 @@ $this->group(['middleware' => 'web'], function () {
 
         $this->get('/home', 'HomeController@index');
 
-        $this->resource('books', 'BooksController');
+        $this->resource('books', 'BooksController', ['except' => ['edit']]);
         $this->resource('persons', 'PersonsController', ['except' => ['edit']]);
 
         $this->resource('users', 'UsersController');

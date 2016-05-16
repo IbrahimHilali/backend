@@ -13,10 +13,12 @@ use App\Http\Requests;
 
 class PersonPrintController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @param Person $persons
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Person $persons)
@@ -39,7 +41,8 @@ class PersonPrintController extends Controller
      * Store a newly created resource in storage.
      *
      * @param AddNewPrintToPersonRequest $request
-     * @param Person $persons
+     * @param Person                     $persons
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(AddNewPrintToPersonRequest $request, Person $persons)
@@ -48,7 +51,7 @@ class PersonPrintController extends Controller
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
         $persons->prints()->save($print);
-        
+
         if ($request->ajax()) {
             return $persons->prints;
         }
@@ -60,13 +63,12 @@ class PersonPrintController extends Controller
      * Display the specified resource.
      *
      * @param Person $persons
-     * @param $printId
+     * @param        $printId
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Person $persons, $printId)
     {
-        //$person = Person::findOrFail($personId);
-
         return $persons->prints()->findOrFail($printId);
     }
 
@@ -74,6 +76,7 @@ class PersonPrintController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -85,8 +88,9 @@ class PersonPrintController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePrintRequest $request
-     * @param Person $persons
-     * @param $printId
+     * @param Person             $persons
+     * @param                    $printId
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePrintRequest $request, Person $persons, $printId)
@@ -107,14 +111,16 @@ class PersonPrintController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Person $persons
-     * @param $printId
+     * @param        $printId
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Person $persons, $printId)
     {
-        if (Gate::allows('people.update')) {
-            $persons->prints()->find($printId)->delete();
-            return $persons->prints;
-        }
+        $this->authorize('people.update');
+
+        $persons->prints()->find($printId)->delete();
+
+        return $persons->prints;
     }
 }

@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Str;
+use Schema;
 
 class Controller extends BaseController
 {
+
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected function prepareCollection(
@@ -20,13 +21,12 @@ class Controller extends BaseController
         Builder $builder,
         Request $request,
         $unknownFieldCallback = null,
-        $pageSize = null,
-        $customUrlFields = []
+        $pageSize = null
     ) {
         $orderByKey = $request->get('order-by');
         $direction = ($request->get('direction', 0)) ? 'desc' : 'asc';
 
-        if (\Schema::hasColumn($builder->getModel()->getTable(), $orderByKey)) {
+        if (Schema::hasColumn($builder->getModel()->getTable(), $orderByKey)) {
             $builder->orderBy($orderByKey, $direction);
         } else {
             if (is_callable($unknownFieldCallback)) {
@@ -39,42 +39,46 @@ class Controller extends BaseController
 
         $paginator = $builder->paginate($pageSize);
 
-        $this->preserveIndexSet($collectionName, $orderByKey, $request, $paginator, $customUrlFields);
+        $this->preserveIndexSet($collectionName, $request);
 
         return $paginator;
     }
 
     /**
-     * @param $collectionName
+     * @param         $collectionName
      * @param Request $request
-     * @param LengthAwarePaginator $paginator
-     * @internal param $persons
-     * @internal param $orderByKey
+     *
+     * @return mixed
      */
-    protected function preserveIndexSet($collectionName, $orderByKey, Request $request, LengthAwarePaginator $paginator, $custom=[])
+    protected function preserveIndexSet($collectionName, Request $request)
     {
-        session([
-            $collectionName => $request->all()
+        return session([
+            $collectionName => $request->all(),
         ]);
     }
 
-    protected function preparePrefixDisplay(Request $request, $prefixes)
+    /**
+     * Creates the prefix selection UI for a given prefix of a list of prefixes.
+     *
+     * @param $prefix
+     * @param $prefixes
+     */
+    protected function preparePrefixDisplay($prefix, $prefixes)
     {
-        $firstCharacter = Str::substr($request->get('prefix'), 0, 1);
-        $secondCharacter = Str::substr($request->get('prefix'), 1, 1);
+        view()->composer('partials.prefixSelection', function ($view) use ($prefix, $prefixes) {
+            $firstCharacter = Str::substr($prefix, 0, 1);
+            $secondCharacter = Str::substr($prefix, 1, 1);
 
-        $characters = $prefixes;
+            $characters = $prefixes;
 
-        $navigationPrefixes = [];
+            $navigationPrefixes = [];
 
-        foreach ($characters as $character) {
-            if ($split = preg_split('//u', $character->prefix, null, PREG_SPLIT_NO_EMPTY)) {
-                list($first, $second) = $split;
-                $navigationPrefixes[$first][] = $second;
+            foreach ($characters as $character) {
+                if ($split = preg_split('//u', $character->prefix, null, PREG_SPLIT_NO_EMPTY)) {
+                    list($first, $second) = $split;
+                    $navigationPrefixes[$first][] = $second;
+                }
             }
-        }
-
-        view()->composer('partials.prefixSelection', function ($view) use ($firstCharacter, $secondCharacter, $navigationPrefixes) {
             $view->with(compact('firstCharacter', 'secondCharacter', 'navigationPrefixes'));
         });
     }

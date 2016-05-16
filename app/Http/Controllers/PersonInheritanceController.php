@@ -13,10 +13,12 @@ use App\Http\Requests;
 
 class PersonInheritanceController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @param Person $persons
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Person $persons)
@@ -38,7 +40,8 @@ class PersonInheritanceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param AddNewInheritanceToPersonRequest $request
-     * @param Person $persons
+     * @param Person                           $persons
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(AddNewInheritanceToPersonRequest $request, Person $persons)
@@ -58,6 +61,7 @@ class PersonInheritanceController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,6 +73,7 @@ class PersonInheritanceController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -80,10 +85,10 @@ class PersonInheritanceController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateInheritanceRequest $request
-     * @param Person $persons
-     * @param $inheritanceId
+     * @param Person                   $persons
+     * @param                          $inheritanceId
+     *
      * @return \Illuminate\Http\Response
-     * @internal param int $id
      */
     public function update(UpdateInheritanceRequest $request, Person $persons, $inheritanceId)
     {
@@ -100,16 +105,17 @@ class PersonInheritanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param Person $persons
+     * @param        $inheritanceId
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Person $persons, $inheritanceId)
     {
-        if (Gate::allows('people.update')) {
-            // TODO: Add permission check
-            $persons->inheritances()->find($inheritanceId)->delete();
-            return $persons->inheritances;
-        }
+        $this->authorize('people.update');
 
+        $persons->inheritances()->find($inheritanceId)->delete();
+
+        return $persons->inheritances;
     }
 }
