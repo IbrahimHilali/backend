@@ -69,17 +69,35 @@ class Controller extends BaseController
             $firstCharacter = Str::substr($prefix, 0, 1);
             $secondCharacter = Str::substr($prefix, 1, 1);
 
-            $characters = $prefixes;
-
             $navigationPrefixes = [];
 
-            foreach ($characters as $character) {
-                if ($split = preg_split('//u', $character->prefix, null, PREG_SPLIT_NO_EMPTY)) {
+            foreach ($prefixes as $prefix) {
+                $prefix = $this->preparePrefix($prefix->prefix);
+
+                if ($split = preg_split('//u', $prefix, null, PREG_SPLIT_NO_EMPTY)) {
                     list($first, $second) = $split;
+
                     $navigationPrefixes[$first][] = $second;
                 }
             }
             $view->with(compact('firstCharacter', 'secondCharacter', 'navigationPrefixes'));
         });
+    }
+
+    protected function preparePrefix($prefix)
+    {
+        $prefix = Str::lower($prefix);
+
+        $replaces = [
+            ['ä', 'a'],
+            ['ö', 'o'],
+            ['ü', 'u'],
+        ];
+
+        foreach ($replaces as $replace) {
+            $prefix = Str::replaceFirst($replace[0], $replace[1], $prefix);
+        }
+
+        return Str::ucfirst($prefix);
     }
 }
