@@ -67,17 +67,24 @@ class Controller extends BaseController
     {
         view()->composer('partials.prefixSelection', function ($view) use ($prefix, $prefixes) {
             $firstCharacter = Str::substr($prefix, 0, 1);
-            $secondCharacter = Str::substr($prefix, 1, 1);
+            $secondCharacter = Str::substr($prefix, 1);
 
             $navigationPrefixes = [];
 
             foreach ($prefixes as $prefix) {
                 $prefix = $this->preparePrefix($prefix->prefix);
 
-                if ($split = preg_split('//u', $prefix, null, PREG_SPLIT_NO_EMPTY)) {
-                    list($first, $second) = $split;
+                $prefixStart = Str::substr($prefix, 0, 1);
+                $prefixWithoutStart = Str::substr($prefix, 1);
 
-                    $navigationPrefixes[$first][] = $second;
+                if ($prefixStart) {
+                    if (!isset($navigationPrefixes[$prefixStart])) {
+                        $navigationPrefixes[$prefixStart] = [];
+                    }
+
+                    if ($prefixWithoutStart) {
+                        $navigationPrefixes[$prefixStart][] = $prefixWithoutStart;
+                    }
                 }
             }
             $view->with(compact('firstCharacter', 'secondCharacter', 'navigationPrefixes'));
