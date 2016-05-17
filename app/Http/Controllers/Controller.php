@@ -95,15 +95,10 @@ class Controller extends BaseController
     {
         $prefix = Str::lower($prefix);
 
-        $replaces = [
-            ['ä', 'a'],
-            ['ö', 'o'],
-            ['ü', 'u'],
-        ];
+        $search = ['ä', 'ö', 'ü'];
+        $replace = ['a', 'o', 'u'];
 
-        foreach ($replaces as $replace) {
-            $prefix = Str::replaceFirst($replace[0], $replace[1], $prefix);
-        }
+        $prefix = str_replace($search, $replace, $prefix);
 
         return Str::ucfirst($prefix);
     }
