@@ -128,6 +128,7 @@ return [
         'volume' => 'Der Band',
         'volume_irregular' => 'Der Zusatzband',
         'edition' => 'Die Edition',
+        'person' => 'Person',
     ],
 
 ];

@@ -42,18 +42,26 @@ $this->group(['middleware' => 'web'], function () {
 
         $this->get('/home', 'HomeController@index');
 
+        // Books
         $this->resource('books', 'BooksController', ['except' => ['edit']]);
+
+        // Persons
+        $this->get('persons/search', ['as' => 'persons.search', 'uses' => 'PersonsController@search']);
         $this->resource('persons', 'PersonsController', ['except' => ['edit']]);
 
+        // Users
         $this->resource('users', 'UsersController');
         $this->resource('roles', 'RolesController', ['except' => ['edit']]);
 
+        // Associations (user-book)
         $this->get('books/{books}/associations', ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
+        $this->post('books/{books}/associations', ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
 
         $this->get('persons/book/{association}', ['as' => 'persons.book', 'uses' => 'BooksPersonController@show']);
         $this->get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
         $this->post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
 
+        // Administration
         $this->get('admin/publish', ['as' => 'admin.deployment.index', 'uses' => 'DeploymentController@index']);
 
         $this->get('history/since', ['as' => 'history.since', 'uses' => 'HistoryController@since']);

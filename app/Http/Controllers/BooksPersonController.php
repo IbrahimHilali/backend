@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddBookToPersonRequest;
+use App\Http\Requests\AddPersonToBookRequest;
 use Grimm\Book;
 use Grimm\BookPersonAssociation;
 use Grimm\Person;
@@ -62,20 +63,28 @@ class BooksPersonController extends Controller
      */
     public function personStoreBook(AddBookToPersonRequest $request, Person $person)
     {
-        $association = new BookPersonAssociation();
+        $book = Book::find($request->input('book'));
 
-        $association->page = $request->input('page');
-        $association->page_to = $request->input('page_to') ?: null;
-        $association->line = $request->input('line') ?: null;
-        $association->page_description = $request->input('page_description') ?: null;
-
-        $association->person()->associate($person);
-        $association->book()->associate($request->input('book'));
-
-        $association->save();
+        $association = $this->storeAssociation($request, $person, $book);
 
         return redirect()
             ->route('persons.book', [$association->id])
+            ->with('success', 'Verknüpfung erstellt');
+    }
+
+    /**
+     * @param AddPersonToBookRequest $request
+     * @param Book $books
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function bookStorePerson(AddPersonToBookRequest $request, Book $books)
+    {
+        $person = Person::findOrFail($request->input('person'));
+
+        $association = $this->storeAssociation($request, $person, $books);
+
+        return redirect()
+            ->route('books.associations.index', [$books->id])
             ->with('success', 'Verknüpfung erstellt');
     }
 
@@ -109,7 +118,7 @@ class BooksPersonController extends Controller
         return view('books.person', compact('association'));
     }
 
-    public function showBook(Book $books)
+    public function showBook(Request $request, Book $books)
     {
         /*
         $books->load([
@@ -179,5 +188,28 @@ class BooksPersonController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @param Person $person
+     * @param Book $book
+     * @return BookPersonAssociation
+     */
+    protected function storeAssociation(Request $request, Person $person, Book $book)
+    {
+        $association = new BookPersonAssociation();
+
+        $association->page = $request->input('page');
+        $association->page_to = $request->input('page_to') ?: null;
+        $association->line = $request->input('line') ?: null;
+        $association->page_description = $request->input('page_description') ?: null;
+
+        $association->person()->associate($person);
+        $association->book()->associate($book);
+
+        $association->save();
+
+        return $association;
     }
 }

@@ -105,6 +105,25 @@ class PersonsController extends Controller
     }
 
     /**
+     * JSON based search via person names
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function search(Request $request)
+    {
+        $query = Person::searchByName($request->get('name'));
+
+        /*
+         * Sort by full text match
+        $query->orderBy('last_name')
+        ->orderBy('first_name');
+        */
+
+        return $query->paginate(20);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param UpdatePersonDataRequest $request

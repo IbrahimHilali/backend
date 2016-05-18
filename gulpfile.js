@@ -16,5 +16,8 @@ require('laravel-elixir-vueify');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss').browserify('persons/persons.js').browserify('deployment/deployment.js');
+    mix.sass('app.scss')
+        .browserify('associations/associations.js')
+        .browserify('persons/persons.js')
+        .browserify('deployment/deployment.js');
 });
