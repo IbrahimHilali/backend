@@ -21,7 +21,7 @@ class BackupStatusReader
 
     public function lastBackupAttempt($format = null)
     {
-        $data = $this->redis->get('last_backup_attempt');
+        $data = $this->redis->get('grimm.last_backup_attempt');
 
         $date = new Carbon($data);
         if ($format === null) {
@@ -33,12 +33,12 @@ class BackupStatusReader
 
     public function lastBackupStatus()
     {
-        return $this->redis->get('last_backup_status');
+        return $this->redis->get('grimm.last_backup_status');
     }
 
     public function lastSuccessfulBackup($format = null)
     {
-        $data = $this->redis->get('last_successful_backup');
+        $data = $this->redis->get('grimm.last_successful_backup');
         $date = new Carbon($data);
 
         if ($format === null) {
@@ -63,7 +63,7 @@ class BackupStatusReader
 
     public function lastBackupName()
     {
-        return $this->redis->get('last_backup_name');
+        return $this->redis->get('grimm.last_backup_name');
     }
 
     /**

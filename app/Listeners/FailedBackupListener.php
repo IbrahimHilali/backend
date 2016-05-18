@@ -29,8 +29,8 @@ class FailedBackupListener
      */
     public function handle(BackupHasFailed $event)
     {
-        $this->redis->set('last_backup_attempt', Carbon::now());
-        $this->redis->set('last_backup_status', 'fail');
-        $this->redis->set('last_backup_name', $event->backupDestination->getBackupName());
+        $this->redis->set('grimm.last_backup_attempt', Carbon::now());
+        $this->redis->set('grimm.last_backup_status', 'fail');
+        $this->redis->set('grimm.last_backup_name', $event->backupDestination->getBackupName());
     }
 }
