@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import typeahead from './components/Typeahead.vue';
+import typeahead from '../utils/Typeahead.vue';
 
 new Vue({
     el: '#associations',

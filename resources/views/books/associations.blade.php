@@ -43,7 +43,13 @@
                                        placeholder="Person suchen"
                                        src="{{ url('persons/search') }}?name="
                                        :prepare-response="prepareResponse"
-                                       :on-hit="personSelected"></typeahead>
+                                       :on-hit="personSelected"
+                                       result="person"
+                                       template-name="person"
+                                       template="@{{ item.last_name }}, @{{ item.first_name }} <em class='pull-right'>@{{ item.bio_data }}</em>"
+                                       empty="Es wurde keine Person gefunden!"
+                            >
+                            </typeahead>
                         </div>
                     </div>
                 </form>

@@ -10038,7 +10038,7 @@ var _vue = require('vue');
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Typeahead = require('./components/Typeahead.vue');
+var _Typeahead = require('../utils/Typeahead.vue');
 
 var _Typeahead2 = _interopRequireDefault(_Typeahead);
 
@@ -10081,7 +10081,7 @@ new _vue2.default({
     }
 });
 
-},{"./components/Typeahead.vue":3,"vue":1}],3:[function(require,module,exports){
+},{"../utils/Typeahead.vue":3,"vue":1}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10095,20 +10095,35 @@ var _vue2 = _interopRequireDefault(_vue);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    props: ['id', 'placeholder', 'src', 'onHit', 'prepareResponse'],
+    props: ['id', 'placeholder', 'templateName', 'template', 'src', 'onHit', 'prepareResponse', 'result', 'empty'],
 
     data: function data() {
         return {
             value: '',
-            results: []
+            results: [],
+            searched: false,
+            current: 0
         };
     },
+
+
+    partials: {
+        'default': '<span v-html="item | highlight value"></span>'
+    },
+
     ready: function ready() {
+        if (this.templateName && this.templateName !== 'default') {
+            _vue2.default.partial(this.templateName, this.template);
+        } else {
+            this.templateName = 'default';
+        }
+
         this.$els.searchPerson.focus();
 
         this.$watch('value', function (newValue, oldValue) {
             $.get(this.src + newValue, function (response) {
                 this.results = this.preparation(response);
+                this.searched = true;
             }.bind(this));
         });
     },
@@ -10131,11 +10146,20 @@ exports.default = {
         },
         reset: function reset() {
             this.results = [];
+        },
+        hit: function hit() {
+            this.onHit(this.results[this.current], this);
+        },
+        up: function up() {
+            if (this.current > 0) this.current--;
+        },
+        down: function down() {
+            if (this.current < this.results.length - 1) this.current++;
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<input class=form-control :id=id :placeholder=placeholder v-el:search-person=\"\" v-model=value debounce=500 autocomplete=off><ul class=list-group><li v-for=\"item in results\" @click=itemClicked(item) class=list-group-item style=\"cursor: pointer\">{{ item.last_name }}, {{ item.first_name }} <em class=pull-right>{{ item.bio_data }}</em><li v-show=\"results.length == 0\" class=list-group-item>Keine Person gefunden</ul>"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<input class=form-control :id=id :placeholder=placeholder v-el:search-person=\"\" v-model=value debounce=500 @keydown.up=up @keydown.down=down @keydown.enter.prevent=hit @keydown.esc=reset autocomplete=off><ul class=list-group><li v-for=\"item in results\" @click=itemClicked(item) @mousemove=\"current = $index\" class=list-group-item v-bind:class=\"{'active': $index == current}\" style=\"cursor: pointer\"><partial :name=templateName></partial><li v-show=\"searched &amp;&amp; results.length == 0\" class=list-group-item><span v-html=empty></span></ul>"
 
 },{"vue":1}]},{},[2]);
 
