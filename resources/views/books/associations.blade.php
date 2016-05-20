@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="searchPerson" class="col-sm-2 control-label">Band:</label>
+                        <label for="searchPerson" class="col-sm-2 control-label">Person suchen:</label>
                         <div class="col-sm-10">
                             <typeahead id="searchPerson"
                                        placeholder="Person suchen"
@@ -195,7 +195,7 @@
                             </td>
                             <td>
                                 <button @click="fillOccurrenceForm({{ $person }})" class="btn btn-primary">
-                                <i class="fa fa-arrow-right"></i>
+                                <i class="fa fa-plus"></i>
                                 </button>
                             </td>
                         </tr>

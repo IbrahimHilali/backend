@@ -31,9 +31,9 @@ class HistoryTranspiler
     {
         $this->clear();
 
-        foreach ($activities as $activity) {
+        $activities->each(function($activity) {
             $this->transpileEntry($activity);
-        }
+        });
 
         return $this->history;
     }

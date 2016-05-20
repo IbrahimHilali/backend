@@ -14,9 +14,8 @@
         <li v-for="item in results"
             @click="itemClicked(item)"
             @mousemove="current = $index"
-            class="list-group-item"
-            v-bind:class="{'active': $index == current}"
-            style="cursor: pointer;">
+            class="list-group-item typeahead-item"
+            :class="{'active': $index == current}">
             <partial :name="templateName"></partial>
         </li>
         <li v-show="searched && results.length == 0"
@@ -26,7 +25,13 @@
     </ul>
 </template>
 
-<script>
+<style>
+    .typeahead-item {
+        cursor: pointer;
+    }
+</style>
+
+<script type="text/babel">
     import Vue from 'vue';
 
     export default {
@@ -59,11 +64,12 @@
 
             this.$els.searchPerson.focus();
 
-            this.$watch('value', function (newValue, oldValue) {
-                $.get(this.src + newValue, function (response) {
+            this.$watch('value', (newValue, oldValue) => {
+                $.get(this.src + newValue, (response) => {
                     this.results = this.preparation(response);
                     this.searched = true;
-                }.bind(this));
+                    this.current = 0;
+                });
             });
         },
 
@@ -93,11 +99,15 @@
             },
 
             up() {
-                if (this.current > 0) this.current--
+                if (this.current > 0) {
+                    this.current--;
+                }
             },
 
             down() {
-                if (this.current < this.results.length - 1) this.current++
+                if (this.current < this.results.length - 1) {
+                    this.current++;
+                }
             }
         }
     }

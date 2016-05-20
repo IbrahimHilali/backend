@@ -10032,6 +10032,26 @@ setTimeout(function () {
 module.exports = Vue;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
+var inserted = exports.cache = {}
+
+exports.insert = function (css) {
+  if (inserted[css]) return
+  inserted[css] = true
+
+  var elem = document.createElement('style')
+  elem.setAttribute('type', 'text/css')
+
+  if ('textContent' in elem) {
+    elem.textContent = css
+  } else {
+    elem.styleSheet.cssText = css
+  }
+
+  document.getElementsByTagName('head')[0].appendChild(elem)
+  return elem
+}
+
+},{}],3:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -10081,7 +10101,8 @@ new _vue2.default({
     }
 });
 
-},{"../utils/Typeahead.vue":3,"vue":1}],3:[function(require,module,exports){
+},{"../utils/Typeahead.vue":4,"vue":1}],4:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert(".typeahead-item{cursor:pointer}")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10112,6 +10133,8 @@ exports.default = {
     },
 
     ready: function ready() {
+        var _this = this;
+
         if (this.templateName && this.templateName !== 'default') {
             _vue2.default.partial(this.templateName, this.template);
         } else {
@@ -10121,10 +10144,11 @@ exports.default = {
         this.$els.searchPerson.focus();
 
         this.$watch('value', function (newValue, oldValue) {
-            $.get(this.src + newValue, function (response) {
-                this.results = this.preparation(response);
-                this.searched = true;
-            }.bind(this));
+            $.get(_this.src + newValue, function (response) {
+                _this.results = _this.preparation(response);
+                _this.searched = true;
+                _this.current = 0;
+            });
         });
     },
 
@@ -10151,16 +10175,20 @@ exports.default = {
             this.onHit(this.results[this.current], this);
         },
         up: function up() {
-            if (this.current > 0) this.current--;
+            if (this.current > 0) {
+                this.current--;
+            }
         },
         down: function down() {
-            if (this.current < this.results.length - 1) this.current++;
+            if (this.current < this.results.length - 1) {
+                this.current++;
+            }
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<input class=form-control :id=id :placeholder=placeholder v-el:search-person=\"\" v-model=value debounce=500 @keydown.up=up @keydown.down=down @keydown.enter.prevent=hit @keydown.esc=reset autocomplete=off><ul class=list-group><li v-for=\"item in results\" @click=itemClicked(item) @mousemove=\"current = $index\" class=list-group-item v-bind:class=\"{'active': $index == current}\" style=\"cursor: pointer\"><partial :name=templateName></partial><li v-show=\"searched &amp;&amp; results.length == 0\" class=list-group-item><span v-html=empty></span></ul>"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<input class=form-control :id=id :placeholder=placeholder v-el:search-person=\"\" v-model=value debounce=500 @keydown.up=up @keydown.down=down @keydown.enter.prevent=hit @keydown.esc=reset autocomplete=off><ul class=list-group><li v-for=\"item in results\" @click=itemClicked(item) @mousemove=\"current = $index\" class=\"list-group-item typeahead-item\" :class=\"{'active': $index == current}\"><partial :name=templateName></partial><li v-show=\"searched &amp;&amp; results.length == 0\" class=list-group-item><span v-html=empty></span></ul>"
 
-},{"vue":1}]},{},[2]);
+},{"vue":1,"vueify-insert-css":2}]},{},[3]);
 
 //# sourceMappingURL=associations.js.map
