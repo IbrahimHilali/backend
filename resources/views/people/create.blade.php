@@ -4,11 +4,11 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('persons.index')) }}"><i
+                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('people.index')) }}"><i
                                 class="fa fa-caret-left"></i></a> Person erstellen</h1>
             </div>
             <div class="col-md-12 page-content">
-                <form action="{{ route('persons.store') }}" class="form-horizontal"
+                <form action="{{ route('people.store') }}" class="form-horizontal"
                       method="POST">
                     {{ csrf_field() }}
                     @include('partials.form.field', ['field' => 'last_name', 'model' => 'people'])
@@ -26,7 +26,7 @@
                     <div class="button-bar row">
                         <div class="col-sm-10 col-md-offset-2">
                             <button type="submit" class="btn btn-primary">Speichern</button>
-                            <a href="{{ referrer_url('last_person_index', route('persons.index')) }}"
+                            <a href="{{ referrer_url('last_person_index', route('people.index')) }}"
                                class="btn btn-link">Abbrechen</a>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
 
 @section('scripts')
     {{-- <script>
-        var BASE_URL = "{{ route('persons.create') }}";
+        var BASE_URL = "{{ route('people.create') }}";
     </script>
     <script src="{{ url('js/persons.js') }}"></script>
     <script>

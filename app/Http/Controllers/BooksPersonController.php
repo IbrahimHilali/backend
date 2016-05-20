@@ -52,7 +52,7 @@ class BooksPersonController extends Controller
                 ->paginate(10);;
         }
 
-        return view('persons.add-book', compact('books', 'person'));
+        return view('people.add-book', compact('books', 'person'));
     }
 
     /**
@@ -68,7 +68,7 @@ class BooksPersonController extends Controller
         $association = $this->storeAssociation($request, $person, $book);
 
         return redirect()
-            ->route('persons.book', [$association->id])
+            ->route('people.book', [$association->id])
             ->with('success', 'Verknüpfung erstellt');
     }
 

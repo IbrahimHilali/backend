@@ -41,7 +41,7 @@
             <ul class="nav navbar-nav">
                 <li class="disabled"><a href="#" onclick="return false">Briefe</a></li>
                 @can('people.*')
-                <li><a href="{{ route('persons.index') }}">{{ trans('people.people') }}</a></li>
+                <li><a href="{{ route('people.index') }}">{{ trans('people.people') }}</a></li>
                 @endcan
                 @can('books.*')
                 <li><a href="{{ route('books.index') }}">{{ trans('books.books') }}</a></li>

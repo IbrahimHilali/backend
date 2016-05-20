@@ -4374,6 +4374,12 @@ a.thumbnail.active {
   .alert-danger .alert-link {
     color: #843534; }
 
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0; }
+  to {
+    background-position: 0 0; } }
+
 @keyframes progress-bar-stripes {
   from {
     background-position: 40px 0; }
@@ -4407,6 +4413,7 @@ a.thumbnail.active {
 
 .progress.active .progress-bar,
 .progress-bar.active {
+  -webkit-animation: progress-bar-stripes 2s linear infinite;
   animation: progress-bar-stripes 2s linear infinite; }
 
 .progress-bar-success {
@@ -5020,9 +5027,12 @@ button.close {
   -webkit-overflow-scrolling: touch;
   outline: 0; }
   .modal.fade .modal-dialog {
+    -webkit-transform: translate(0, -25%);
     transform: translate(0, -25%);
+    transition: -webkit-transform 0.3s ease-out;
     transition: transform 0.3s ease-out; }
   .modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
     transform: translate(0, 0); }
 
 .modal-open .modal {
@@ -5365,16 +5375,22 @@ button.close {
       line-height: 1; }
     @media all and (transform-3d), (-webkit-transform-3d) {
       .carousel-inner > .item {
+        transition: -webkit-transform 0.6s ease-in-out;
         transition: transform 0.6s ease-in-out;
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        -webkit-perspective: 1000px;
         perspective: 1000px; }
         .carousel-inner > .item.next, .carousel-inner > .item.active.right {
+          -webkit-transform: translate3d(100%, 0, 0);
           transform: translate3d(100%, 0, 0);
           left: 0; }
         .carousel-inner > .item.prev, .carousel-inner > .item.active.left {
+          -webkit-transform: translate3d(-100%, 0, 0);
           transform: translate3d(-100%, 0, 0);
           left: 0; }
         .carousel-inner > .item.next.left, .carousel-inner > .item.prev.right, .carousel-inner > .item.active {
+          -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
           left: 0; } }
   .carousel-inner > .active,
@@ -5746,6 +5762,9 @@ body {
 .page-title {
   background: #35495D;
   border: 1px solid #22303d; }
+  .page-title.error-title {
+    background: #d9534f;
+    border: 1px solid #c9302c; }
   .page-title h1 {
     color: #fff;
     margin-top: 10px;
@@ -5759,8 +5778,10 @@ body {
   text-align: center;
   border-bottom: 1px solid lightgray;
   padding-bottom: -5px;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
   border-left: 1px solid #dfdfdf;
@@ -5833,7 +5854,14 @@ body {
     border-radius: 1px; }
 
 .table tr:target {
+  -webkit-animation: target-fade 2s 1;
   animation: target-fade 2s 1; }
+
+@-webkit-keyframes target-fade {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1); }
+  100% {
+    background-color: transparent; } }
 
 @keyframes target-fade {
   0% {
@@ -5866,8 +5894,10 @@ body {
   border: 1px solid #2e6da4; }
 
 .button-box {
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center; }
   .button-box div {
@@ -5901,6 +5931,7 @@ table.collapse.in {
 .letters-container {
   background: #35495D;
   text-align: center;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
   .letters-container .letters {

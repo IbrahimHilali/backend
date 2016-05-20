@@ -41,7 +41,7 @@
                         <div class="col-sm-10">
                             <typeahead id="searchPerson"
                                        placeholder="Person suchen"
-                                       src="{{ url('persons/search') }}?name="
+                                       src="{{ url('people/search') }}?name="
                                        :prepare-response="prepareResponse"
                                        :on-hit="personSelected"
                                        result="person"

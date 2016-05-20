@@ -22,6 +22,7 @@ class PersonsController extends Controller
      * Display a listing of the resource.
      *
      * @param IndexPersonRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(IndexPersonRequest $request)
@@ -34,7 +35,6 @@ class PersonsController extends Controller
             $people = Person::query();
         }
 
-
         if ($request->has('prefix')) {
             $people->byPrefix($request->get('prefix'));
         }
@@ -46,10 +46,11 @@ class PersonsController extends Controller
                 if (!array_key_exists('name', $customData)) {
                     $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
                 }
+
                 return 'name';
             }, 200);
 
-        return view('persons.index', compact('people'));
+        return view('people.index', compact('people'));
     }
 
     /**
@@ -59,13 +60,14 @@ class PersonsController extends Controller
      */
     public function create()
     {
-        return view('persons.create');
+        return view('people.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param StorePersonRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(StorePersonRequest $request)
@@ -76,7 +78,7 @@ class PersonsController extends Controller
 
         event(new StorePersonEvent($person, $request->user()));
 
-        return redirect()->route('persons.show', [$person->id])->with('success',
+        return redirect()->route('people.show', [$person->id])->with('success',
             'Die Person wurde erfolgreich erstellt!');
     }
 
@@ -84,6 +86,7 @@ class PersonsController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -98,16 +101,17 @@ class PersonsController extends Controller
             'inheritances',
             'bookAssociations.book' => function ($query) {
                 $query->orderBy('books.title');
-            }
+            },
         ])->findOrFail($id);
 
-        return view('persons.show', compact('person'));
+        return view('people.show', compact('person'));
     }
 
     /**
      * JSON based search via person names
      *
      * @param Request $request
+     *
      * @return mixed
      */
     public function search(Request $request)
@@ -127,16 +131,17 @@ class PersonsController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePersonDataRequest $request
-     * @param Person $persons
+     * @param Person                  $people
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePersonDataRequest $request, Person $persons)
+    public function update(UpdatePersonDataRequest $request, Person $people)
     {
-        $this->updatePersonModel($request, $persons);
+        $this->updatePersonModel($request, $people);
 
-        event(new UpdatePersonEvent($persons, $request->user()));
+        event(new UpdatePersonEvent($people, $request->user()));
 
-        return redirect()->route('persons.show', ['persons' => $persons->id])->with('success',
+        return redirect()->route('people.show', [$people->id])->with('success',
             'Eintrag erfolgreich aktualisiert!');
     }
 
@@ -144,21 +149,23 @@ class PersonsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DestroyPersonRequest $request
-     * @param Person $persons
+     * @param Person               $people
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyPersonRequest $request, Person $persons)
+    public function destroy(DestroyPersonRequest $request, Person $people)
     {
-        $persons->delete();
+        $people->delete();
 
-        event(new DestroyPersonEvent($persons, $request->user()));
+        event(new DestroyPersonEvent($people, $request->user()));
 
-        return redirect()->route('persons.index')->with('success', 'Die Person wurde erfolgreich gelöscht!');
+        return redirect()->route('people.index')->with('success', 'Die Person wurde erfolgreich gelöscht!');
     }
 
     /**
      * TODO: Extract this method
-     * @param $request
+     *
+     * @param        $request
      * @param Person $person
      */
     private function updatePersonModel(Request $request, Person $person)
@@ -174,7 +181,7 @@ class PersonsController extends Controller
 
         $person->add_bio_data = $request->get('add_bio_data') ?: null;
 
-        $person->source = $request->get('source') ?: null;
+        $person->source = $request->get('source') ?: ''; // Source is not nullable!
 
         $person->is_organization = $request->get('is_organization');
 

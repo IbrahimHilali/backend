@@ -28,6 +28,12 @@ body {
 .page-title {
   background: #35495D;
   border: 1px solid darken(#35495D, 10%);
+
+  &.error-title {
+    background: $brand-danger;
+    border: 1px solid darken($brand-danger, 10%);
+  }
+
   h1 {
     color: #fff;
     margin-top: 10px;

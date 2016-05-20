@@ -21,7 +21,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center" style="width: 40%;">
-                                    <a href="{{ route('persons.show', [$association->person->id]) }}">
+                                    <a href="{{ route('people.show', [$association->person->id]) }}">
                                         <i class="fa fa-arrow-left"></i>
                                     </a>
                                     {{ $association->person->id }}

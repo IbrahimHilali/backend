@@ -40,14 +40,14 @@ $this->group(['middleware' => 'web'], function () {
             return redirect('home');
         });
 
-        $this->get('/home', 'HomeController@index');
+        $this->get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
         // Books
         $this->resource('books', 'BooksController', ['except' => ['edit']]);
 
         // Persons
-        $this->get('persons/search', ['as' => 'persons.search', 'uses' => 'PersonsController@search']);
-        $this->resource('persons', 'PersonsController', ['except' => ['edit']]);
+        $this->get('people/search', ['as' => 'people.search', 'uses' => 'PersonsController@search']);
+        $this->resource('people', 'PersonsController', ['except' => ['edit']]);
 
         // Users
         $this->resource('users', 'UsersController');
@@ -57,9 +57,9 @@ $this->group(['middleware' => 'web'], function () {
         $this->get('books/{books}/associations', ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
         $this->post('books/{books}/associations', ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
 
-        $this->get('persons/book/{association}', ['as' => 'persons.book', 'uses' => 'BooksPersonController@show']);
-        $this->get('persons/{person}/add-book', ['as' => 'persons.add-book', 'uses' => 'BooksPersonController@personAddBook']);
-        $this->post('persons/{person}/add-book', ['as' => 'persons.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
+        $this->get('people/book/{association}', ['as' => 'people.book', 'uses' => 'BooksPersonController@show']);
+        $this->get('people/{person}/add-book', ['as' => 'people.add-book', 'uses' => 'BooksPersonController@personAddBook']);
+        $this->post('people/{person}/add-book', ['as' => 'people.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
 
         // Administration
         $this->get('admin/publish', ['as' => 'admin.deployment.index', 'uses' => 'DeploymentController@index']);
@@ -69,8 +69,8 @@ $this->group(['middleware' => 'web'], function () {
 });
 
 $this->group(['middleware' => 'api'], function() {
-    $this->resource('persons.prints', 'PersonPrintController', ['except' => ['edit']]);
-    $this->resource('persons.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
+    $this->resource('people.prints', 'PersonPrintController', ['except' => ['edit']]);
+    $this->resource('people.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
     $this->post('admin/publish/trigger', ['as' => 'admin.deployment.trigger', 'uses' => 'DeploymentController@triggerDeployment']);
     $this->get('admin/publish/status', ['as' => 'admin.deployment.status', 'uses' => 'DeploymentController@status']);
     $this->post('admin/publish/blankify', ['as' => 'admin.deployment.blankify', 'uses' => 'DeploymentController@blankify']);

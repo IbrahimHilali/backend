@@ -6,11 +6,11 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('persons.index'), '#person-' . $person->id) }}"><i
+                <h1><a class="prev-link" href="{{ referrer_url('last_person_index', route('people.index'), '#person-' . $person->id) }}"><i
                                 class="fa fa-caret-left"></i></a> Personendaten: {{ $person->fullName() }}</h1>
             </div>
             <div class="col-md-12 page-content">
-                <form action="{{ route('persons.update', ['persons' => $person->id]) }}" class="form-horizontal"
+                <form action="{{ route('people.update', ['people' => $person->id]) }}" class="form-horizontal"
                       method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
@@ -29,7 +29,7 @@
                     <div class="button-bar row">
                         <div class="col-sm-10 col-md-offset-2">
                             <button type="submit" class="btn btn-primary">Speichern</button>
-                            <a href="{{ referrer_url('last_person_index', route('persons.index')) }}"
+                            <a href="{{ referrer_url('last_person_index', route('people.index')) }}"
                                class="btn btn-link">Abbrechen</a>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             <tbody>
                             <tr v-for="print in prints" is="in-place"
                                 :print-id="print.id" :print-entry="print.entry" :print-year="print.year"
-                                base-url="{{ route('persons.prints.index', [$person->id]) }}">
+                                base-url="{{ route('people.prints.index', [$person->id]) }}">
                             </tr>
                             </tbody>
                         </table>
@@ -82,7 +82,7 @@
                                         <h4 class="modal-title" id="addPrintTitle">Druck hinzufügen</h4>
                                     </div>
                                     <form @submit.prevent="storePrint" id="createPrintForm"
-                                          action="{{ route('persons.prints.store', ['persons' => $person->id]) }}"
+                                          action="{{ route('people.prints.store', ['people' => $person->id]) }}"
                                           class="form-inline" method="POST">
                                         <div class="modal-body">
                                             {{ csrf_field() }}
@@ -124,7 +124,7 @@
                             <tbody>
                             <tr v-for="inheritance in inheritances" is="inheritance-in-place"
                                 :inheritance-id="inheritance.id" :inheritance-entry="inheritance.entry"
-                                base-url="{{ route('persons.inheritances.index', [$person->id]) }}">
+                                base-url="{{ route('people.inheritances.index', [$person->id]) }}">
                             </tr>
                             </tbody>
                         </table>
@@ -138,7 +138,7 @@
                                         <h4 class="modal-title" id="addInheritanceTitle">Nachlass hinzufügen</h4>
                                     </div>
                                     <form @submit.prevent="storeInheritance"
-                                          action="{{ route('persons.inheritances.store', ['persons' => $person->id]) }}"
+                                          action="{{ route('people.inheritances.store', ['people' => $person->id]) }}"
                                           class="form-inline" id="createInheritanceForm" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -161,7 +161,7 @@
                     <div role="tabpanel" class="tab-pane" id="books">
                         <div class="add-button">
                             @can('books.assign')
-                            <a href="{{ route('persons.add-book', [$person->id]) }}" role="button"
+                            <a href="{{ route('people.add-book', [$person->id]) }}" role="button"
                                class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i> Buch hinzufügen
                             </a>
@@ -192,7 +192,7 @@
                                     </td>
                                     <td>{{ $bookAssociation->line }}</td>
                                     <td class="action-column">
-                                        <a href="{{ route('persons.book', [$bookAssociation->id]) }}">
+                                        <a href="{{ route('people.book', [$bookAssociation->id]) }}">
                                             <i class="fa fa-link"></i>
                                         </a>
                                     </td>
@@ -229,7 +229,7 @@
 
                     <div class="panel-body">
                         <p>
-                        <form id="danger-zone" action="{{ route('persons.destroy', ['id' => $person->id]) }}"
+                        <form id="danger-zone" action="{{ route('people.destroy', ['id' => $person->id]) }}"
                               method="post"
                               class="form-inline">
                             {{ csrf_field() }}
@@ -250,7 +250,7 @@
 
 @section('scripts')
     <script>
-        var BASE_URL = "{{ route('persons.show', [$person->id]) }}";
+        var BASE_URL = "{{ route('people.show', [$person->id]) }}";
     </script>
     <script src="{{ url('js/persons.js') }}"></script>
     <script>

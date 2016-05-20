@@ -17,14 +17,14 @@ class PersonPrintController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Person $persons
+     * @param Person $people
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Person $persons)
+    public function index(Person $people)
     {
         //$person = Person::findOrFail($personId);
-        return $persons->prints;
+        return $people->prints;
     }
 
     /**
@@ -41,35 +41,35 @@ class PersonPrintController extends Controller
      * Store a newly created resource in storage.
      *
      * @param AddNewPrintToPersonRequest $request
-     * @param Person                     $persons
+     * @param Person                     $people
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewPrintToPersonRequest $request, Person $persons)
+    public function store(AddNewPrintToPersonRequest $request, Person $people)
     {
         $print = new PersonPrint();
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
-        $persons->prints()->save($print);
+        $people->prints()->save($print);
 
         if ($request->ajax()) {
-            return $persons->prints;
+            return $people->prints;
         }
 
-        return redirect()->route('persons.show', ['persons' => $persons->id]);
+        return redirect()->route('people.show', ['people' => $people->id]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Person $persons
+     * @param Person $people
      * @param        $printId
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Person $persons, $printId)
+    public function show(Person $people, $printId)
     {
-        return $persons->prints()->findOrFail($printId);
+        return $people->prints()->findOrFail($printId);
     }
 
     /**
@@ -88,16 +88,16 @@ class PersonPrintController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePrintRequest $request
-     * @param Person             $persons
+     * @param Person             $people
      * @param                    $printId
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePrintRequest $request, Person $persons, $printId)
+    public function update(UpdatePrintRequest $request, Person $people, $printId)
     {
 
         /** @var PersonPrint $print */
-        $print = $persons->prints()->find($printId);
+        $print = $people->prints()->find($printId);
 
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
@@ -110,17 +110,17 @@ class PersonPrintController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Person $persons
+     * @param Person $people
      * @param        $printId
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $persons, $printId)
+    public function destroy(Person $people, $printId)
     {
         $this->authorize('people.update');
 
-        $persons->prints()->find($printId)->delete();
+        $people->prints()->find($printId)->delete();
 
-        return $persons->prints;
+        return $people->prints;
     }
 }

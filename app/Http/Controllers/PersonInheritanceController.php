@@ -40,21 +40,21 @@ class PersonInheritanceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param AddNewInheritanceToPersonRequest $request
-     * @param Person                           $persons
+     * @param Person                           $people
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewInheritanceToPersonRequest $request, Person $persons)
+    public function store(AddNewInheritanceToPersonRequest $request, Person $people)
     {
         $inheritance = new PersonInheritance();
         $inheritance->entry = $request->get('entry');
-        $persons->inheritances()->save($inheritance);
+        $people->inheritances()->save($inheritance);
 
         if ($request->ajax()) {
-            return $persons->inheritances;
+            return $people->inheritances;
         }
 
-        return redirect()->route('persons.show', ['persons' => $persons->id])->with('success', 'Nachlass hinzugefügt');
+        return redirect()->route('people.show', ['people' => $people->id])->with('success', 'Nachlass hinzugefügt');
     }
 
     /**
@@ -85,15 +85,15 @@ class PersonInheritanceController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateInheritanceRequest $request
-     * @param Person                   $persons
+     * @param Person                   $people
      * @param                          $inheritanceId
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInheritanceRequest $request, Person $persons, $inheritanceId)
+    public function update(UpdateInheritanceRequest $request, Person $people, $inheritanceId)
     {
         /** @var PersonInheritance $inheritance */
-        $inheritance = $persons->inheritances()->find($inheritanceId);
+        $inheritance = $people->inheritances()->find($inheritanceId);
 
         $inheritance->entry = $request->get('entry');
 
@@ -105,17 +105,17 @@ class PersonInheritanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Person $persons
+     * @param Person $people
      * @param        $inheritanceId
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $persons, $inheritanceId)
+    public function destroy(Person $people, $inheritanceId)
     {
         $this->authorize('people.update');
 
-        $persons->inheritances()->find($inheritanceId)->delete();
+        $people->inheritances()->find($inheritanceId)->delete();
 
-        return $persons->inheritances;
+        return $people->inheritances;
     }
 }

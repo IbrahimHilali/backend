@@ -13,7 +13,7 @@
                         <ul>
                             @foreach($latestPeopleCreated as $person)
                                 <li>
-                                    <a href="{{ route('persons.show', ['id' => $person->id]) }}">{{ $person->first_name }} {{ $person->last_name }}</a>
+                                    <a href="{{ route('people.show', ['id' => $person->id]) }}">{{ $person->first_name }} {{ $person->last_name }}</a>
                                     ({{ $person->updated_at->format('d.m.Y H:i:s') }})
                                 </li>
                             @endforeach
@@ -45,7 +45,7 @@
                             @endcan
                             @can('people.store')
                             <div>
-                                <a href="{{ route('persons.create') }}"><i class="fa fa-users fa-4x"></i>
+                                <a href="{{ route('people.create') }}"><i class="fa fa-users fa-4x"></i>
                                     <h5>Neue Person</h5></a>
                             </div>
                             @endcan

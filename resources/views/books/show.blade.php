@@ -63,7 +63,7 @@
                     @foreach($book->personAssociations as $personAssociation)
                         <tr>
                             <td>
-                                <a href="{{ route('persons.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
+                                <a href="{{ route('people.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
                             </td>
                             <td>{{ $personAssociation->person->last_name }}</td>
                             <td>{{ $personAssociation->person->first_name }}</td>
@@ -76,7 +76,7 @@
                             <td>{{ $personAssociation->line }}</td>
                             <td>{{ $personAssociation->page_description }}</td>
                             <td>
-                                <a href="{{ route('persons.book', [$personAssociation->id]) }}"
+                                <a href="{{ route('people.book', [$personAssociation->id]) }}"
                                    data-toggle="tooltip" data-title="Verknüpfung">
                                     <span class="fa fa-link"></span>
                                 </a>

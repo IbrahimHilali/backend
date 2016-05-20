@@ -1,5 +1,5 @@
 <p>
-    {{ trans($activity->getType() . '.' . $activity->getType(false)) }} entfernt
+    {{ trans($activity->getType() . '.' . $activity->getType(false)) }} entfernt <a href="{{ route($activity->getType().'.show', $activity->model_id) }}" title="Details"><i class="fa fa-link"></i></a>
 </p>
 
 <table class="table table-striped collapse" id="activity-{{ $activity->id }}">
