@@ -135,6 +135,22 @@ class Person extends Model
         ]);
     }
 
+    public function scopeDetails(Builder $query)
+    {
+        return $query->with([
+            'information.code' => function ($query) {
+                $query->orderBy('person_codes.name');
+            },
+            'prints' => function ($query) {
+                $query->orderBy('year', 'asc');
+            },
+            'inheritances',
+            'bookAssociations.book' => function ($query) {
+                $query->orderBy('books.title');
+            },
+        ]);
+    }
+
     protected static function boot()
     {
         parent::boot();

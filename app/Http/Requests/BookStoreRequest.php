@@ -41,7 +41,7 @@ class BookStoreRequest extends Request
     /**
      * Creates a new book entry in database
      *
-     * @return bool
+     * @return Book
      */
     public function persist()
     {

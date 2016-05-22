@@ -99,18 +99,7 @@ class PersonsController extends Controller
      */
     public function show($id)
     {
-        $person = Person::withTrashed()->with([
-            'information.code' => function ($query) {
-                $query->orderBy('person_codes.name');
-            },
-            'prints' => function ($query) {
-                $query->orderBy('year', 'asc');
-            },
-            'inheritances',
-            'bookAssociations.book' => function ($query) {
-                $query->orderBy('books.title');
-            },
-        ])->findOrFail($id);
+        $person = Person::withTrashed()->details()->findOrFail($id);
 
         return view('people.show', compact('person'));
     }

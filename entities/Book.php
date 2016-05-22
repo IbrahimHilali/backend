@@ -85,6 +85,17 @@ class Book extends Model
         return $query->whereRaw('match(title, short_title) against (? in boolean mode)', [$title]);
     }
 
+    public function scopeDetails(Builder $query)
+    {
+        return $query->with([
+            'personAssociations' => function ($query) {
+                $query->orderBy('book_person.page')
+                    ->orderBy('book_person.line');
+            },
+            'personAssociations.person',
+        ]);
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -91,13 +91,7 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        $book = Book::withTrashed()->with([
-            'personAssociations' => function ($query) {
-                $query->orderBy('book_person.page')
-                    ->orderBy('book_person.line');
-            },
-            'personAssociations.person',
-        ])->findOrFail($id);
+        $book = Book::withTrashed()->details()->findOrFail($id);
 
         return view('books.show', compact('book'));
     }
