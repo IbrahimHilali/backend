@@ -34,6 +34,10 @@ class ModelActivityProvider extends ServiceProvider
             $this->logDeleting($model);
         });
 
+        Book::restored(function (Model $model) {
+            $this->logRestoring($model);
+        });
+
         Person::created(function (Model $model) {
             $this->logCreating($model);
         });
