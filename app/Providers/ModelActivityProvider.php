@@ -81,11 +81,15 @@ class ModelActivityProvider extends ServiceProvider
 
     protected function logUpdating(Model $model)
     {
-        $this->log($model, [
-            'action' => 'updating',
-            'before' => $this->getBeforeFromModel($model),
-            'after' => $model->getDirty(),
-        ]);
+        $before = $this->getBeforeFromModel($model);
+
+        if (!array_key_exists('deleted_at', $before)) {
+            $this->log($model, [
+                'action' => 'updating',
+                'before' => $before,
+                'after' => $model->getDirty(),
+            ]);
+        }
     }
 
     protected function logDeleting(Model $model)

@@ -1,9 +1,9 @@
 <template>
     <tr v-if="existing">
         <td colspan="2" v-if="!editing">
-            <a href="#" v-on:click.prevent="clickEdit"><i class="fa fa-edit"></i></a> {{ inheritanceEntry }}
+            <a href="#" v-on:click.prevent="clickEdit" v-if="editable"><i class="fa fa-edit"></i></a> {{ inheritanceEntry }}
         </td>
-        <td v-if="!editing"><a href="#" v-on:click.prevent="deleteInheritance"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
+        <td v-if="!editing"><a href="#" v-on:click.prevent="deleteInheritance" v-if="editable"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
         <td v-if="editing">
             <a href="#" class="btn btn-link btn-sm" v-on:click.prevent="stopEdit"><i class="fa fa-times"></i></a>
         </td>
@@ -20,7 +20,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['inheritanceId', 'inheritanceEntry', 'baseUrl'],
+        props: ['inheritanceId', 'inheritanceEntry', 'baseUrl', 'editable'],
         methods: {
             clickEdit: function () {
                 if (this.editingEntry == '') {

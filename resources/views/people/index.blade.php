@@ -31,9 +31,14 @@
             </div>
             @include('partials.prefixSelection', ['route' => 'people'])
             <div class="col-md-12 pagination-container">
-                {{ $people->appends(request()->except('page'))->links() }}
+                {{ $people->appends(request()->except(['page', 'trash']))->links() }}
             </div>
             <div class="col-md-12 list-content">
+                <div class="add-button">
+                    <a href="{{ route('people.index') }}?trash={{ (int)!session('person.trash', 1) }}" type="button" class="btn btn-{{ (session('person.trash', 0)) ? 'danger' : 'default' }} btn-sm" data-toggle="tooltip" data-placement="bottom" title="Gelöschte Elemente anzeigen">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </div>
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
@@ -80,7 +85,7 @@
             </div>
             <div class="col-md-12 pagination-container">
                 <div class="pagination-container">
-                    {{ $people->appends(request()->except('page'))->links() }}
+                    {{ $people->appends(request()->except(['page', 'trash']))->links() }}
                 </div>
             </div>
         </div>

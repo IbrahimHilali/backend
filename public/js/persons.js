@@ -10045,7 +10045,7 @@ var _vue2 = _interopRequireDefault(_vue);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    props: ['inheritanceId', 'inheritanceEntry', 'baseUrl'],
+    props: ['inheritanceId', 'inheritanceEntry', 'baseUrl', 'editable'],
     methods: {
         clickEdit: function clickEdit() {
             if (this.editingEntry == '') {
@@ -10099,7 +10099,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<tr v-if=existing><td colspan=2 v-if=!editing><a href=# v-on:click.prevent=clickEdit><i class=\"fa fa-edit\"></i></a> {{ inheritanceEntry }}<td v-if=!editing><a href=# v-on:click.prevent=deleteInheritance><i class=\"fa fa-trash\" data-toggle=tooltip data-placement=top title=Löschen></i></a><td v-if=editing><a href=# class=\"btn btn-link btn-sm\" v-on:click.prevent=stopEdit><i class=\"fa fa-times\"></i></a><td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingEntry v-el:entry-input=\"\" v-on:keyup.enter=saveInheritance()><td v-if=editing><button type=button class=\"btn btn-primary btn-sm\" v-on:click=saveInheritance()><i class=\"fa fa-spinner fa-spin\" v-if=saving></i> Speichern</button>"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<tr v-if=existing><td colspan=2 v-if=!editing><a href=# v-on:click.prevent=clickEdit v-if=editable><i class=\"fa fa-edit\"></i></a> {{ inheritanceEntry }}<td v-if=!editing><a href=# v-on:click.prevent=deleteInheritance v-if=editable><i class=\"fa fa-trash\" data-toggle=tooltip data-placement=top title=Löschen></i></a><td v-if=editing><a href=# class=\"btn btn-link btn-sm\" v-on:click.prevent=stopEdit><i class=\"fa fa-times\"></i></a><td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingEntry v-el:entry-input=\"\" v-on:keyup.enter=saveInheritance()><td v-if=editing><button type=button class=\"btn btn-primary btn-sm\" v-on:click=saveInheritance()><i class=\"fa fa-spinner fa-spin\" v-if=saving></i> Speichern</button>"
 
 },{"vue":1}],3:[function(require,module,exports){
 'use strict';
@@ -10115,7 +10115,7 @@ var _vue2 = _interopRequireDefault(_vue);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    props: ['printId', 'printEntry', 'printYear', 'baseUrl'],
+    props: ['printId', 'printEntry', 'printYear', 'baseUrl', 'editable'],
     methods: {
         clickEdit: function clickEdit() {
             if (this.editingYear == '') {
@@ -10175,7 +10175,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<tr v-if=existing><td v-if=editing><a href=# class=\"btn btn-link btn-sm\" v-on:click.prevent=stopEdit><i class=\"fa fa-times\"></i></a><td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingEntry v-el:entry-input=\"\" v-on:keyup.enter=savePrint()><td colspan=2 v-if=!editing><a href=# v-on:click.prevent=clickEdit><i class=\"fa fa-edit\"></i></a> {{ printEntry }}<td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingYear v-on:keyup.enter=savePrint()><td v-if=editing><button type=button class=\"btn btn-primary btn-sm\" v-on:click=savePrint()><i class=\"fa fa-spinner fa-spin\" v-if=saving></i> Speichern</button><td colspan=2 v-if=!editing>{{ printYear }} <a href=# v-on:click.prevent=deletePrint><i class=\"fa fa-trash\" data-toggle=tooltip data-placement=top title=Löschen></i></a>"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<tr v-if=existing><td v-if=editing><a href=# class=\"btn btn-link btn-sm\" v-on:click.prevent=stopEdit><i class=\"fa fa-times\"></i></a><td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingEntry v-el:entry-input=\"\" v-on:keyup.enter=savePrint()><td colspan=2 v-if=!editing><a href=# v-on:click.prevent=clickEdit v-if=editable><i class=\"fa fa-edit\"></i></a> {{ printEntry }}<td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingYear v-on:keyup.enter=savePrint()><td v-if=editing><button type=button class=\"btn btn-primary btn-sm\" v-on:click=savePrint()><i class=\"fa fa-spinner fa-spin\" v-if=saving></i> Speichern</button><td colspan=2 v-if=!editing>{{ printYear }} <a href=# v-on:click.prevent=deletePrint v-if=editable><i class=\"fa fa-trash\" data-toggle=tooltip data-placement=top title=Löschen></i></a>"
 
 },{"vue":1}],4:[function(require,module,exports){
 'use strict';

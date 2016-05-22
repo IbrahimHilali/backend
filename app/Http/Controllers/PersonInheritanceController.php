@@ -17,13 +17,15 @@ class PersonInheritanceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Person $persons
+     * @param Person $people
      *
      * @return \Illuminate\Http\Response
+     *
      */
-    public function index(Person $persons)
+    public function index($id)
     {
-        return $persons->inheritances;
+        $people = Person::withTrashed()->findOrFail($id);
+        return $people->inheritances;
     }
 
     /**

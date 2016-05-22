@@ -21,9 +21,9 @@ class PersonPrintController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Person $people)
+    public function index($people)
     {
-        //$person = Person::findOrFail($personId);
+        $people = Person::withTrashed()->findOrFail($people);
         return $people->prints;
     }
 

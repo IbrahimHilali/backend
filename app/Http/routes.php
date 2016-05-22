@@ -49,6 +49,8 @@ $this->group(['middleware' => 'web'], function () {
         $this->get('people/search', ['as' => 'people.search', 'uses' => 'PersonsController@search']);
         $this->resource('people', 'PersonsController', ['except' => ['edit']]);
 
+        $this->post('people/{id}/restore', ['as' => 'people.restore', 'uses' => 'PersonsController@restore']);
+
         // Users
         $this->resource('users', 'UsersController');
         $this->resource('roles', 'RolesController', ['except' => ['edit']]);

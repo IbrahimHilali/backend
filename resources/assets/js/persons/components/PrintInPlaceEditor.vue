@@ -7,7 +7,7 @@
             <input type="text" class="form-control input-sm" v-model="editingEntry" v-el:entry-input v-on:keyup.enter="savePrint()" />
         </td>
         <td colspan="2" v-if="!editing">
-            <a href="#" v-on:click.prevent="clickEdit"><i class="fa fa-edit"></i></a> {{ printEntry }}
+            <a href="#" v-on:click.prevent="clickEdit" v-if="editable"><i class="fa fa-edit"></i></a> {{ printEntry }}
         </td>
         <td v-if="editing">
             <input type="text" class="form-control input-sm" v-model="editingYear" v-on:keyup.enter="savePrint()" />
@@ -15,7 +15,7 @@
         <td v-if="editing">
             <button type="button" class="btn btn-primary btn-sm" v-on:click="savePrint()"><i class="fa fa-spinner fa-spin" v-if="saving"></i> Speichern</button>
         </td>
-        <td colspan="2" v-if="!editing">{{ printYear }} <a href="#" v-on:click.prevent="deletePrint"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
+        <td colspan="2" v-if="!editing">{{ printYear }} <a href="#" v-on:click.prevent="deletePrint" v-if="editable"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
     </tr>
 </template>
 
@@ -23,7 +23,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['printId', 'printEntry', 'printYear', 'baseUrl'],
+        props: ['printId', 'printEntry', 'printYear', 'baseUrl', 'editable'],
         methods: {
             clickEdit: function () {
                 if (this.editingYear == '') {

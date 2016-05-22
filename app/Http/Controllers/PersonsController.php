@@ -28,11 +28,19 @@ class PersonsController extends Controller
     public function index(IndexPersonRequest $request)
     {
         $customData = [];
+        $people = Person::query();
+
+        if ($request->has('trash')) {
+            session(['person.trash' => $request->get('trash')]);
+        }
+
+        if (session('person.trash')) {
+            $people->withTrashed();
+        }
+
         if ($request->has('name')) {
-            $people = Person::searchByName($request->get('name'));
+            $people = $people->searchByName($request->get('name'));
             $customData['name'] = $request->get('name');
-        } else {
-            $people = Person::query();
         }
 
         if ($request->has('prefix')) {
@@ -91,7 +99,7 @@ class PersonsController extends Controller
      */
     public function show($id)
     {
-        $person = Person::with([
+        $person = Person::withTrashed()->with([
             'information.code' => function ($query) {
                 $query->orderBy('person_codes.name');
             },
@@ -160,6 +168,15 @@ class PersonsController extends Controller
         event(new DestroyPersonEvent($people, $request->user()));
 
         return redirect()->route('people.index')->with('success', 'Die Person wurde erfolgreich gelöscht!');
+    }
+
+    public function restore(DestroyPersonRequest $request, $id)
+    {
+        $person = Person::onlyTrashed()->find($id);
+
+        $person->restore();
+        
+        return redirect()->route('people.show', [$id])->with('success', 'Die Person wurde wiederhergestellt!');
     }
 
     /**

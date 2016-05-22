@@ -5857,6 +5857,10 @@ body {
   -webkit-animation: target-fade 2s 1;
   animation: target-fade 2s 1; }
 
+.table tr.bg-danger:target {
+  -webkit-animation: target-danger-fade 2s 1;
+  animation: target-danger-fade 2s 1; }
+
 @-webkit-keyframes target-fade {
   0% {
     background-color: rgba(0, 0, 0, 0.1); }
@@ -5868,6 +5872,18 @@ body {
     background-color: rgba(0, 0, 0, 0.1); }
   100% {
     background-color: transparent; } }
+
+@-webkit-keyframes target-danger-fade {
+  0% {
+    background-color: #f2dede; }
+  100% {
+    background-color: #f2dede; } }
+
+@keyframes target-danger-fade {
+  0% {
+    background-color: #f2dede; }
+  100% {
+    background-color: #f2dede; } }
 
 .search:hover input, .search input:focus, .search.active input {
   width: 200px;
@@ -5954,5 +5970,17 @@ table.collapse.in {
         color: #fff; }
         .letters-container .letters li a:hover {
           background: #2c3c4d; }
+
+.deleted-record-info {
+  background: #d9534f;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px; }
+  .deleted-record-info .btn {
+    background: #d9534f;
+    color: #fff;
+    border: 1px solid #fff;
+    display: block;
+    margin-top: 15px; }
 
 /*# sourceMappingURL=app.css.map */

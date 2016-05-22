@@ -157,9 +157,18 @@ body {
   animation: target-fade 2s 1;
 }
 
+.table tr.bg-danger:target {
+  animation: target-danger-fade 2s 1;
+}
+
 @keyframes target-fade {
   0% { background-color: rgba(0,0,0,.1); }
   100% { background-color: rgba(0,0,0,0); }
+}
+
+@keyframes target-danger-fade {
+  0% { background-color: fade-in($state-danger-bg,.1); }
+  100% { background-color: $state-danger-bg; }
 }
 
 .search:hover input, .search input:focus, .search.active input {
@@ -268,5 +277,20 @@ table.collapse.in {
         }
       }
     }
+  }
+}
+
+.deleted-record-info {
+  background: $brand-danger;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  .btn {
+    background: $brand-danger;
+    color: #fff;
+    border: 1px solid #fff;
+    display: block;
+    margin-top: 15px;
   }
 }
