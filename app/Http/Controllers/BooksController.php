@@ -134,7 +134,7 @@ class BooksController extends Controller
      */
     public function destroy(Request $request, Book $books)
     {
-        $books->personAssociations()->delete();
+        //$books->personAssociations()->delete();
 
         $books->delete();
 

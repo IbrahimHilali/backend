@@ -5,7 +5,6 @@ namespace Grimm;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 /**
  * @property integer                 id
@@ -84,5 +83,20 @@ class Book extends Model
     public function scopeSearchByTitle(Builder $query, $title)
     {
         return $query->whereRaw('match(title, short_title) against (? in boolean mode)', [$title]);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::restored(function (Book $model) {
+            $model->personAssociations()->whereHas('person', function($q) {
+                $q->whereNull('deleted_at');
+            })->restore();
+        });
+
+        static::deleted(function (Book $model) {
+            $model->personAssociations()->delete();
+        });
     }
 }

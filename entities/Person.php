@@ -134,4 +134,19 @@ class Person extends Model
             'bookAssociations',
         ]);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::restored(function (Person $model) {
+            $model->bookAssociations()->whereHas('book', function($q) {
+                $q->whereNull('deleted_at');
+            })->restore();
+        });
+
+        static::deleted(function (Person $model) {
+            $model->bookAssociations()->delete();
+        });
+    }
 }
