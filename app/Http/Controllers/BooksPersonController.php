@@ -106,8 +106,9 @@ class BooksPersonController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param Book $book
      */
-    public function show(BookPersonAssociation $association)
+    public function show($id)
     {
+        $association = BookPersonAssociation::withTrashed()->findOrFail($id);
         $association->load([
             'book',
             'person'

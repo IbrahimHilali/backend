@@ -294,3 +294,13 @@ table.collapse.in {
     margin-top: 15px;
   }
 }
+
+// TODO: this should look nicer :/
+.toolbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-left: 1px solid darken($pagination-bg, 5%);
+  border-right: 1px solid darken($pagination-bg, 5%);
+
+  background-color: #fff;
+}

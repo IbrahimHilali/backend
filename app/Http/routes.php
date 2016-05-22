@@ -50,6 +50,7 @@ $this->group(['middleware' => 'web'], function () {
         $this->resource('people', 'PersonsController', ['except' => ['edit']]);
 
         $this->post('people/{id}/restore', ['as' => 'people.restore', 'uses' => 'PersonsController@restore']);
+        $this->post('books/{id}/restore', ['as' => 'books.restore', 'uses' => 'BooksController@restore']);
 
         // Users
         $this->resource('users', 'UsersController');

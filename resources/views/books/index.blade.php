@@ -5,14 +5,14 @@
         <div class="row page">
             <div class="col-md-12 page-title">
                 <div class="button-container">
-                    <div class="search {{ Request::has('title') ? 'active' : '' }}">
+                    <div class="search {{ request()->has('title') ? 'active' : '' }}">
                         <form action="{{ url('books') }}" method="get">
-                            <input type="text" class="form-control input-sm" name="title" maxlength="64" placeholder="Suche" value="{{ Request::has('title') ? Request::get('title') : '' }}" />
+                            <input type="text" class="form-control input-sm" name="title" maxlength="64" placeholder="Suche" value="{{ request()->has('title') ? request('title') : '' }}" />
                             <button id="search-btn" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button>
 
                         </form>
                     </div>
-                    @if(Request::has('title'))
+                    @if(request()->has('title'))
                         <div class="reset-search">
                             <a href="{{ url('books') }}" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>
                         </div>
@@ -28,9 +28,19 @@
             </div>
             @include('partials.prefixSelection', ['route' => 'books'])
             <div class="col-md-12 pagination-container">
-                {{ $books->appends(Request::except('page'))->links() }}
+                {{ $books->appends(request()->except(['page', 'trash']))->links() }}
+            </div>
+            <div class="col-md-12 toolbar">
+                <div class="pull-right">
+                    <a href="{{ route('books.index') }}?trash={{ (int)!session('book.trash', 0) }}" type="button"
+                       class="btn btn-{{ (session('book.trash', 0)) ? 'danger' : 'default' }} btn-sm"
+                       data-toggle="tooltip" data-placement="bottom" title="Gelöschte Elemente anzeigen">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </div>
             </div>
             <div class="col-md-12 list-content">
+
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
@@ -46,7 +56,7 @@
                     <tbody>
                     @foreach($books->items() as $book)
                         <tr id="book-{{ $book->id }}" onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'"
-                            style="cursor: pointer;">
+                            style="cursor: pointer;" class="@if($book->trashed()) bg-danger @endif">
                             <td>{{ $book->id }}</td>
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->short_title }}</td>
@@ -65,7 +75,7 @@
                 </table>
             </div>
             <div class="col-md-12 pagination-container">
-                {{ $books->appends(Request::except('page'))->links() }}
+                {{ $books->appends(request()->except(['page', 'trash']))->links() }}
             </div>
         </div>
     </div>

@@ -5983,4 +5983,11 @@ table.collapse.in {
     display: block;
     margin-top: 15px; }
 
+.toolbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-left: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
+  background-color: #fff; }
+
 /*# sourceMappingURL=app.css.map */

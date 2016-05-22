@@ -25,11 +25,18 @@ class BooksController extends Controller
      */
     public function index(IndexBookRequest $request)
     {
+        $books = Book::query();
+
+        if ($request->has('trash')) {
+            session(['book.trash' => $request->get('trash')]);
+        }
+
+        if (session('book.trash')) {
+            $books->withTrashed();
+        }
 
         if ($request->has('title')) {
-            $books = Book::searchByTitle($request->get('title'));
-        } else {
-            $books = Book::query();
+            $books = $books->searchByTitle($request->get('title'));
         }
 
         if ($request->has('prefix')) {
@@ -84,7 +91,7 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        $book = Book::with([
+        $book = Book::withTrashed()->with([
             'personAssociations' => function ($query) {
                 $query->orderBy('book_person.page')
                     ->orderBy('book_person.line');
@@ -121,7 +128,7 @@ class BooksController extends Controller
 
         return redirect()
             ->route('books.show', ['id' => $books->id])
-            ->with('success', 'Saved changes');
+            ->with('success', 'Die Änderungen wurden gespeichert');
     }
 
     /**
@@ -134,7 +141,6 @@ class BooksController extends Controller
      */
     public function destroy(Request $request, Book $books)
     {
-        //$books->personAssociations()->delete();
 
         $books->delete();
 
@@ -143,5 +149,14 @@ class BooksController extends Controller
         return redirect()
             ->route('books.index')
             ->with('success', trans('books.delete'));
+    }
+
+    public function restore(DestroyBookEvent $request, $id)
+    {
+        $book = Book::onlyTrashed()->findOrFail($id);
+
+        $book->restore();
+
+        return redirect()->route('books.show', [$id])->with('success', 'Das Buch wurde wiederhergestellt!');
     }
 }
