@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-12 list-content">
                 <div class="add-button">
-                    <a href="{{ route('people.index') }}?trash={{ (int)!session('person.trash', 1) }}" type="button" class="btn btn-{{ (session('person.trash', 0)) ? 'danger' : 'default' }} btn-sm" data-toggle="tooltip" data-placement="bottom" title="Gelöschte Elemente anzeigen">
+                    <a href="{{ route('people.index') }}?trash={{ (int)!session('person.trash', 0) }}" type="button" class="btn btn-{{ (session('person.trash', 0)) ? 'danger' : 'default' }} btn-sm" data-toggle="tooltip" data-placement="bottom" title="Gelöschte Elemente anzeigen">
                         <i class="fa fa-trash-o"></i>
                     </a>
                 </div>
