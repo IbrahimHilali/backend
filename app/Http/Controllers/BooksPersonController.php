@@ -183,12 +183,18 @@ class BooksPersonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param BookPersonAssociation $association
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BookPersonAssociation $association)
     {
-        //
+        $bookId = $association->book_id;
+
+        $association->forceDelete();
+
+        return redirect()
+            ->route('books.show', [$bookId])
+            ->with('success', trans('associations.deleted'));
     }
 
     /**

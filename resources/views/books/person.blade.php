@@ -86,12 +86,14 @@
                             </div>
 
                             <div class="panel-body">
-                                <p>
-                                    <button class="btn btn-danger">
+                                <form class="form-inline" action="{{ route('people.book.delete', [$association]) }}" method="post">
+                                    {{ csrf_field() }}
+                                    {{ method_field('delete') }}
+                                    <button type="submit" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                         Verknüpfung aufheben
                                     </button>
-                                </p>
+                                </form>
                             </div>
                         </div>
                     </div>

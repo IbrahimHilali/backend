@@ -61,6 +61,8 @@ $this->group(['middleware' => 'web'], function () {
         $this->post('books/{books}/associations', ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
 
         $this->get('people/book/{association}', ['as' => 'people.book', 'uses' => 'BooksPersonController@show']);
+        $this->delete('people/book/{association}', ['as' => 'people.book.delete', 'uses' => 'BooksPersonController@destroy']);
+
         $this->get('people/{person}/add-book', ['as' => 'people.add-book', 'uses' => 'BooksPersonController@personAddBook']);
         $this->post('people/{person}/add-book', ['as' => 'people.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
 
