@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="panel-body">
-                                <form class="form-inline" action="{{ route('people.book.delete', [$association]) }}" method="post">
+                                <form id="danger-zone" class="form-inline" action="{{ route('people.book.delete', [$association]) }}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
                                     <button type="submit" class="btn btn-danger">
