@@ -47,7 +47,7 @@ class BooksController extends Controller
 
         $books = $this->prepareCollection('last_book_index', $books, $request,
             function ($builder) {
-                $builder->orderBy('title')->orderBy('volume')
+                $builder->orderBy('short_title')->orderBy('volume')
                     ->orderBy('volume_irregular')
                     ->orderBy('edition');
                 return 'identification';
