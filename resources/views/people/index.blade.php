@@ -42,18 +42,11 @@
                 <table class="table table-responsive table-hover">
                     <thead>
                     <tr>
-                        {{--<th><a href="{{ sort_link('people', 'id') }}"># {!! sort_arrow('id') !!}</a></th>--}}
                         <th>
                             <a href="{{ sort_link('people', 'last_name') }}">Name {!! sort_arrow('last_name') !!}</a>
                         </th>
-                        {{-- <th>
-                            <a href="{{ sort_link('people', 'first_name') }}">Vorname {!! sort_arrow('first_name') !!}</a>
-                        </th> --}}
-                        <th><a href="{{ sort_link('people', 'is_organization') }}"><i class="fa fa-user"></i> / <i
-                                        class="fa fa-building"></i> {!! sort_arrow('is_organization') !!}</a></th>
-                        <th><a href="{{ sort_link('people', 'source') }}">Quelle {!! sort_arrow('source') !!}</a></th>
-                        <th><a href="{{ sort_link('people', 'bio_data') }}">Biogr.
-                                Daten {!! sort_arrow('bio_data') !!}</a></th>
+                        <th><a href="{{ sort_link('people', 'bio_data') }}">{{ trans('people.bio_data') }} {!! sort_arrow('bio_data') !!}</a></th>
+                        <th><a href="{{ sort_link('people', 'add_bio_data') }}">{{ trans('people.add_bio_data') }} {!! sort_arrow('add_bio_data') !!}</a></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,17 +54,9 @@
                         <tr id="person-{{ $person->id }}"
                             onclick="location.href='{{ route('people.show', ['id' => $person->id]) }}'"
                             style="cursor: pointer;" class="@if($person->auto_generated) bg-warning @endif @if($person->trashed()) bg-danger @endif">
-                            {{--<td>{{ $person->id }}</td>--}}
                             <td>{{ $person->fullName() }}</td>
-                            {{-- <td>{{ $person->first_name }}</td>--}}
-                            <td>@if(!$person->is_organization)
-                                    <i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="Mensch"></i>
-                                @else
-                                    <i class="fa fa-building" data-toggle="tooltip" data-placement="top"
-                                       title="Organisation (Uni o.ä.)"></i>
-                                @endif</td>
-                            <td>{{ $person->source }}</td>
                             <td>{{ $person->bio_data }}</td>
+                            <td>{{ str_limit($person->add_bio_data,50, '[...]') }}</td>
                         </tr>
                     @empty
                         <tr onclick="location.href='{{ route('people.create') }}'" style="cursor: pointer;">
