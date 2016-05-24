@@ -45,8 +45,8 @@
                     <thead>
                     <tr>
                         <th><a href="{{ sort_link('books', 'id') }}"># {!! sort_arrow('id') !!}</a></th>
-                        <th><a href="{{ sort_link('books', 'title') }}">Titel  {!! sort_arrow('title') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'short_title') }}">Kurztitel  {!! sort_arrow('short_title') !!}</a></th>
+                        <th><a href="{{ sort_link('books', 'title') }}">Titel  {!! sort_arrow('title') !!}</a></th>
                         {{-- <th><a href="{{ sort_link('books', 'year') }}">Jahr  {!! sort_arrow('year') !!}</a></th>--}}
                         <th><a href="{{ sort_link('books', 'volume') }}">Band  {!! sort_arrow('volume') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'edition') }}">Edition  {!! sort_arrow('edition') !!}</a></th>
@@ -58,8 +58,8 @@
                         <tr id="book-{{ $book->id }}" onclick="location.href='{{ route('books.show', ['id' => $book->id]) }}'"
                             style="cursor: pointer;" class="@if($book->trashed()) bg-danger @endif">
                             <td>{{ $book->id }}</td>
-                            <td>{{ $book->title }}</td>
                             <td>{{ $book->short_title }}</td>
+                            <td>{{ $book->title }}</td>
                             {{-- <td>{{ $book->year }}</td> --}}
                             <td>
                                 {{ $book->volume }}

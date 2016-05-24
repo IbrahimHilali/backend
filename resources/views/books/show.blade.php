@@ -37,8 +37,8 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
-                        @include('partials.form.field', ['field' => 'title', 'model' => $book, 'disabled' => $book->trashed()])
                         @include('partials.form.field', ['field' => 'short_title', 'model' => $book, 'disabled' => $book->trashed()])
+                        @include('partials.form.field', ['field' => 'title', 'model' => $book, 'disabled' => $book->trashed()])
                         {{-- @include('partials.form.field', ['field' => 'year', 'model' => $book]) --}}
                         @include('partials.form.field', ['field' => 'volume', 'model' => $book, 'disabled' => $book->trashed()])
                         @include('partials.form.field', ['field' => 'volume_irregular', 'model' => $book, 'disabled' => $book->trashed()])

@@ -11,18 +11,8 @@
             </div>
             <div class="col-md-12 page-content">
                 <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="bookTitle" class="col-sm-2 control-label">Buchtitel:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{{ $book->title }}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookTitle" class="col-sm-2 control-label">Kurztitel:</label>
-                        <div class="col-sm-10">
-                            <p class="form-control-static">{{ $book->short_title }}</p>
-                        </div>
-                    </div>
+                    @include('partials.form.field', ['field' => 'short_title', 'model' => $book, 'disabled' => true])
+                    @include('partials.form.field', ['field' => 'title', 'model' => $book, 'disabled' => true])
                     <div class="form-group">
                         <label for="bookTitle" class="col-sm-2 control-label">Band:</label>
                         <div class="col-sm-10">

@@ -13,8 +13,8 @@
                       method="post">
                     {{ csrf_field() }}
 
-                    @include('partials.form.field', ['field' => 'title', 'model' => 'books'])
                     @include('partials.form.field', ['field' => 'short_title', 'model' => 'books'])
+                    @include('partials.form.field', ['field' => 'title', 'model' => 'books'])
                     {{-- @include('partials.form.field', ['field' => 'year', 'model' => 'books]) --}}
                     @include('partials.form.field', ['field' => 'volume', 'model' => 'books'])
                     @include('partials.form.field', ['field' => 'volume_irregular', 'model' => 'books'])
