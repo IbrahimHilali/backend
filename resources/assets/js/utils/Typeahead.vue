@@ -65,7 +65,7 @@
             this.$els.searchPerson.focus();
 
             this.$watch('value', (newValue, oldValue) => {
-                $.get(this.src + newValue, (response) => {
+                $.get(this.src + encodeURIComponent(newValue), (response) => {
                     this.results = this.preparation(response);
                     this.searched = true;
                     this.current = 0;

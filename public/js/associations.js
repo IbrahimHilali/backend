@@ -10144,7 +10144,7 @@ exports.default = {
         this.$els.searchPerson.focus();
 
         this.$watch('value', function (newValue, oldValue) {
-            $.get(_this.src + newValue, function (response) {
+            $.get(_this.src + encodeURIComponent(newValue), function (response) {
                 _this.results = _this.preparation(response);
                 _this.searched = true;
                 _this.current = 0;

@@ -1,6 +1,6 @@
 @if(!$filter->selectable()->isEmpty())
 <div class="btn-group">
-    <button type="button" class="btn btn-default btn-sm">Filter <span class="badge">{{ $filter->selectable(true)->count() }}</span></button>
+    <button type="button" class="btn btn-default btn-sm">Filter <span class="badge {{ ($filter->selectable(true)->count() > 0) ? '': 'hide' }}">{{ $filter->selectable(true)->count() }}</span></button>
     <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
