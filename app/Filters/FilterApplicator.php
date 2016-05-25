@@ -1,0 +1,178 @@
+<?php
+
+namespace App\Filters;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+
+class FilterApplicator
+{
+
+    /**
+     * @var Request
+     */
+    protected $requestFilters;
+    protected $filters = [];
+    protected $defaults = [];
+    protected $appliedFilters = [];
+
+    /**
+     * Register a single new filter.
+     *
+     * @param Filter $filter
+     */
+    public function registerFilter(Filter $filter)
+    {
+        $this->filters[$filter->appliesTo()] = $filter;
+
+        if (method_exists($filter, 'default')) {
+            $this->defaults[] = $filter;
+        }
+    }
+
+    /**
+     * Register multiple filters at once
+     *
+     * @param Filter[] $filters
+     */
+    public function registerFilters(array $filters)
+    {
+        foreach ($filters as $filter) {
+            $this->registerFilter($filter);
+        }
+    }
+
+    /**
+     * Filter a given Builder by the given request data.
+     * First the request data is passed to the relevant filters.
+     * Afterwards all filters with a default()-method are called.
+     *
+     * @param Builder $builder
+     * @param Request $request
+     *
+     * @return Builder
+     */
+    public function filter(Builder $builder, Request $request)
+    {
+
+        $this->requestFilters = $this->filterRequest($request);
+
+        foreach ($this->requestFilters as $key => $requestFilter) {
+            if (array_key_exists($key, $this->filters)) {
+                $this->filters[$key]->apply($builder, $this->requestFilters);
+                $this->appliedFilters[] = get_class($this->filters[$key]);
+            }
+        }
+
+        $this->callDefaults($builder);
+
+        return $builder;
+    }
+
+    /**
+     * Filter the request variables for relevant fields.
+     *
+     * @param Request $request
+     *
+     * @return Collection
+     */
+    public function filterRequest(Request $request)
+    {
+        $requestVariables = new Collection($request->all());
+
+        return $requestVariables
+            ->filter(function ($value, $key) {
+                return array_key_exists($key, $this->filters);
+            });
+    }
+
+    /**
+     * Returns true if the given filter has been applied.
+     *
+     * @param $filter
+     *
+     * @return bool
+     */
+    public function applied($filter)
+    {
+        return in_array($filter, $this->appliedFilters);
+    }
+
+    /**
+     * @param $key
+     *
+     * @return Filter
+     */
+    public function filterFor($key)
+    {
+        return $this->filters[$key];
+    }
+
+    public function buildQueryString($deltaFilters = [])
+    {
+        $delta = $this->delta($deltaFilters);
+
+        return http_build_query($delta);
+    }
+
+    public function delta($deltaFilters = [])
+    {
+        $deltaCollection = collect($deltaFilters);
+
+        $toRemove = $deltaCollection->filter(function ($value, $key) {
+            return is_numeric($key) && starts_with($value, '-');
+        })->map(function ($item) {
+            return substr($item, 1);
+        });
+
+        $flags = $this->flags($deltaCollection);
+
+        return $delta = $this->requestFilters->filter(function ($value, $key) use ($toRemove) {
+            $filterClass = $this->filters[$key];
+
+            return $filterClass->shouldPreserve() && !$toRemove->contains($key);
+        })->merge($deltaCollection->filter(function ($value, $key) {
+            return is_string($key);
+        }))->merge($flags)->toArray();
+    }
+
+    public function selectable($active=false)
+    {
+        $selectable = collect($this->filters)->filter(function($value) {
+            return $value instanceof SelectableFilter;
+        });
+
+        if ($active) {
+            return $selectable->filter(function ($value) {
+                return $value->applied();
+            });
+        }
+
+        return $selectable;
+    }
+
+    protected function callDefaults(Builder $builder)
+    {
+        foreach ($this->defaults as $defaultFilter) {
+            $defaultFilter->default($builder);
+        }
+    }
+
+    /**
+     * @param $deltaCollection
+     *
+     * @return mixed
+     */
+    protected function flags($deltaCollection)
+    {
+        $flags = $deltaCollection->filter(function ($value, $key) {
+            return is_numeric($key) && !starts_with($value, '-');
+        })->map(function ($value, $key) {
+            $filter = $this->filterFor($value);
+            return [$value => $filter->nextValue()];
+        })->flatten(1);
+
+        return $flags;
+    }
+}

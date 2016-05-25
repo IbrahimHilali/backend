@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Events\DestroyPersonEvent;
 use App\Events\StorePersonEvent;
 use App\Events\UpdatePersonEvent;
+use App\Filters\People\BioDataDuplicateFilter;
+use App\Filters\People\NameFilter;
+use App\Filters\Shared\PrefixFilter;
+use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\DestroyPersonRequest;
 use App\Http\Requests\IndexPersonRequest;
 use App\Http\Requests\StorePersonRequest;
@@ -18,6 +22,8 @@ use App\Http\Controllers\Controller;
 class PersonsController extends Controller
 {
 
+    use FiltersEntity;
+
     /**
      * Display a listing of the resource.
      *
@@ -27,31 +33,15 @@ class PersonsController extends Controller
      */
     public function index(IndexPersonRequest $request)
     {
-        $customData = [];
         $people = Person::query();
 
-        if ($request->has('trash')) {
-            session(['person.trash' => $request->get('trash')]);
-        }
-
-        if (session('person.trash')) {
-            $people->withTrashed();
-        }
-
-        if ($request->has('name')) {
-            $people = $people->searchByName($request->get('name'));
-            $customData['name'] = $request->get('name');
-        }
-
-        if ($request->has('prefix')) {
-            $people->byPrefix($request->get('prefix'));
-        }
+        $this->filter($people);
 
         $this->preparePrefixDisplay($request->get('prefix'), Person::prefixesOfLength('last_name', 2)->get());
 
         $people = $this->prepareCollection('last_person_index', $people, $request,
-            function ($builder, $orderByKey, $direction) use ($customData) {
-                if (!array_key_exists('name', $customData)) {
+            function ($builder, $orderByKey, $direction) use ($request) {
+                if (!$this->filter->applied(NameFilter::class)) {
                     $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
                 }
 
@@ -164,7 +154,7 @@ class PersonsController extends Controller
         $person = Person::onlyTrashed()->find($id);
 
         $person->restore();
-        
+
         return redirect()->route('people.show', [$id])->with('success', 'Die Person wurde wiederhergestellt!');
     }
 
@@ -194,5 +184,15 @@ class PersonsController extends Controller
         $person->auto_generated = $request->get('auto_generated');
 
         $person->save();
+    }
+
+    protected function filters()
+    {
+        return [
+            new TrashFilter('people'),
+            new NameFilter(),
+            new PrefixFilter('last_name'),
+            new BioDataDuplicateFilter(),
+        ];
     }
 }

@@ -14,7 +14,7 @@
                     </div>
                     @if(request()->has('title'))
                         <div class="reset-search">
-                            <a href="{{ url('books') }}" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>
+                            <a href="{{ url()->filtered(['-name']) }}" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>
                         </div>
                     @endif
                     <div class="generic">
@@ -28,15 +28,11 @@
             </div>
             @include('partials.prefixSelection', ['route' => 'books'])
             <div class="col-md-12 pagination-container">
-                {{ $books->appends(request()->except(['page', 'trash']))->links() }}
+                {{ $books->appends($filter->delta())->links() }}
             </div>
             <div class="col-md-12 toolbar">
                 <div class="pull-right">
-                    <a href="{{ route('books.index') }}?trash={{ (int)!session('book.trash', 0) }}" type="button"
-                       class="btn btn-{{ (session('book.trash', 0)) ? 'danger' : 'default' }} btn-sm"
-                       data-toggle="tooltip" data-placement="bottom" title="Gelöschte Elemente anzeigen">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
+                    @include('partials.filterSelection')
                 </div>
             </div>
             <div class="col-md-12 list-content">
@@ -75,7 +71,7 @@
                 </table>
             </div>
             <div class="col-md-12 pagination-container">
-                {{ $books->appends(request()->except(['page', 'trash']))->links() }}
+                {{ $books->appends($filter->delta())->links() }}
             </div>
         </div>
     </div>

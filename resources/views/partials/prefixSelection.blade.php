@@ -2,12 +2,12 @@
     <ul class="letters">
         @foreach($navigationPrefixes as $letter => $_)
             <li {!! active($firstCharacter, $letter) !!}>
-                <a href="{{ url($route) }}?prefix={{ $letter }}">{{ $letter }}</a>
+                <a href="{{ url()->filtered(['prefix' => $letter]) }}">{{ $letter }}</a>
             </li>
         @endforeach
         @if($firstCharacter)
             <li>
-                <a href="{{ url($route) }}">&times;</a>
+                <a href="{{ url()->filtered(['-prefix']) }}">&times;</a>
             </li>
         @endif
     </ul>
@@ -17,12 +17,12 @@
         <ul class="letters">
             @foreach($navigationPrefixes[$firstCharacter] as $letter)
                 <li {!! active($secondCharacter, $letter) !!}>
-                    <a href="{{ url($route) }}?prefix={{ $firstCharacter . $letter }}">{{ $firstCharacter . $letter }}</a>
+                    <a href="{{ url()->filtered(['prefix' => $firstCharacter . $letter]) }}">{{ $firstCharacter . $letter }}</a>
                 </li>
             @endforeach
             @if($secondCharacter)
                 <li>
-                    <a href="{{ url($route) }}?prefix={{ $firstCharacter }}">&times;</a>
+                    <a href="{{ url()->filtered(['prefix' => $firstCharacter]) }}">&times;</a>
                 </li>
             @endif
         </ul>

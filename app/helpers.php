@@ -75,12 +75,19 @@ if (!function_exists('active')) {
      */
     function active($field, $value)
     {
+        return active_if($field == $value);
+    }
+}
 
-        if ($field == $value) {
-            return ' class="active"';
-        }
-
-        return '';
+if (!function_exists('active_if')) {
+    /**
+     * @param $condition
+     *
+     * @return string
+     */
+    function active_if($condition)
+    {
+        return ($condition) ? ' class="active"' : '';
     }
 }
 

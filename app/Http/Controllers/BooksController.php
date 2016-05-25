@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Events\DestroyBookEvent;
 use App\Events\StoreBookEvent;
 use App\Events\UpdateBookEvent;
+use App\Filters\Books\TitleFilter;
+use App\Filters\Shared\PrefixFilter;
+use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Http\Requests\IndexBookRequest;
@@ -16,6 +19,7 @@ use App\Http\Controllers\Controller;
 
 class BooksController extends Controller
 {
+    use FiltersEntity;
 
     /**
      * Display a listing of the resource.
@@ -27,21 +31,7 @@ class BooksController extends Controller
     {
         $books = Book::query();
 
-        if ($request->has('trash')) {
-            session(['book.trash' => $request->get('trash')]);
-        }
-
-        if (session('book.trash')) {
-            $books->withTrashed();
-        }
-
-        if ($request->has('title')) {
-            $books = $books->searchByTitle($request->get('title'));
-        }
-
-        if ($request->has('prefix')) {
-            $books->byPrefix($request->get('prefix'), 'short_title');
-        }
+        $this->filter($books);
 
         $this->preparePrefixDisplay($request->get('prefix'), Book::prefixesOfLength('short_title', 2)->get());
 
@@ -152,5 +142,14 @@ class BooksController extends Controller
         $book->restore();
 
         return redirect()->route('books.show', [$id])->with('success', 'Das Buch wurde wiederhergestellt!');
+    }
+
+    protected function filters()
+    {
+        return [
+            new TrashFilter('books'),
+            new TitleFilter(),
+            new PrefixFilter('short_title')
+        ];
     }
 }

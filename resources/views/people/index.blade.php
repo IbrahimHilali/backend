@@ -16,7 +16,7 @@
                     </div>
                     @if(request()->has('name'))
                         <div class="reset-search">
-                            <a href="{{ url('people') }}" class="btn btn-default btn-sm"><i
+                            <a href="{{ url()->filtered(['-name']) }}" class="btn btn-default btn-sm"><i
                                         class="fa fa-times"></i></a>
                         </div>
                     @endif
@@ -31,13 +31,12 @@
             </div>
             @include('partials.prefixSelection', ['route' => 'people'])
             <div class="col-md-12 pagination-container">
-                {{ $people->appends(request()->except(['page', 'trash']))->links() }}
+                {{ $people->appends($filter->delta())->links() }}
             </div>
             <div class="col-md-12 list-content">
                 <div class="add-button">
-                    <a href="{{ route('people.index') }}?trash={{ (int)!session('person.trash', 0) }}" type="button" class="btn btn-{{ (session('person.trash', 0)) ? 'danger' : 'default' }} btn-sm" data-toggle="tooltip" data-placement="bottom" title="Gelöschte Elemente anzeigen">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
+                    @include('partials.filterSelection')
+
                 </div>
                 <table class="table table-responsive table-hover">
                     <thead>
@@ -70,7 +69,7 @@
             </div>
             <div class="col-md-12 pagination-container">
                 <div class="pagination-container">
-                    {{ $people->appends(request()->except(['page', 'trash']))->links() }}
+                    {{ $people->appends($filter->delta())->links() }}
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Deployment\DeploymentService;
+use App\Filters\FilterApplicator;
 use App\History\HistoryEntityTransformer;
 use App\History\Presenters\BookPresenter;
 use App\History\Presenters\PersonPresenter;
@@ -38,6 +39,27 @@ class AppServiceProvider extends ServiceProvider
         
         $this->app->singleton(HistoryEntityTransformer::class, function () {
             return new HistoryEntityTransformer([new PersonPresenter(), new BookPresenter()]);
+        });
+
+        $this->app->singleton(FilterApplicator::class, function () {
+            return new FilterApplicator();
+        });
+        
+        \URL::macro('filtered_to', function($to, $deltaFilters = []) {
+            /** @var FilterApplicator $filterApplicator */
+            $filterApplicator = app(FilterApplicator::class);
+            
+            $queryString = $filterApplicator->buildQueryString($deltaFilters);
+
+            if (empty($queryString)) {
+                return $to;
+            }
+
+            return $to . '?' . $queryString;
+        });
+
+        \URL::macro('filtered', function($deltaFilters = []) {
+            return url()->filtered_to(url()->current(), $deltaFilters);
         });
     }
 }
