@@ -41,13 +41,13 @@
             <ul class="nav navbar-nav">
                 <li class="disabled"><a href="#" onclick="return false">Briefe</a></li>
                 @can('people.*')
-                <li><a href="{{ route('people.index') }}">{{ trans('people.people') }}</a></li>
+                <li {!! active_if(request()->is('people*')) !!}><a href="{{ route('people.index') }}">{{ trans('people.people') }}</a></li>
                 @endcan
                 @can('books.*')
-                <li><a href="{{ route('books.index') }}">{{ trans('books.books') }}</a></li>
+                <li {!! active_if(request()->is('books*')) !!}><a href="{{ route('books.index') }}">{{ trans('books.books') }}</a></li>
                 @endcan
                 @can('users.*')
-                <li><a href="{{ route('users.index') }}">{{ trans('users.users') }}</a></li>
+                <li {!! active_if(request()->is('users*')) !!}><a href="{{ route('users.index') }}">{{ trans('users.users') }}</a></li>
                 @endcan
                 @can('admin.*')
                 <li class="dropdown">
