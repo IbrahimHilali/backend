@@ -58,12 +58,7 @@ if (!function_exists('checked')) {
      */
     function checked($field, $value)
     {
-
-        if ($field == $value) {
-            return ' checked="checked"';
-        }
-
-        return '';
+        return checked_if($field == $value);
     }
 }
 
