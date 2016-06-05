@@ -20,22 +20,8 @@ class Controller extends BaseController
         $collectionName,
         Builder $builder,
         Request $request,
-        $unknownFieldCallback = null,
         $pageSize = null
     ) {
-        $orderByKey = $request->get('order-by');
-        $direction = ($request->get('direction', 0)) ? 'desc' : 'asc';
-
-        if (Schema::hasColumn($builder->getModel()->getTable(), $orderByKey)) {
-            $builder->orderBy($orderByKey, $direction);
-        } else {
-            if (is_callable($unknownFieldCallback)) {
-                $return = $unknownFieldCallback($builder, $orderByKey, $direction);
-                if (!is_null($return)) {
-                    $orderByKey = $return;
-                }
-            }
-        }
 
         $paginator = $builder->paginate($pageSize);
 

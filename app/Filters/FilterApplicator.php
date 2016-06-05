@@ -16,6 +16,7 @@ class FilterApplicator
     protected $filters = [];
     protected $defaults = [];
     protected $appliedFilters = [];
+    protected $optionalParameters = [];
 
     /**
      * Register a single new filter.
@@ -25,6 +26,10 @@ class FilterApplicator
     public function registerFilter(Filter $filter)
     {
         $this->filters[$filter->appliesTo()] = $filter;
+
+        if ($filter instanceof FilterWithOptionals) {
+            $this->optionalParameters = array_merge($this->optionalParameters, $filter->optionals());
+        }
 
         if (method_exists($filter, 'default')) {
             $this->defaults[] = $filter;
@@ -83,7 +88,7 @@ class FilterApplicator
 
         return $requestVariables
             ->filter(function ($value, $key) {
-                return array_key_exists($key, $this->filters);
+                return array_key_exists($key, $this->filters) || in_array($key, $this->optionalParameters);
             });
     }
 
@@ -129,9 +134,11 @@ class FilterApplicator
         $flags = $this->flags($deltaCollection);
 
         return $delta = $this->requestFilters->filter(function ($value, $key) use ($toRemove) {
-            $filterClass = $this->filters[$key];
-
-            return $filterClass->shouldPreserve() && !$toRemove->contains($key);
+            if (array_key_exists($key, $this->filters)) {
+                $filterClass = $this->filters[$key];
+                return $filterClass->shouldPreserve() && !$toRemove->contains($key);
+            }
+            return in_array($key, $this->optionalParameters);
         })->merge($deltaCollection->filter(function ($value, $key) {
             return is_string($key);
         }))->merge($flags)->toArray();
@@ -164,7 +171,7 @@ class FilterApplicator
      *
      * @return mixed
      */
-    protected function flags($deltaCollection)
+    protected function flags(Collection $deltaCollection)
     {
         $flags = $deltaCollection->filter(function ($value, $key) {
             return is_numeric($key) && !starts_with($value, '-');

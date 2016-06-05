@@ -184,7 +184,7 @@
                                 </table>
                             </td>
                             <td>
-                                <button @click="fillOccurrenceForm({{ $person }})" class="btn btn-primary">
+                                <button @click="fillOccurrenceForm({{ $person }})" class="btn btn-sm btn-primary">
                                 <i class="fa fa-plus"></i>
                                 </button>
                             </td>
