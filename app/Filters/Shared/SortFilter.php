@@ -35,7 +35,6 @@ class SortFilter implements FilterWithOptionals
             $query->orderBy($this->orderByKey, $this->direction);
         } else {
             if (is_callable($this->unknownFieldCallback)) {
-                //dd($this->direction);
                 $return = call_user_func_array($this->unknownFieldCallback, [$query, $this->orderByKey, $this->direction]);
                 if (!is_null($return)) {
                     $this->orderByKey = $return;
