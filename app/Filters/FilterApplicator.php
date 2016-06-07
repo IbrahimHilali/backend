@@ -159,6 +159,16 @@ class FilterApplicator
         return $selectable;
     }
 
+    public function selected()
+    {
+        return $this->selectable(true);
+    }
+
+    public function hasSelected()
+    {
+        return $this->selected()->count() > 0;
+    }
+
     protected function callDefaults(Builder $builder)
     {
         foreach ($this->defaults as $defaultFilter) {
@@ -175,10 +185,10 @@ class FilterApplicator
     {
         $flags = $deltaCollection->filter(function ($value, $key) {
             return is_numeric($key) && !starts_with($value, '-');
-        })->map(function ($value, $key) {
+        })->flatMap(function ($value, $key) {
             $filter = $this->filterFor($value);
             return [$value => $filter->nextValue()];
-        })->flatten(1);
+        });
 
         return $flags;
     }

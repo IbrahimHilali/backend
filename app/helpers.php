@@ -141,3 +141,9 @@ if (!function_exists('field_name')) {
         return trans($langFile . '.' . $field);
     }
 }
+
+if (!function_exists('toggle_active_filters')) {
+    function toggle_active_filters($filter) {
+        return url()->filtered($filter->selectable(true)->keys()->toArray());
+    }
+}
