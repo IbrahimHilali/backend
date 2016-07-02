@@ -6,6 +6,14 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
+                <div class="button-container">
+                    <div class="generic">
+                        <a href="{{ route('people.create') }}" role="button" class="btn btn-default btn-sm">
+                            <span class="fa fa-plus"></span>
+                            {{ trans('people.store') }}
+                        </a>
+                    </div>
+                </div>
                 <h1><a class="prev-link"
                        href="{{ referrer_url('last_person_index', route('people.index'), '#person-' . $person->id) }}"><i
                                 class="fa fa-caret-left"></i></a> Personendaten: {{ $person->fullName() }}</h1>
