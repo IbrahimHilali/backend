@@ -10192,6 +10192,10 @@ var _InheritanceInPlaceEditor = require('./components/InheritanceInPlaceEditor.v
 
 var _InheritanceInPlaceEditor2 = _interopRequireDefault(_InheritanceInPlaceEditor);
 
+var _Levenshtein = require('../utils/Levenshtein');
+
+var _Levenshtein2 = _interopRequireDefault(_Levenshtein);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.component('in-place', _PrintInPlaceEditor2.default);
@@ -10277,6 +10281,77 @@ new _vue2.default({
     }
 });
 
-},{"./components/InheritanceInPlaceEditor.vue":2,"./components/PrintInPlaceEditor.vue":3,"vue":1}]},{},[4]);
+/**
+ * On save, we calculate the change in the name and according to that,
+ * we will ask if the user wants to really change the entry
+ * to prevent accidental overwriting.
+ */
+$('#person-editor').on('submit', function (event) {
+    var prevLastName = $('input[name=prev_last_name]').val();
+    var prevFirstName = $('input[name=prev_first_name]').val();
+    var prevName = prevLastName + ', ' + prevFirstName;
+
+    var currentLastName = $('input[name=last_name]').val();
+    var currentFirstName = $('input[name=first_name]').val();
+    var currentName = currentLastName + ', ' + currentFirstName;
+
+    var distance = (0, _Levenshtein2.default)(prevName, currentName);
+
+    if (distance > 3) {
+        var message = 'Der Name wurde an ' + distance + ' Stellen bearbeitet. Soll der Datensatz wirklich geändert werden?\n\nBisheriger Name: ' + prevName + '\n\nNeuer Name: ' + currentName;
+        if (!confirm(message)) {
+            event.preventDefault();
+        }
+    }
+});
+
+},{"../utils/Levenshtein":5,"./components/InheritanceInPlaceEditor.vue":2,"./components/PrintInPlaceEditor.vue":3,"vue":1}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (str1, str2) {
+    var cost = [],
+        n = str1.length,
+        m = str2.length,
+        i = void 0,
+        j = void 0;
+
+    if (n == 0 || m == 0) {
+        return;
+    }
+
+    for (i = 0; i <= n; i++) {
+        cost[i] = [];
+    }
+
+    for (i = 0; i <= n; i++) {
+        cost[i][0] = i;
+    }
+
+    for (j = 0; j <= m; j++) {
+        cost[0][j] = j;
+    }
+
+    for (i = 1; i <= n; i++) {
+        var x = str1.charAt(i - 1);
+
+        for (j = 1; j <= m; j++) {
+            var y = str2.charAt(j - 1);
+
+            if (x == y) {
+                cost[i][j] = cost[i - 1][j - 1];
+            } else {
+                cost[i][j] = 1 + Math.min(cost[i - 1][j - 1], cost[i][j - 1], cost[i - 1][j]);
+            }
+        }
+    }
+
+    return cost[n][m];
+};
+
+},{}]},{},[4]);
 
 //# sourceMappingURL=persons.js.map

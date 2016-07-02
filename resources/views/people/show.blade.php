@@ -42,10 +42,12 @@
             </div>
             @endif
             <div class="col-md-12 page-content">
-                <form action="{{ route('people.update', ['people' => $person->id]) }}" class="form-horizontal"
+                <form id="person-editor" action="{{ route('people.update', ['people' => $person->id]) }}" class="form-horizontal"
                       method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
+                    <input type="hidden" name="prev_last_name" value="{{ $person->last_name }}">
+                    <input type="hidden" name="prev_first_name" value="{{ $person->first_name }}">
                     @include('partials.form.field', ['field' => 'last_name', 'model' => $person, 'disabled' => $person->trashed()])
                     @include('partials.form.field', ['field' => 'first_name', 'model' => $person, 'disabled' => $person->trashed()])
                     @include('partials.form.field', ['field' => 'birth_date', 'model' => $person, 'disabled' => $person->trashed()])

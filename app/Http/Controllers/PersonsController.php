@@ -7,6 +7,7 @@ use App\Events\StorePersonEvent;
 use App\Events\UpdatePersonEvent;
 use App\Filters\People\BioDataDuplicateFilter;
 use App\Filters\People\NameFilter;
+use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
 use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
@@ -187,6 +188,7 @@ class PersonsController extends Controller
             new NameFilter(),
             new PrefixFilter('last_name'),
             new BioDataDuplicateFilter(),
+            new OnlyTrashedFilter('people'),
             new SortFilter(function ($builder, $orderByKey, $direction) {
                 if (!$this->filter->applied(NameFilter::class)) {
                     $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
