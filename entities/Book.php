@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Book extends Model
 {
 
-    use SoftDeletes, CollectPrefixes;
+    use SoftDeletes, CollectPrefixes, HasActivity;
 
     protected $table = 'books';
 
@@ -93,6 +93,9 @@ class Book extends Model
                     ->orderBy('book_person.line');
             },
             'personAssociations.person',
+            'activity' => function ($query) {
+                $query->latest()->with('user');
+            },
         ]);
     }
 

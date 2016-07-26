@@ -67,51 +67,68 @@
                         @endunless
                     </form>
                 </div>
-                @unless($book->trashed())
-                <div class="add-button">
-                    <a href="{{ route('books.associations.index', [$book->id]) }}" class="btn btn-primary btn-sm">
-                        <i class="fa fa-plus"></i> Person hinzufügen
-                    </a>
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#associations" data-toggle="tab">Assoziationen</a>
+                    </li>
+                    <li>
+                        <a href="#changes" data-toggle="tab">Änderungsverlauf</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="associations">
+                        @unless($book->trashed())
+                        <div class="add-button">
+                            <a href="{{ route('books.associations.index', [$book->id]) }}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-plus"></i> Person hinzufügen
+                            </a>
+                        </div>
+                        @endunless
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nachname</th>
+                                <th>Vorname</th>
+                                <th>Seite</th>
+                                <th>Zeile</th>
+                                <th>Notiz</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($book->personAssociations as $personAssociation)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('people.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
+                                    </td>
+                                    <td>{{ $personAssociation->person->last_name }}</td>
+                                    <td>{{ $personAssociation->person->first_name }}</td>
+                                    <td>
+                                        {{ $personAssociation->page }}
+                                        @if($personAssociation->page_to)
+                                            bis {{ $personAssociation->page_to }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $personAssociation->line }}</td>
+                                    <td>{{ $personAssociation->page_description }}</td>
+                                    <td>
+                                        <a href="{{ route('people.book', [$personAssociation->id]) }}"
+                                           data-toggle="tooltip" data-title="Verknüpfung">
+                                            <span class="fa fa-link"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="changes">
+                        @include('logs.entity-activity', ['entity' => $book])
+                    </div>
                 </div>
-                @endunless
-                <table class="table table-responsive">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nachname</th>
-                        <th>Vorname</th>
-                        <th>Seite</th>
-                        <th>Zeile</th>
-                        <th>Notiz</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($book->personAssociations as $personAssociation)
-                        <tr>
-                            <td>
-                                <a href="{{ route('people.show', ['id' => $personAssociation->person->id]) }}">{{ $personAssociation->person->id }}</a>
-                            </td>
-                            <td>{{ $personAssociation->person->last_name }}</td>
-                            <td>{{ $personAssociation->person->first_name }}</td>
-                            <td>
-                                {{ $personAssociation->page }}
-                                @if($personAssociation->page_to)
-                                    bis {{ $personAssociation->page_to }}
-                                @endif
-                            </td>
-                            <td>{{ $personAssociation->line }}</td>
-                            <td>{{ $personAssociation->page_description }}</td>
-                            <td>
-                                <a href="{{ route('people.book', [$personAssociation->id]) }}"
-                                   data-toggle="tooltip" data-title="Verknüpfung">
-                                    <span class="fa fa-link"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
 
                 @unless($book->trashed())
                 <div class="row">

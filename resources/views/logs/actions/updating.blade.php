@@ -3,7 +3,7 @@
 </p>
 
 <table class="table table-striped collapse" id="activity-{{ $activity->id }}">
-    @foreach($activity->log['after'] as $field => $value)
+    @foreach($activity->after() as $field => $value)
         <tr>
             <th width="20%">{{ trans($activity->getType() . '.' . $field) }}</th>
             <td width="40%">{{ $activity->log['before'][$field] }}</td>

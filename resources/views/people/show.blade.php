@@ -84,6 +84,9 @@
                     <li>
                         <a href="#information" data-toggle="tab">Informationen</a>
                     </li>
+                    <li>
+                        <a href="#changes" data-toggle="tab">Änderungsverlauf</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -198,6 +201,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="changes">
+                        @include('logs.entity-activity', ['entity' => $person])
                     </div>
                 </div>
 
