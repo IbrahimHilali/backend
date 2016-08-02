@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property integer                 id
- * @property string                  last_name
- * @property string                  first_name
- * @property string                  birth_date
- * @property string                  death_date
- * @property string                  bio_data
- * @property string                  bio_data_source
- * @property string                  add_bio_data
- * @property boolean                 is_organization
- * @property boolean                 auto_generated
- * @property string                  source
+ * @property integer id
+ * @property string last_name
+ * @property string first_name
+ * @property string birth_date
+ * @property string death_date
+ * @property string bio_data
+ * @property string bio_data_source
+ * @property string add_bio_data
+ * @property boolean is_organization
+ * @property boolean auto_generated
+ * @property string source
  *
- * @property PersonInformation[]     information
- * @property PersonPrint[]           prints
- * @property PersonInheritance[]     inheritances
+ * @property PersonInformation[] information
+ * @property PersonPrint[] prints
+ * @property PersonInheritance[] inheritances
  * @property BookPersonAssociation[] bookAssociations
  */
 class Person extends Model
@@ -106,10 +106,18 @@ class Person extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function references()
+    {
+        return $this->hasMany(PersonReference::class);
+    }
+
+    /**
      * Search for a person by name
      *
      * @param         $query The query object
-     * @param  string $name  The name searched for
+     * @param  string $name The name searched for
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -156,7 +164,7 @@ class Person extends Model
         parent::boot();
 
         static::restored(function (Person $model) {
-            $model->bookAssociations()->whereHas('book', function($q) {
+            $model->bookAssociations()->whereHas('book', function ($q) {
                 $q->whereNull('deleted_at');
             })->restore();
         });
