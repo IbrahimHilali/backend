@@ -78,7 +78,7 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="associations">
+                    <div role="tabpanel" class="tab-pane active" id="associations">
                         @unless($book->trashed())
                         <div class="add-button">
                             <a href="{{ route('books.associations.index', [$book->id]) }}" class="btn btn-primary btn-sm">
@@ -159,4 +159,19 @@
 
 
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+
+        // Tab auto selection
+        var url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+        }
+
+        $('.nav-tabs a').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
+        });
+    </script>
 @endsection
