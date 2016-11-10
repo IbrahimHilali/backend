@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property integer                 id
- * @property string                  last_name
- * @property string                  first_name
- * @property string                  birth_date
- * @property string                  death_date
- * @property string                  bio_data
- * @property string                  bio_data_source
- * @property string                  add_bio_data
- * @property boolean                 is_organization
- * @property boolean                 auto_generated
- * @property string                  source
+ * @property integer id
+ * @property string last_name
+ * @property string first_name
+ * @property string birth_date
+ * @property string death_date
+ * @property string bio_data
+ * @property string bio_data_source
+ * @property string add_bio_data
+ * @property boolean is_organization
+ * @property boolean auto_generated
+ * @property string source
  *
- * @property PersonInformation[]     information
- * @property PersonPrint[]           prints
- * @property PersonInheritance[]     inheritances
+ * @property PersonInformation[] information
+ * @property PersonPrint[] prints
+ * @property PersonInheritance[] inheritances
  * @property BookPersonAssociation[] bookAssociations
  */
 class Person extends Model
@@ -103,6 +103,14 @@ class Person extends Model
     public function bookAssociations()
     {
         return $this->hasMany(BookPersonAssociation::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function references()
+    {
+        return $this->hasMany(PersonReference::class);
     }
 
     /**

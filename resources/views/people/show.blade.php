@@ -19,27 +19,28 @@
                                 class="fa fa-caret-left"></i></a> Personendaten: {{ $person->fullName() }}</h1>
             </div>
             @if($person->trashed())
-            <div class="col-md-12 deleted-record-info">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-1">
-                        <div class="media">
-                            <div class="media-left">
-                                <i class="fa fa-trash-o fa-5x"></i>
-                            </div>
-                            <div class="media-body media-middle">
-                                <h4 class="media-heading">Die Person wurde gelöscht</h4>
-                                <p>Das bedeutet, dass sie nicht mehr für die Veröffentlichung berücksichtigt wird und nicht mehr sichtbar ist.</p>
+                <div class="col-md-12 deleted-record-info">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-1">
+                            <div class="media">
+                                <div class="media-left">
+                                    <i class="fa fa-trash-o fa-5x"></i>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <h4 class="media-heading">Die Person wurde gelöscht</h4>
+                                    <p>Das bedeutet, dass sie nicht mehr für die Veröffentlichung berücksichtigt wird
+                                        und nicht mehr sichtbar ist.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-2 delete-btn-container">
-                        <form action="{{ route('people.restore', [$person->id]) }}" method="POST">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn">Wiederherstellen</button>
-                        </form>
+                        <div class="col-md-2 delete-btn-container">
+                            <form action="{{ route('people.restore', [$person->id]) }}" method="POST">
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn">Wiederherstellen</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
             <div class="col-md-12 page-content">
                 <form id="person-editor" action="{{ route('people.update', ['people' => $person->id]) }}" class="form-horizontal"
@@ -61,13 +62,13 @@
                     @include('partials.form.boolean', ['field' => 'auto_generated', 'model' => $person, 'disabled' => $person->trashed()])
 
                     @unless($person->trashed())
-                    <div class="button-bar row">
-                        <div class="col-sm-10 col-md-offset-2">
-                            <button type="submit" class="btn btn-primary">Speichern</button>
-                            <a href="{{ referrer_url('last_person_index', route('people.index')) }}"
-                               class="btn btn-link">Abbrechen</a>
+                        <div class="button-bar row">
+                            <div class="col-sm-10 col-md-offset-2">
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                                <a href="{{ referrer_url('last_person_index', route('people.index')) }}"
+                                   class="btn btn-link">Abbrechen</a>
+                            </div>
                         </div>
-                    </div>
                     @endunless
                 </form>
 
@@ -77,6 +78,9 @@
                     </li>
                     <li>
                         <a href="#inheritances" data-toggle="tab">Nachlässe</a>
+                    </li>
+                    <li>
+                        <a href="#references" data-toggle="tab">Referenzen</a>
                     </li>
                     <li>
                         <a href="#books" data-toggle="tab">Bücher</a>
@@ -92,12 +96,12 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="prints">
                         @unless($person->trashed())
-                        <div class="add-button">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addPrint">
-                                <i class="fa fa-plus"></i> Druck hinzufügen
-                            </button>
-                        </div>
+                            <div class="add-button">
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#addPrint">
+                                    <i class="fa fa-plus"></i> Druck hinzufügen
+                                </button>
+                            </div>
                         @endunless
                         <table class="table table-responsive">
                             <thead>
@@ -109,7 +113,8 @@
                             <tbody>
                             <tr v-for="print in prints" is="in-place"
                                 :print-id="print.id" :print-entry="print.entry" :print-year="print.year"
-                                base-url="{{ route('people.prints.index', [$person->id]) }}" editable="{{ !$person->trashed() }}">
+                                base-url="{{ route('people.prints.index', [$person->id]) }}"
+                                editable="{{ !$person->trashed() }}">
                             </tr>
                             </tbody>
                         </table>
@@ -117,12 +122,12 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="inheritances">
                         @unless($person->trashed())
-                        <div class="add-button">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#addInheritance">
-                                <i class="fa fa-plus"></i> Nachlass hinzufügen
-                            </button>
-                        </div>
+                            <div class="add-button">
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#addInheritance">
+                                    <i class="fa fa-plus"></i> Nachlass hinzufügen
+                                </button>
+                            </div>
                         @endunless
                         <table class="table table-responsive">
                             <thead>
@@ -133,22 +138,53 @@
                             <tbody>
                             <tr v-for="inheritance in inheritances" is="inheritance-in-place"
                                 :inheritance-id="inheritance.id" :inheritance-entry="inheritance.entry"
-                                base-url="{{ route('people.inheritances.index', [$person->id]) }}" editable="{{ !$person->trashed() }}">
+                                base-url="{{ route('people.inheritances.index', [$person->id]) }}"
+                                editable="{{ !$person->trashed() }}">
                             </tr>
                             </tbody>
                         </table>
                         @include('people.inheritanceDialog')
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="references">
+                        @unless($person->trashed())
+                            <div class="add-button">
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#addReference">
+                                    <i class="fa fa-plus"></i> Referenz hinzufügen
+                                </button>
+                            </div>
+                        @endunless
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th># Person</th>
+                                <th>Name</th>
+                                <th>Notiz</th>
+                                <th class="action-column"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($person->references as $reference)
+                                <tr>
+                                    <td>{{ $reference->reference->id }}</td>
+                                    <td>{{ $reference->reference->fullName() }}</td>
+                                    <td>{{ $reference->notes }}</td>
+                                    <td>ä</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <div role="tabpanel" class="tab-pane" id="books">
                         @unless($person->trashed())
-                        <div class="add-button">
-                            @can('books.assign')
-                                <a href="{{ route('people.add-book', [$person->id]) }}" role="button"
-                                   class="btn btn-primary btn-sm">
-                                    <i class="fa fa-plus"></i> Buch hinzufügen
-                                </a>
-                            @endcan
-                        </div>
+                            <div class="add-button">
+                                @can('books.assign')
+                                    <a href="{{ route('people.add-book', [$person->id]) }}" role="button"
+                                       class="btn btn-primary btn-sm">
+                                        <i class="fa fa-plus"></i> Buch hinzufügen
+                                    </a>
+                                @endcan
+                            </div>
                         @endunless
                         <table class="table table-responsive">
                             <thead>
@@ -209,26 +245,26 @@
 
                 @can('people.delete')
                     @unless($person->trashed())
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Gefahrenzone</h1>
-                        </div>
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Gefahrenzone</h1>
+                            </div>
 
-                        <div class="panel-body">
-                            <p>
-                            <form id="danger-zone" action="{{ route('people.destroy', ['id' => $person->id]) }}"
-                                  method="post"
-                                  class="form-inline">
-                                {{ csrf_field() }}
-                                {{ method_field('delete') }}
-                                <button class="btn btn-danger">
-                                    <span class="fa fa-trash"></span>
-                                    {{ trans('people.delete') }}
-                                </button>
-                            </form>
-                            </p>
+                            <div class="panel-body">
+                                <p>
+                                <form id="danger-zone" action="{{ route('people.destroy', ['id' => $person->id]) }}"
+                                      method="post"
+                                      class="form-inline">
+                                    {{ csrf_field() }}
+                                    {{ method_field('delete') }}
+                                    <button class="btn btn-danger">
+                                        <span class="fa fa-trash"></span>
+                                        {{ trans('people.delete') }}
+                                    </button>
+                                </form>
+                                </p>
+                            </div>
                         </div>
-                    </div>
                     @endunless
                 @endcan
             </div>
