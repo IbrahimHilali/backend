@@ -7,7 +7,9 @@ use App\Events\StorePersonEvent;
 use App\Events\UpdatePersonEvent;
 use App\Filters\People\BioDataDuplicateFilter;
 use App\Filters\People\NameFilter;
+use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
+use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\DestroyPersonRequest;
 use App\Http\Requests\IndexPersonRequest;
@@ -39,14 +41,7 @@ class PersonsController extends Controller
 
         $this->preparePrefixDisplay($request->get('prefix'), Person::prefixesOfLength('last_name', 2)->get());
 
-        $people = $this->prepareCollection('last_person_index', $people, $request,
-            function ($builder, $orderByKey, $direction) use ($request) {
-                if (!$this->filter->applied(NameFilter::class)) {
-                    $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
-                }
-
-                return 'name';
-            }, 200);
+        $people = $this->prepareCollection('last_person_index', $people, $request, 200);
 
         return view('people.index', compact('people'));
     }
@@ -193,6 +188,14 @@ class PersonsController extends Controller
             new NameFilter(),
             new PrefixFilter('last_name'),
             new BioDataDuplicateFilter(),
+            new OnlyTrashedFilter('people'),
+            new SortFilter(function ($builder, $orderByKey, $direction) {
+                if (!$this->filter->applied(NameFilter::class)) {
+                    $builder->orderBy('last_name', $direction)->orderBy('first_name', $direction);
+                }
+
+                return 'name';
+            }),
         ];
     }
 }

@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Person extends Model
 {
 
-    use SoftDeletes, CollectPrefixes;
+    use SoftDeletes, CollectPrefixes, HasActivity;
 
     public static $unknownName = 'unknown';
 
@@ -116,12 +116,12 @@ class Person extends Model
     /**
      * Search for a person by name
      *
-     * @param         $query The query object
-     * @param  string $name The name searched for
+     * @param  Builder $query The query object
+     * @param  string  $name  The name searched for
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearchByName($query, $name)
+    public function scopeSearchByName(Builder $query, $name)
     {
         return $query->whereRaw('match(first_name, last_name) against (? in boolean mode)', [$name]);
     }
@@ -155,6 +155,9 @@ class Person extends Model
             'inheritances',
             'bookAssociations.book' => function ($query) {
                 $query->orderBy('books.title');
+            },
+            'activity' => function ($query) {
+                $query->latest()->with('user');
             },
         ]);
     }

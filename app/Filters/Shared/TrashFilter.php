@@ -7,6 +7,11 @@ use App\Filters\FlagFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
+/**
+ * Include trashed records into result set
+ *
+ * @package App\Filters\Shared
+ */
 class TrashFilter implements Filter, FlagFilter
 {
 

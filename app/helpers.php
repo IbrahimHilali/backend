@@ -58,12 +58,7 @@ if (!function_exists('checked')) {
      */
     function checked($field, $value)
     {
-
-        if ($field == $value) {
-            return ' checked="checked"';
-        }
-
-        return '';
+        return checked_if($field == $value);
     }
 }
 
@@ -144,5 +139,11 @@ if (!function_exists('field_name')) {
     function field_name($field, $model) {
         $langFile = (is_string($model)) ? $model : model_type($model);
         return trans($langFile . '.' . $field);
+    }
+}
+
+if (!function_exists('toggle_active_filters')) {
+    function toggle_active_filters($filter) {
+        return url()->filtered($filter->selected()->keys()->toArray());
     }
 }

@@ -7,6 +7,7 @@ use App\Events\StoreBookEvent;
 use App\Events\UpdateBookEvent;
 use App\Filters\Books\TitleFilter;
 use App\Filters\Shared\PrefixFilter;
+use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
@@ -19,12 +20,14 @@ use App\Http\Controllers\Controller;
 
 class BooksController extends Controller
 {
+
     use FiltersEntity;
 
     /**
      * Display a listing of the resource.
      *
      * @param IndexBookRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(IndexBookRequest $request)
@@ -35,13 +38,7 @@ class BooksController extends Controller
 
         $this->preparePrefixDisplay($request->get('prefix'), Book::prefixesOfLength('short_title', 2)->get());
 
-        $books = $this->prepareCollection('last_book_index', $books, $request,
-            function ($builder) {
-                $builder->orderBy('short_title')->orderBy('volume')
-                    ->orderBy('volume_irregular')
-                    ->orderBy('edition');
-                return 'identification';
-            }, 50);
+        $books = $this->prepareCollection('last_book_index', $books, $request, 50);
 
         return view('books.index', compact('books'));
     }
@@ -60,6 +57,7 @@ class BooksController extends Controller
      * Store a newly created resource in storage.
      *
      * @param BookStoreRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(BookStoreRequest $request)
@@ -77,6 +75,7 @@ class BooksController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -90,6 +89,7 @@ class BooksController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -101,7 +101,8 @@ class BooksController extends Controller
      * Update the specified resource in storage.
      *
      * @param BookUpdateRequest $request
-     * @param Book $books
+     * @param Book              $books
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(BookUpdateRequest $request, Book $books)
@@ -119,7 +120,8 @@ class BooksController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @param Book $books
+     * @param Book    $books
+     *
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
@@ -149,7 +151,14 @@ class BooksController extends Controller
         return [
             new TrashFilter('books'),
             new TitleFilter(),
-            new PrefixFilter('short_title')
+            new PrefixFilter('short_title'),
+            new SortFilter(function ($builder) {
+                $builder->orderBy('short_title')->orderBy('volume')
+                    ->orderBy('volume_irregular')
+                    ->orderBy('edition');
+
+                return 'identification';
+            }),
         ];
     }
 }

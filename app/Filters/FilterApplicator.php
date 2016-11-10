@@ -10,12 +10,13 @@ class FilterApplicator
 {
 
     /**
-     * @var Request
+     * @var Collection
      */
     protected $requestFilters;
     protected $filters = [];
     protected $defaults = [];
     protected $appliedFilters = [];
+    protected $optionalParameters = [];
 
     /**
      * Register a single new filter.
@@ -25,6 +26,10 @@ class FilterApplicator
     public function registerFilter(Filter $filter)
     {
         $this->filters[$filter->appliesTo()] = $filter;
+
+        if ($filter instanceof FilterWithOptionals) {
+            $this->optionalParameters = array_merge($this->optionalParameters, $filter->optionals());
+        }
 
         if (method_exists($filter, 'default')) {
             $this->defaults[] = $filter;
@@ -83,7 +88,7 @@ class FilterApplicator
 
         return $requestVariables
             ->filter(function ($value, $key) {
-                return array_key_exists($key, $this->filters);
+                return array_key_exists($key, $this->filters) || in_array($key, $this->optionalParameters);
             });
     }
 
@@ -100,6 +105,8 @@ class FilterApplicator
     }
 
     /**
+     * Return the filter object for the given filter URL key.
+     * 
      * @param $key
      *
      * @return Filter
@@ -109,6 +116,15 @@ class FilterApplicator
         return $this->filters[$key];
     }
 
+    /**
+     * Build the query string for the filters and the given delta
+     * (see documentation for the delta method on how to use the
+     * $deltaFilters array).
+     *
+     * @param array $deltaFilters
+     *
+     * @return string
+     */
     public function buildQueryString($deltaFilters = [])
     {
         $delta = $this->delta($deltaFilters);
@@ -116,10 +132,22 @@ class FilterApplicator
         return http_build_query($delta);
     }
 
+    /**
+     * Collect all filters and their values that should be appended
+     * to the URL to another request. The $deltaFilers parameter
+     * allows to intercept this list. Adding the name of a filter
+     * will toggle the value of this filter as long as it is a FlagFilter.
+     * Adding the name of a filter preceded by a dash will remove the filter.
+     *
+     * @param array $deltaFilters
+     *
+     * @return array
+     */
     public function delta($deltaFilters = [])
     {
         $deltaCollection = collect($deltaFilters);
 
+        /** @var Collection $toRemove */
         $toRemove = $deltaCollection->filter(function ($value, $key) {
             return is_numeric($key) && starts_with($value, '-');
         })->map(function ($item) {
@@ -128,30 +156,57 @@ class FilterApplicator
 
         $flags = $this->flags($deltaCollection);
 
-        return $delta = $this->requestFilters->filter(function ($value, $key) use ($toRemove) {
-            $filterClass = $this->filters[$key];
-
-            return $filterClass->shouldPreserve() && !$toRemove->contains($key);
-        })->merge($deltaCollection->filter(function ($value, $key) {
+        $additionalFields = $deltaCollection->filter(function ($value, $key) {
             return is_string($key);
-        }))->merge($flags)->toArray();
-    }
-
-    public function selectable($active=false)
-    {
-        $selectable = collect($this->filters)->filter(function($value) {
-            return $value instanceof SelectableFilter;
         });
 
-        if ($active) {
-            return $selectable->filter(function ($value) {
-                return $value->applied();
-            });
-        }
+        return $delta = $this->requestFilters->filter(function ($value, $key) use ($toRemove) {
+            return $this->shouldFilterValueBePreserved($key, $toRemove);
+        })->merge($additionalFields)->merge($flags)->toArray();
+    }
+
+    /**
+     * Grab all filters, that are selectable, i.e. can be switched on or off.
+     *
+     * @return Collection
+     */
+    public function selectable()
+    {
+        $selectable = collect($this->filters)->filter(function ($value) {
+            return $value instanceof SelectableFilter;
+        });
 
         return $selectable;
     }
 
+    /**
+     * Fetch all currently active selectable filters.
+     *
+     * @return Collection
+     */
+    public function selected()
+    {
+        return $this->selectable()->filter(function ($value) {
+            return $value->applied();
+        });
+    }
+
+    /**
+     * Check if there are selectable filters, that are currently selected.
+     *
+     * @return bool
+     */
+    public function hasSelected()
+    {
+        return $this->selected()->count() > 0;
+    }
+
+    /**
+     * Call the filters that have a default action, i.e. an action
+     * that is always set to run.
+     *
+     * @param Builder $builder
+     */
     protected function callDefaults(Builder $builder)
     {
         foreach ($this->defaults as $defaultFilter) {
@@ -160,19 +215,44 @@ class FilterApplicator
     }
 
     /**
+     * Filter the given delta collection for flags.
+     * These are values with numerical key, that are not
+     * preceded by a dash.
+     *
      * @param $deltaCollection
      *
      * @return mixed
      */
-    protected function flags($deltaCollection)
+    protected function flags(Collection $deltaCollection)
     {
         $flags = $deltaCollection->filter(function ($value, $key) {
             return is_numeric($key) && !starts_with($value, '-');
-        })->map(function ($value, $key) {
+        })->flatMap(function ($value, $key) {
             $filter = $this->filterFor($value);
+
             return [$value => $filter->nextValue()];
-        })->flatten(1);
+        });
 
         return $flags;
+    }
+
+    /**
+     * Determines if the given filter value should be preserved in
+     * the URL for the next page.
+     *
+     * @param string     $key
+     * @param Collection $toRemove
+     *
+     * @return bool
+     */
+    protected function shouldFilterValueBePreserved($key, $toRemove)
+    {
+        if (array_key_exists($key, $this->filters)) {
+            $filterClass = $this->filters[$key];
+
+            return $filterClass->shouldPreserve() && !$toRemove->contains($key);
+        }
+
+        return in_array($key, $this->optionalParameters);
     }
 }

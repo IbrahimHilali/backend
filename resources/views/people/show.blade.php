@@ -6,6 +6,14 @@
     <div class="container">
         <div class="row page">
             <div class="col-md-12 page-title">
+                <div class="button-container">
+                    <div class="generic">
+                        <a href="{{ route('people.create') }}" role="button" class="btn btn-default btn-sm">
+                            <span class="fa fa-plus"></span>
+                            {{ trans('people.store') }}
+                        </a>
+                    </div>
+                </div>
                 <h1><a class="prev-link"
                        href="{{ referrer_url('last_person_index', route('people.index'), '#person-' . $person->id) }}"><i
                                 class="fa fa-caret-left"></i></a> Personendaten: {{ $person->fullName() }}</h1>
@@ -35,10 +43,12 @@
                 </div>
             @endif
             <div class="col-md-12 page-content">
-                <form action="{{ route('people.update', ['people' => $person->id]) }}" class="form-horizontal"
+                <form id="person-editor" action="{{ route('people.update', ['people' => $person->id]) }}" class="form-horizontal"
                       method="POST">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
+                    <input type="hidden" name="prev_last_name" value="{{ $person->last_name }}">
+                    <input type="hidden" name="prev_first_name" value="{{ $person->first_name }}">
                     @include('partials.form.field', ['field' => 'last_name', 'model' => $person, 'disabled' => $person->trashed()])
                     @include('partials.form.field', ['field' => 'first_name', 'model' => $person, 'disabled' => $person->trashed()])
                     @include('partials.form.field', ['field' => 'birth_date', 'model' => $person, 'disabled' => $person->trashed()])
@@ -77,6 +87,9 @@
                     </li>
                     <li>
                         <a href="#information" data-toggle="tab">Informationen</a>
+                    </li>
+                    <li>
+                        <a href="#changes" data-toggle="tab">Änderungsverlauf</a>
                     </li>
                 </ul>
 
@@ -224,6 +237,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="changes">
+                        @include('logs.entity-activity', ['entity' => $person])
                     </div>
                 </div>
 
