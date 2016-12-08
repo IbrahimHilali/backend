@@ -51,13 +51,14 @@ $this->group(['middleware' => 'web'], function () {
 
         $this->post('people/{id}/restore', ['as' => 'people.restore', 'uses' => 'PersonsController@restore']);
         $this->post('books/{id}/restore', ['as' => 'books.restore', 'uses' => 'BooksController@restore']);
+        $this->post('library/{id}/restore', ['as' => 'library.restore', 'uses' => 'LibraryController@restore']);
 
         // Users
         $this->resource('users', 'UsersController');
         $this->resource('roles', 'RolesController', ['except' => ['edit']]);
 
         // Grimm Library
-        $this->resource('library', 'LibraryController');
+        $this->resource('library', 'LibraryController', ['except' => ['edit']]);
 
         // Associations (user-book)
         $this->get('books/{books}/associations',

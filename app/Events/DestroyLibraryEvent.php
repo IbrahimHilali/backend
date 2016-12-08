@@ -2,17 +2,17 @@
 
 namespace App\Events;
 
-use App\Events\Event;
-use Grimm\Book;
+use Grimm\LibraryBook;
 use Grimm\User;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class DestroyBookEvent extends Event
+class DestroyLibraryEvent extends Event
 {
+
     use SerializesModels;
+
     /**
-     * @var Book
+     * @var LibraryBook
      */
     public $book;
     /**
@@ -23,12 +23,11 @@ class DestroyBookEvent extends Event
     /**
      * Create a new event instance.
      *
-     * @param Book $book
+     * @param LibraryBook $book
      * @param User $user
      */
-    public function __construct(Book $book, User $user)
+    public function __construct(LibraryBook $book, User $user)
     {
-        //
         $this->book = $book;
         $this->user = $user;
     }

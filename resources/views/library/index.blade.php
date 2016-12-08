@@ -29,7 +29,7 @@
                         </a>
                     </div>
                 </div>
-                <h1>Personendatenbank</h1>
+                <h1>pers. Grimm-Bibliothek</h1>
             </div>
             @include('partials.prefixSelection', ['route' => 'library'])
             <div class="col-md-12 pagination-container">
@@ -55,15 +55,15 @@
                         <tr id="person-{{ $book->id }}"
                             onclick="location.href='{{ route('library.show', ['id' => $book->id]) }}'"
                             style="cursor: pointer;"
-                            class="@if($book->auto_generated) bg-warning @endif @if($book->trashed()) bg-danger @endif">
+                            class="@if($book->trashed()) bg-danger @endif">
                             <td>{{ $book->catalog_id }}</td>
                             <td>{{ $book->title }}</td>
                         </tr>
                     @empty
                         <tr onclick="location.href='{{ route('library.create') }}'" style="cursor: pointer;">
                             <td class="empty-list" colspan="6">
-                                In der Datenbank ist kein Buch vorhanden. Möchten Sie
-                                eins erstellen?
+                                In der Datenbank ist kein Buch vorhanden.
+                                Möchten Sie eins erstellen?
                             </td>
                         </tr>
                     @endforelse

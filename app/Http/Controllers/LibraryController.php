@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DestroyLibraryEvent;
+use App\Events\StoreLibraryEvent;
+use App\Events\UpdateLibraryEvent;
 use App\Filters\Library\TitleFilter;
 use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
 use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\IndexLibraryRequest;
+use App\Http\Requests\ShowLibraryRequest;
+use App\Http\Requests\StoreLibraryRequest;
+use App\Http\Requests\UpdateLibraryRequest;
 use Grimm\LibraryBook;
 use Illuminate\Http\Request;
 
@@ -42,63 +48,96 @@ class LibraryController extends Controller
      */
     public function create()
     {
-        //
+        return view('library.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StoreLibraryRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLibraryRequest $request)
     {
-        //
+        $book = $request->persist();
+
+        event(new StoreLibraryEvent($book, $request->user()));
+
+        return redirect()
+            ->route('library.show', ['id' => $book->id])
+            ->with('success', trans('library.store_success'));
     }
 
     /**
      * Display the specified resource.
      *
+     * @param ShowLibraryRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ShowLibraryRequest $request, $id)
     {
-        //
-    }
+        $book = LibraryBook::withTrashed()->findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('library.show', compact('book'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param UpdateLibraryRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLibraryRequest $request, $id)
     {
-        //
+        /** @var LibraryBook $book */
+        $book = LibraryBook::query()->findOrFail($id);
+
+        $request->persist($book);
+
+        event(new UpdateLibraryEvent($book, $request->user()));
+
+        return redirect()
+            ->route('library.show', ['id' => $book->id])
+            ->with('success', 'Die Änderungen wurden gespeichert');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        /** @var LibraryBook $book */
+        $book = LibraryBook::query()->findOrFail($id);
+
+        $book->delete();
+
+        event(new DestroyLibraryEvent($book, $request->user()));
+
+        return redirect()
+            ->route('library.index')
+            ->with('success', trans('library.deleted_success'));
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore($id)
+    {
+        /** @var LibraryBook $book */
+        $book = LibraryBook::onlyTrashed()->findOrFail($id);
+
+        $book->restore();
+
+        return redirect()
+            ->route('library.show', [$id])
+            ->with('success', 'Das Buch wurde wiederhergestellt!');
     }
 
     protected function filters()
@@ -109,10 +148,8 @@ class LibraryController extends Controller
             new PrefixFilter('title'),
             new OnlyTrashedFilter('library'),
             new SortFilter(function ($builder, $orderByKey, $direction) {
-                if ($this->filter->applied(SortFilter::class)) {
-                    $builder->orderByRaw('ABS(catalog_id) ' . $direction)
-                        ->orderBy('catalog_id', $direction);
-                }
+                $builder->orderByRaw('ABS(catalog_id) ' . $direction)
+                    ->orderBy('catalog_id', $direction);
 
                 return 'cat_id';
             }),

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class IndexLibraryRequest extends Request
+class ShowLibraryRequest extends Request
 {
 
     /**

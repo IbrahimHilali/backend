@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int id
+ * @property string catalog_id
+ * @property string title
+ */
 class LibraryBook extends Model
 {
 
@@ -25,8 +30,8 @@ class LibraryBook extends Model
     /**
      * Search for a book by title
      *
-     * @param Builder     $query The query object
-     * @param             $title The title searched for
+     * @param Builder $query The query object
+     * @param string $title The title searched for
      *
      * @return Builder
      */
