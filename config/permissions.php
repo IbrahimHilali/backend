@@ -19,5 +19,9 @@ return [
     'people.update',
     'people.delete',
 
+    'library.store',
+    'library.update',
+    'library.delete',
+
     'admin.deployment',
 ];

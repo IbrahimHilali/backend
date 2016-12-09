@@ -35,6 +35,20 @@ $factory->define(Grimm\Person::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(Grimm\LibraryBook::class, function (Faker\Generator $faker) {
+
+    $catalog_id = $faker->numberBetween(1, 10000);
+
+    if ($faker->boolean(20)) {
+        $catalog_id .= $faker->randomLetter();
+    }
+
+    return [
+        'catalog_id' => $catalog_id,
+        'title' => $faker->sentence,
+    ];
+});
+
 $factory->define(Grimm\Book::class, function (Faker\Generator $faker) {
 
     if ($faker->boolean(80)) {
@@ -94,7 +108,7 @@ $factory->define(Grimm\PersonPrint::class, function (Faker\Generator $faker) {
     return [
         'person_id' => $person->id,
         'entry' => $faker->paragraph,
-        'year'  => rand(12000, 20000)/10
+        'year' => rand(12000, 20000) / 10
     ];
 });
 

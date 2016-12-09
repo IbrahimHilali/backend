@@ -51,20 +51,29 @@ $this->group(['middleware' => 'web'], function () {
 
         $this->post('people/{id}/restore', ['as' => 'people.restore', 'uses' => 'PersonsController@restore']);
         $this->post('books/{id}/restore', ['as' => 'books.restore', 'uses' => 'BooksController@restore']);
+        $this->post('library/{id}/restore', ['as' => 'library.restore', 'uses' => 'LibraryController@restore']);
 
         // Users
         $this->resource('users', 'UsersController');
         $this->resource('roles', 'RolesController', ['except' => ['edit']]);
 
+        // Grimm Library
+        $this->resource('library', 'LibraryController', ['except' => ['edit']]);
+
         // Associations (user-book)
-        $this->get('books/{books}/associations', ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
-        $this->post('books/{books}/associations', ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
+        $this->get('books/{books}/associations',
+            ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
+        $this->post('books/{books}/associations',
+            ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
 
         $this->get('people/book/{association}', ['as' => 'people.book', 'uses' => 'BooksPersonController@show']);
-        $this->delete('people/book/{association}', ['as' => 'people.book.delete', 'uses' => 'BooksPersonController@destroy']);
+        $this->delete('people/book/{association}',
+            ['as' => 'people.book.delete', 'uses' => 'BooksPersonController@destroy']);
 
-        $this->get('people/{person}/add-book', ['as' => 'people.add-book', 'uses' => 'BooksPersonController@personAddBook']);
-        $this->post('people/{person}/add-book', ['as' => 'people.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
+        $this->get('people/{person}/add-book',
+            ['as' => 'people.add-book', 'uses' => 'BooksPersonController@personAddBook']);
+        $this->post('people/{person}/add-book',
+            ['as' => 'people.add-book.store', 'uses' => 'BooksPersonController@personStoreBook']);
 
         // Administration
         $this->get('admin/publish', ['as' => 'admin.deployment.index', 'uses' => 'DeploymentController@index']);
@@ -73,10 +82,12 @@ $this->group(['middleware' => 'web'], function () {
     });
 });
 
-$this->group(['middleware' => 'api'], function() {
+$this->group(['middleware' => 'api'], function () {
     $this->resource('people.prints', 'PersonPrintController', ['except' => ['edit']]);
     $this->resource('people.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
-    $this->post('admin/publish/trigger', ['as' => 'admin.deployment.trigger', 'uses' => 'DeploymentController@triggerDeployment']);
+    $this->post('admin/publish/trigger',
+        ['as' => 'admin.deployment.trigger', 'uses' => 'DeploymentController@triggerDeployment']);
     $this->get('admin/publish/status', ['as' => 'admin.deployment.status', 'uses' => 'DeploymentController@status']);
-    $this->post('admin/publish/blankify', ['as' => 'admin.deployment.blankify', 'uses' => 'DeploymentController@blankify']);
+    $this->post('admin/publish/blankify',
+        ['as' => 'admin.deployment.blankify', 'uses' => 'DeploymentController@blankify']);
 });

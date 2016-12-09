@@ -41,25 +41,39 @@
             <ul class="nav navbar-nav">
                 <li class="disabled"><a href="#" onclick="return false">Briefe</a></li>
                 @can('people.*')
-                <li {!! active_if(request()->is('people*')) !!}><a href="{{ route('people.index') }}">{{ trans('people.people') }}</a></li>
+                    <li {!! active_if(request()->is('people*')) !!}>
+                        <a href="{{ route('people.index') }}">{{ trans('people.people') }}</a>
+                    </li>
                 @endcan
                 @can('books.*')
-                <li {!! active_if(request()->is('books*')) !!}><a href="{{ route('books.index') }}">{{ trans('books.books') }}</a></li>
+                    <li {!! active_if(request()->is('books*')) !!}>
+                        <a href="{{ route('books.index') }}">{{ trans('books.books') }}</a>
+                    </li>
                 @endcan
-                @can('users.*')
-                <li {!! active_if(request()->is('users*')) !!}><a href="{{ route('users.index') }}">{{ trans('users.users') }}</a></li>
+                @can('library.*')
+                    <li {!! active_if(request()->is('library*')) !!}>
+                        <a href="{{ route('library.index') }}">{{ trans('library.library') }}</a>
+                    </li>
                 @endcan
                 @can('admin.*')
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        {{ trans('admin.admin') }} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        @can('admin.deployment')
-                        <li><a href="{{ route('admin.deployment.index') }}">{{ trans('admin.deployment') }}</a></li>
-                        @endcan
-                    </ul>
-                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {{ trans('admin.admin') }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            @can('users.*')
+                                <li {!! active_if(request()->is('users*')) !!}>
+                                    <a href="{{ route('users.index') }}">{{ trans('users.users') }}</a>
+                                </li>
+                                <li class="divider"></li>
+                            @endcan
+                            @can('admin.deployment')
+                                <li>
+                                    <a href="{{ route('admin.deployment.index') }}">{{ trans('admin.deployment') }}</a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
                 @endcan
             </ul>
 
@@ -92,7 +106,7 @@
 @include('info')
 @yield('content')
 
-        <!-- JavaScripts -->
+<!-- JavaScripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
