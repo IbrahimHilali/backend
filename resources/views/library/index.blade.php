@@ -29,7 +29,7 @@
                         </a>
                     </div>
                 </div>
-                <h1>pers. Grimm-Bibliothek</h1>
+                <h1>Pers. Grimm-Bibliothek</h1>
             </div>
             @include('partials.prefixSelection', ['route' => 'library'])
             <div class="col-md-12 pagination-container">
