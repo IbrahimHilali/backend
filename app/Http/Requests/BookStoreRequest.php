@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Grimm\Book;
 
 class BookStoreRequest extends Request
@@ -15,7 +14,7 @@ class BookStoreRequest extends Request
      */
     public function authorize()
     {
-        return Gate::allows('books.store');
+        return $this->user()->can('books.store');
     }
 
     /**

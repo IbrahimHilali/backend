@@ -17,6 +17,11 @@ return [
         'delete' => 'Nur ein Nutzer mit diesem Recht kann Bücher löschen.',
         'assign' => 'Mit diesem Recht kann ein Nutzer ein Buch einer Person zuordnen.',
     ],
+    'library' => [
+        'store' => 'Um ein neues Buch der Grimm-Bibliothek anzulegen, wird dieses Recht benötigt.',
+        'update' => 'Zur Aktualisierung der Daten eines existierenden Buchs in der Grimm-Bibliothek muss ein Nutzer dieses Recht haben.',
+        'delete' => 'Nur ein Nutzer mit diesem Recht kann Bücher der Grimm-Bibliothek löschen.',
+    ],
     'admin' => [
         'deployment' => 'Der Benutzer kann die Aktualisierung des öffentlichen Datenbestands anstoßen.',
     ],

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Gate;
 use Grimm\Book;
 
 class BookUpdateRequest extends Request
@@ -15,7 +14,7 @@ class BookUpdateRequest extends Request
      */
     public function authorize()
     {
-        return Gate::allows('books.update');
+        return $this->user()->can('books.update');
     }
 
     /**
