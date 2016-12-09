@@ -10,5 +10,5 @@ return [
     'not_found' => 'Das Buch wurde nicht gefunden!',
 
     'deleted_success' => 'Das Buch wurde gelöscht.',
-    'store_success' => 'Der Benutzer wurde erfolgreich angelegt!',
+    'store_success' => 'Das Buch wurde erfolgreich angelegt!',
 ];
