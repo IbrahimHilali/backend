@@ -10,6 +10,7 @@ use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
 use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
+use App\Http\Requests\DestroyLibraryRequest;
 use App\Http\Requests\IndexLibraryRequest;
 use App\Http\Requests\ShowLibraryRequest;
 use App\Http\Requests\StoreLibraryRequest;
@@ -106,16 +107,16 @@ class LibraryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Request $request
+     * @param DestroyLibraryRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(DestroyLibraryRequest $request, $id)
     {
         /** @var LibraryBook $book */
         $book = LibraryBook::query()->findOrFail($id);
 
-        $book->delete();
+        $request->persist($book);
 
         event(new DestroyLibraryEvent($book, $request->user()));
 
@@ -125,10 +126,11 @@ class LibraryController extends Controller
     }
 
     /**
+     * @param DestroyLibraryRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore($id)
+    public function restore(DestroyLibraryRequest $request, $id)
     {
         /** @var LibraryBook $book */
         $book = LibraryBook::onlyTrashed()->findOrFail($id);
