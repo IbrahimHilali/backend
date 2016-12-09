@@ -43,10 +43,10 @@
                     <thead>
                     <tr>
                         <th>
-                            <a href="{{ sort_link('library', 'cat_id') }}">{{ trans('library.cat_id') }} {!! sort_arrow('cat_id') !!}</a>
+                            <a href="{{ sort_link('library', 'cat_id') }}">{{ trans('librarybooks.catalog_id') }} {!! sort_arrow('cat_id') !!}</a>
                         </th>
                         <th>
-                            <a href="{{ sort_link('library', 'title') }}">{{ trans('library.title') }} {!! sort_arrow('title') !!}</a>
+                            <a href="{{ sort_link('library', 'title') }}">{{ trans('librarybooks.title') }} {!! sort_arrow('title') !!}</a>
                         </th>
                     </tr>
                     </thead>
