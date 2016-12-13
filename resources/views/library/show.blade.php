@@ -50,7 +50,7 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="prev_title" value="{{ $book->title }}">
                     @include('partials.form.field', ['field' => 'catalog_id', 'model' => $book, 'disabled' => $book->trashed()])
-                    @include('partials.form.field', ['field' => 'title', 'model' => $book, 'disabled' => $book->trashed()])
+                    @include('partials.form.textarea', ['field' => 'title', 'model' => $book, 'disabled' => $book->trashed()])
 
                     @unless($book->trashed())
                         <div class="button-bar row">

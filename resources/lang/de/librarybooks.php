@@ -2,5 +2,5 @@
 
 return [
     'catalog_id' => 'fortl. Buchnummer',
-    'title' => 'Titel',
+    'title' => 'Denecke / Teitge',
 ];
