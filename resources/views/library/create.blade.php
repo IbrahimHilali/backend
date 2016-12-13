@@ -14,7 +14,7 @@
                     {{ csrf_field() }}
 
                     @include('partials.form.field', ['field' => 'catalog_id', 'model' => 'librarybooks'])
-                    @include('partials.form.field', ['field' => 'title', 'model' => 'librarybooks'])
+                    @include('partials.form.textarea', ['field' => 'title', 'model' => 'librarybooks'])
 
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-2">
