@@ -53,8 +53,13 @@ class Activity extends Model
     {
         $type = strtolower(last(explode('\\', $this->model_type)));
 
-        if ($pluralize) {
-            return str_plural($type);
+        if ($type == 'librarybook') {
+            // TODO: fix this hack
+            $type = 'library';
+        } else {
+            if ($pluralize) {
+                return str_plural($type);
+            }
         }
 
         return $type;

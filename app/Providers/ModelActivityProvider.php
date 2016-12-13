@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Grimm\Activity;
 use Grimm\Book;
+use Grimm\LibraryBook;
 use Grimm\Person;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +23,25 @@ class ModelActivityProvider extends ServiceProvider
             return;
         }
 
+        $this->registerBook();
+
+        $this->registerPerson();
+
+        $this->registerLibrary();
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    protected function registerBook()
+    {
         Book::created(function (Model $model) {
             $this->logCreating($model);
         });
@@ -37,7 +57,10 @@ class ModelActivityProvider extends ServiceProvider
         Book::restored(function (Model $model) {
             $this->logRestoring($model);
         });
+    }
 
+    protected function registerPerson()
+    {
         Person::created(function (Model $model) {
             $this->logCreating($model);
         });
@@ -55,14 +78,23 @@ class ModelActivityProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
+    protected function registerLibrary()
     {
-        //
+        LibraryBook::created(function (Model $model) {
+            $this->logCreating($model);
+        });
+
+        LibraryBook::updating(function (Model $model) {
+            $this->logUpdating($model);
+        });
+
+        LibraryBook::deleting(function (Model $model) {
+            $this->logDeleting($model);
+        });
+
+        LibraryBook::restored(function (Model $model) {
+            $this->logRestoring($model);
+        });
     }
 
     protected function log($model, $log)
