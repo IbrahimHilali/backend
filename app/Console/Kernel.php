@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\ClearBeanstalkdQueue;
 use App\Console\Commands\Deploy;
+use App\Console\Commands\FillDeneckeTeitgeFromTitle;
 use App\Console\Commands\ImportDBase;
 use App\Console\Commands\UpdatePermissionsTable;
 use Illuminate\Console\Scheduling\Schedule;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         Deploy::class,
         UpdatePermissionsTable::class,
         ClearBeanstalkdQueue::class,
+        FillDeneckeTeitgeFromTitle::class,
     ];
 
     /**

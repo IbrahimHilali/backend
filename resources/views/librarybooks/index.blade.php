@@ -6,7 +6,7 @@
             <div class="col-md-12 page-title">
                 <div class="button-container">
                     <div class="search {{ request()->has('title') ? 'active' : '' }}">
-                        <form action="{{ url('library') }}" method="get">
+                        <form action="{{ url('librarybooks') }}" method="get">
                             <input type="text" class="form-control input-sm" name="title" maxlength="64"
                                    placeholder="Suche" value="{{ request('title') ?: '' }}"/>
 
@@ -23,9 +23,9 @@
                         </div>
                     @endif
                     <div class="generic">
-                        <a href="{{ route('library.create') }}" role="button" class="btn btn-default btn-sm">
+                        <a href="{{ route('librarybooks.create') }}" role="button" class="btn btn-default btn-sm">
                             <span class="fa fa-plus"></span>
-                            {{ trans('library.store') }}
+                            {{ trans('librarybooks.store') }}
                         </a>
                     </div>
                 </div>
@@ -43,24 +43,28 @@
                     <thead>
                     <tr>
                         <th>
-                            <a href="{{ sort_link('library', 'cat_id') }}">{{ trans('librarybooks.catalog_id') }} {!! sort_arrow('cat_id') !!}</a>
+                            <a href="{{ sort_link('librarybooks', 'cat_id') }}">{{ trans('librarybooks.catalog_id') }} {!! sort_arrow('cat_id') !!}</a>
                         </th>
                         <th>
-                            <a href="{{ sort_link('library', 'title') }}">{{ trans('librarybooks.title') }} {!! sort_arrow('title') !!}</a>
+                            <a href="{{ sort_link('librarybooks', 'title') }}">{{ trans('librarybooks.title') }} {!! sort_arrow('title') !!}</a>
+                        </th>
+                        <th>
+                            <a href="{{ sort_link('librarybooks', 'denecke_teitge') }}">{{ trans('librarybooks.denecke_teitge') }} {!! sort_arrow('denecke_teitge') !!}</a>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     @forelse($books->items() as $book)
                         <tr id="person-{{ $book->id }}"
-                            onclick="location.href='{{ route('library.show', ['id' => $book->id]) }}'"
+                            onclick="location.href='{{ route('librarybooks.show', ['id' => $book->id]) }}'"
                             style="cursor: pointer;"
                             class="@if($book->trashed()) bg-danger @endif">
-                            <td>{{ $book->catalog_id }}</td>
-                            <td>{{ $book->title }}</td>
+                            <td width="15%">{{ $book->catalog_id }}</td>
+                            <td width="40%">{{ $book->title }}</td>
+                            <td width="45%">{{ $book->denecke_teitge }}</td>
                         </tr>
                     @empty
-                        <tr onclick="location.href='{{ route('library.create') }}'" style="cursor: pointer;">
+                        <tr onclick="location.href='{{ route('librarybooks.create') }}'" style="cursor: pointer;">
                             <td class="empty-list" colspan="6">
                                 In der Datenbank ist kein Buch vorhanden.
                                 Möchten Sie eins erstellen?

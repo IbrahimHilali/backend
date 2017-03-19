@@ -21,7 +21,9 @@
                             </tr>
                             <tr>
                                 <td class="text-center" style="width: 40%;">
-                                    <a href="{{ route('people.show', [$association->person->id]) }}">
+                                    <a href="{{ route('people.show', [$association->person->id]) }}"
+                                       data-toggle="tooltip"
+                                       title="{{ trans('people.open') }}">
                                         <i class="fa fa-arrow-left"></i>
                                     </a>
                                     {{ $association->person->id }}
@@ -33,7 +35,9 @@
                                 </td>
                                 <td class="text-center" style="width: 40%;">
                                     {{ $association->book->id }}
-                                    <a href="{{ route('books.show', [$association->book->id]) }}">
+                                    <a href="{{ route('books.show', [$association->book->id]) }}"
+                                       data-toggle="tooltip"
+                                       title="{{ trans('books.open') }}">
                                         <i class="fa fa-arrow-right"></i>
                                     </a>
                                 </td>
@@ -86,7 +90,8 @@
                             </div>
 
                             <div class="panel-body">
-                                <form id="danger-zone" class="form-inline" action="{{ route('people.book.delete', [$association]) }}" method="post">
+                                <form id="danger-zone" class="form-inline"
+                                      action="{{ route('people.book.delete', [$association]) }}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
                                     <button type="submit" class="btn btn-danger">

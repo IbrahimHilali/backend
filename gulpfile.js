@@ -19,5 +19,6 @@ elixir(function(mix) {
     mix.sass('app.scss')
         .browserify('associations/associations.js')
         .browserify('persons/persons.js')
+        .browserify('library/library.js')
         .browserify('deployment/deployment.js');
 });

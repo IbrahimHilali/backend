@@ -130,6 +130,8 @@ return [
         'edition' => 'Die Edition',
         'person' => 'Person',
         'catalog_id' => 'Die fortl. Buchnummer',
+        'name' => 'Name',
+        'note' => 'Notiz',
     ],
 
 ];

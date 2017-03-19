@@ -10238,326 +10238,152 @@ setTimeout(function () {
 
 module.exports = Vue;
 },{}],2:[function(require,module,exports){
-'use strict';
+var inserted = exports.cache = {}
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+exports.insert = function (css) {
+  if (inserted[css]) return
+  inserted[css] = true
 
-var _vue = require('vue');
+  var elem = document.createElement('style')
+  elem.setAttribute('type', 'text/css')
 
-var _vue2 = _interopRequireDefault(_vue);
+  if ('textContent' in elem) {
+    elem.textContent = css
+  } else {
+    elem.styleSheet.cssText = css
+  }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  document.getElementsByTagName('head')[0].appendChild(elem)
+  return elem
+}
 
-exports.default = {
-    props: ['inheritanceId', 'inheritanceEntry', 'baseUrl', 'editable'],
-    methods: {
-        clickEdit: function clickEdit() {
-            if (this.editingEntry == '') {
-                this.editingEntry = this.inheritanceEntry;
-            }
-            this.editing = true;
-            this.focusEntryInput();
-        },
-        stopEdit: function stopEdit() {
-            this.editing = false;
-        },
-        saveInheritance: function saveInheritance() {
-            this.saving = true;
-            $.ajax({
-                data: {
-                    'entry': this.editingEntry
-                },
-                url: this.baseUrl + '/' + this.inheritanceId,
-                method: 'PUT'
-            }).done(function (response) {
-                this.inheritanceEntry = response.entry;
-                this.editing = false;
-                this.saving = false;
-            }.bind(this));
-        },
-        deleteInheritance: function deleteInheritance() {
-            var _this = this;
-
-            if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
-                $.ajax({
-                    url: this.baseUrl + '/' + this.inheritanceId,
-                    method: 'DELETE'
-                }).done(function (response) {
-                    _this.existing = false;
-                });
-            }
-        },
-        focusEntryInput: function focusEntryInput() {
-            _vue2.default.nextTick(function () {
-                this.$els.entryInput.focus();
-            }.bind(this));
-        }
-    },
-    data: function data() {
-        return {
-            editing: false,
-            existing: true,
-            saving: false,
-            editingEntry: ''
-        };
-    }
-};
-if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<tr v-if=existing><td colspan=2 v-if=!editing><a href=# v-on:click.prevent=clickEdit v-if=editable><i class=\"fa fa-edit\"></i></a> {{ inheritanceEntry }}<td v-if=!editing><a href=# v-on:click.prevent=deleteInheritance v-if=editable><i class=\"fa fa-trash\" data-toggle=tooltip data-placement=top title=Löschen></i></a><td v-if=editing><a href=# class=\"btn btn-link btn-sm\" v-on:click.prevent=stopEdit><i class=\"fa fa-times\"></i></a><td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingEntry v-el:entry-input=\"\" v-on:keyup.enter=saveInheritance()><td v-if=editing><button type=button class=\"btn btn-primary btn-sm\" v-on:click=saveInheritance()><i class=\"fa fa-spinner fa-spin\" v-if=saving></i> Speichern</button>"
-
-},{"vue":1}],3:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _vue = require('vue');
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-    props: ['printId', 'printEntry', 'printYear', 'baseUrl', 'editable'],
-    methods: {
-        clickEdit: function clickEdit() {
-            if (this.editingYear == '') {
-                this.editingYear = this.printYear;
-            }
-            if (this.editingEntry == '') {
-                this.editingEntry = this.printEntry;
-            }
-            this.editing = true;
-            this.focusEntryInput();
-        },
-        stopEdit: function stopEdit() {
-            this.editing = false;
-        },
-        savePrint: function savePrint() {
-            this.saving = true;
-            $.ajax({
-                data: {
-                    'entry': this.editingEntry,
-                    'year': this.editingYear
-                },
-                url: this.baseUrl + '/' + this.printId,
-                method: 'PUT'
-            }).done(function (response) {
-                this.printEntry = response.entry;
-                this.printYear = response.year;
-                this.editing = false;
-                this.saving = false;
-            }.bind(this));
-        },
-        deletePrint: function deletePrint() {
-            var _this = this;
-
-            if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
-                $.ajax({
-                    url: this.baseUrl + '/' + this.printId,
-                    method: 'DELETE'
-                }).done(function (response) {
-                    _this.existing = false;
-                });
-            }
-        },
-        focusEntryInput: function focusEntryInput() {
-            _vue2.default.nextTick(function () {
-                this.$els.entryInput.focus();
-            }.bind(this));
-        }
-    },
-    data: function data() {
-        return {
-            editing: false,
-            existing: true,
-            saving: false,
-            editingEntry: '',
-            editingYear: ''
-        };
-    }
-};
-if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<tr v-if=existing><td v-if=editing><a href=# class=\"btn btn-link btn-sm\" v-on:click.prevent=stopEdit><i class=\"fa fa-times\"></i></a><td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingEntry v-el:entry-input=\"\" v-on:keyup.enter=savePrint()><td colspan=2 v-if=!editing><a href=# v-on:click.prevent=clickEdit v-if=editable><i class=\"fa fa-edit\"></i></a> {{ printEntry }}<td v-if=editing><input type=text class=\"form-control input-sm\" v-model=editingYear v-on:keyup.enter=savePrint()><td v-if=editing><button type=button class=\"btn btn-primary btn-sm\" v-on:click=savePrint()><i class=\"fa fa-spinner fa-spin\" v-if=saving></i> Speichern</button><td colspan=2 v-if=!editing>{{ printYear }} <a href=# v-on:click.prevent=deletePrint v-if=editable><i class=\"fa fa-trash\" data-toggle=tooltip data-placement=top title=Löschen></i></a>"
-
-},{"vue":1}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _PrintInPlaceEditor = require('./components/PrintInPlaceEditor.vue');
+var _Typeahead = require('../utils/Typeahead.vue');
 
-var _PrintInPlaceEditor2 = _interopRequireDefault(_PrintInPlaceEditor);
-
-var _InheritanceInPlaceEditor = require('./components/InheritanceInPlaceEditor.vue');
-
-var _InheritanceInPlaceEditor2 = _interopRequireDefault(_InheritanceInPlaceEditor);
-
-var _Levenshtein = require('../utils/Levenshtein');
-
-var _Levenshtein2 = _interopRequireDefault(_Levenshtein);
+var _Typeahead2 = _interopRequireDefault(_Typeahead);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_vue2.default.component('in-place', _PrintInPlaceEditor2.default);
-_vue2.default.component('inheritance-in-place', _InheritanceInPlaceEditor2.default);
 
 new _vue2.default({
-    el: '#prints',
+    el: '#library',
 
     data: {
-        prints: [],
-        createEntry: '',
-        createYear: ''
+        moreFields: false,
+        morePeople: false,
+        person: null
+    },
+
+    ready: function ready() {},
+
+    methods: {
+        personSelected: function personSelected(person) {
+            this.person = person;
+        },
+        prepareResponse: function prepareResponse(response) {
+            return response.data;
+        }
+    },
+
+    components: {
+        Typeahead: _Typeahead2.default
+    }
+});
+
+},{"../utils/Typeahead.vue":4,"vue":1}],4:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert(".typeahead-item{cursor:pointer}")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vue = require('vue');
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    props: ['id', 'placeholder', 'templateName', 'template', 'src', 'onHit', 'prepareResponse', 'result', 'empty'],
+
+    data: function data() {
+        return {
+            value: '',
+            results: [],
+            searched: false,
+            current: 0
+        };
+    },
+
+
+    partials: {
+        'default': '<span v-html="item | highlight value"></span>'
     },
 
     ready: function ready() {
         var _this = this;
 
-        var url = BASE_URL + '/prints';
-        $.get(url).done(function (response) {
-            _this.prints = response;
-        });
-        $('#addPrint').on('shown.bs.modal', function (e) {
-            _this.$els.createEntryField.focus();
+        if (this.templateName && this.templateName !== 'default') {
+            _vue2.default.partial(this.templateName, this.template);
+        } else {
+            this.templateName = 'default';
+        }
+
+        this.$els.searchPerson.focus();
+
+        this.$watch('value', function (newValue, oldValue) {
+            $.get(_this.src + encodeURIComponent(newValue), function (response) {
+                _this.results = _this.preparation(response);
+                _this.searched = true;
+                _this.current = 0;
+            });
         });
     },
+
 
     methods: {
-        storePrint: function storePrint() {
-            var _this2 = this;
+        preparation: function preparation(response) {
+            if (typeof this.prepareResponse == 'function') {
+                return this.prepareResponse(response);
+            }
 
-            var url = $('#createPrintForm').attr('action');
+            return response;
+        },
+        itemClicked: function itemClicked(item) {
+            this.reset();
 
-            $.ajax({
-                url: url,
-                data: { entry: this.createEntry, year: this.createYear },
-                method: 'POST'
-            }).done(function (response) {
-                _this2.prints = response;
-                _this2.createEntry = '';
-                _this2.createYear = '';
-                $('#addPrint').modal('hide');
-            });
-        }
-    }
-});
-
-new _vue2.default({
-    el: '#inheritances',
-
-    data: {
-        inheritances: [],
-        createEntry: ''
-    },
-
-    ready: function ready() {
-        var _this3 = this;
-
-        var url = BASE_URL + '/inheritances';
-        $.get(url).done(function (response) {
-            _this3.inheritances = response;
-        });
-        $('#addInheritance').on('shown.bs.modal', function (e) {
-            _this3.$els.createEntryField.focus();
-        });
-    },
-
-    methods: {
-        storeInheritance: function storeInheritance() {
-            var _this4 = this;
-
-            var url = $('#createInheritanceForm').attr('action');
-
-            $.ajax({
-                url: url,
-                data: { 'entry': this.createEntry },
-                method: 'POST'
-            }).done(function (response) {
-                _this4.inheritances = response;
-                _this4.createEntry = '';
-                $('#addInheritance').modal('hide');
-            });
-        }
-    }
-});
-
-/**
- * On save, we calculate the change in the name and according to that,
- * we will ask if the user wants to really change the entry
- * to prevent accidental overwriting.
- */
-$('#person-editor').on('submit', function (event) {
-    var prevLastName = $('input[name=prev_last_name]').val();
-    var prevFirstName = $('input[name=prev_first_name]').val();
-    var prevName = prevLastName + ', ' + prevFirstName;
-
-    var currentLastName = $('input[name=last_name]').val();
-    var currentFirstName = $('input[name=first_name]').val();
-    var currentName = currentLastName + ', ' + currentFirstName;
-
-    var distance = (0, _Levenshtein2.default)(prevName, currentName);
-
-    if (distance > 3) {
-        var message = 'Der Name wurde an ' + distance + ' Stellen bearbeitet. Soll der Datensatz wirklich ge\xE4ndert werden?\n\nBisheriger Name: ' + prevName + '\n\nNeuer Name: ' + currentName;
-        if (!confirm(message)) {
-            event.preventDefault();
-        }
-    }
-});
-
-},{"../utils/Levenshtein":5,"./components/InheritanceInPlaceEditor.vue":2,"./components/PrintInPlaceEditor.vue":3,"vue":1}],5:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-exports.default = function (str1, str2) {
-    var cost = [],
-        n = str1.length,
-        m = str2.length,
-        i = void 0,
-        j = void 0;
-
-    if (n == 0 || m == 0) {
-        return;
-    }
-
-    for (i = 0; i <= n; i++) {
-        cost[i] = [];
-    }
-
-    for (i = 0; i <= n; i++) {
-        cost[i][0] = i;
-    }
-
-    for (j = 0; j <= m; j++) {
-        cost[0][j] = j;
-    }
-
-    for (i = 1; i <= n; i++) {
-        var x = str1.charAt(i - 1);
-
-        for (j = 1; j <= m; j++) {
-            var y = str2.charAt(j - 1);
-
-            if (x == y) {
-                cost[i][j] = cost[i - 1][j - 1];
-            } else {
-                cost[i][j] = 1 + Math.min(cost[i - 1][j - 1], cost[i][j - 1], cost[i - 1][j]);
+            if (typeof this.onHit == 'function') {
+                this.onHit(item);
+            }
+        },
+        reset: function reset() {
+            this.results = [];
+        },
+        hit: function hit() {
+            this.onHit(this.results[this.current], this);
+        },
+        up: function up() {
+            if (this.current > 0) {
+                this.current--;
+            }
+        },
+        down: function down() {
+            if (this.current < this.results.length - 1) {
+                this.current++;
             }
         }
     }
-
-    return cost[n][m];
 };
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "<input class=form-control :id=id :placeholder=placeholder v-el:search-person=\"\" v-model=value debounce=500 @keydown.up=up @keydown.down=down @keydown.enter.prevent=hit @keydown.esc=reset autocomplete=off><ul class=list-group><li v-for=\"item in results\" @click=itemClicked(item) @mousemove=\"current = $index\" class=\"list-group-item typeahead-item\" :class=\"{'active': $index == current}\"><partial :name=templateName></partial><li v-show=\"searched &amp;&amp; results.length == 0\" class=list-group-item><span v-html=empty></span></ul>"
 
-},{}]},{},[4]);
+},{"vue":1,"vueify/lib/insert-css":2}]},{},[3]);
 
-//# sourceMappingURL=persons.js.map
+//# sourceMappingURL=library.js.map

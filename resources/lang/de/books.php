@@ -4,6 +4,8 @@ return [
     'books' => 'Bücher',
     'book' => 'Buch',
 
+    'open' => 'Buch aufrufen',
+
     'store' => 'Buch hinzufügen',
     'update' => 'Buch bearbeiten',
     'delete' => 'Buch löschen',

@@ -13,12 +13,13 @@ use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\DestroyLibraryRequest;
 use App\Http\Requests\IndexLibraryRequest;
 use App\Http\Requests\ShowLibraryRequest;
+use App\Http\Requests\StoreLibraryRelationRequest;
 use App\Http\Requests\StoreLibraryRequest;
 use App\Http\Requests\UpdateLibraryRequest;
 use Grimm\LibraryBook;
 use Illuminate\Http\Request;
 
-class LibraryController extends Controller
+class LibraryBooksController extends Controller
 {
 
     use FiltersEntity;
@@ -39,7 +40,7 @@ class LibraryController extends Controller
 
         $books = $this->prepareCollection('last_person_index', $books, $request, 200);
 
-        return view('library.index', compact('books'));
+        return view('librarybooks.index', compact('books'));
     }
 
     /**
@@ -49,7 +50,7 @@ class LibraryController extends Controller
      */
     public function create()
     {
-        return view('library.create');
+        return view('librarybooks.create');
     }
 
     /**
@@ -65,8 +66,8 @@ class LibraryController extends Controller
         event(new StoreLibraryEvent($book, $request->user()));
 
         return redirect()
-            ->route('library.show', ['id' => $book->id])
-            ->with('success', trans('library.store_success'));
+            ->route('librarybooks.show', ['id' => $book->id])
+            ->with('success', trans('librarybooks.store_success'));
     }
 
     /**
@@ -78,9 +79,14 @@ class LibraryController extends Controller
      */
     public function show(ShowLibraryRequest $request, $id)
     {
-        $book = LibraryBook::withTrashed()->findOrFail($id);
+        $book = LibraryBook::withTrashed()->with([
+            'authors',
+            'editors',
+            'translators',
+            'illustrators'
+        ])->findOrFail($id);
 
-        return view('library.show', compact('book'));
+        return view('librarybooks.show', compact('book'));
     }
 
     /**
@@ -100,8 +106,35 @@ class LibraryController extends Controller
         event(new UpdateLibraryEvent($book, $request->user()));
 
         return redirect()
-            ->route('library.show', ['id' => $book->id])
+            ->route('librarybooks.show', ['id' => $book->id])
             ->with('success', 'Die Änderungen wurden gespeichert');
+    }
+
+    /**
+     * @param LibraryBook $book
+     * @param $name
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function relation(LibraryBook $book, $name)
+    {
+        return view('librarybooks.relation', compact('name', 'book'));
+    }
+
+    /**
+     * @param StoreLibraryRelationRequest $request
+     * @param LibraryBook $book
+     * @param $relation
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeRelation(StoreLibraryRelationRequest $request, LibraryBook $book, $relation)
+    {
+        $request->persist($book, $relation);
+
+        // TODO: trigger event
+
+        return redirect()
+            ->route('librarybooks.show', [$book])
+            ->with('success', 'Verknüpfung wurde erstellt');
     }
 
     /**
@@ -121,8 +154,8 @@ class LibraryController extends Controller
         event(new DestroyLibraryEvent($book, $request->user()));
 
         return redirect()
-            ->route('library.index')
-            ->with('success', trans('library.deleted_success'));
+            ->route('librarybooks.index')
+            ->with('success', trans('librarybooks.deleted_success'));
     }
 
     /**

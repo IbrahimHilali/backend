@@ -52,7 +52,7 @@
                 @endcan
                 @can('library.*')
                     <li {!! active_if(request()->is('library*')) !!}>
-                        <a href="{{ route('library.index') }}">{{ trans('library.library') }}</a>
+                        <a href="{{ route('librarybooks.index') }}">{{ trans('librarybooks.library') }}</a>
                     </li>
                 @endcan
                 @can('admin.*')

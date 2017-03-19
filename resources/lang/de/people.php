@@ -4,6 +4,8 @@ return [
     'people' => 'Personen',
     'person' => 'Person',
 
+    'open' => 'Person aufrufen',
+
     'store' => 'Person hinzufügen',
     'update' => 'Person bearbeiten',
     'delete' => 'Person löschen',
