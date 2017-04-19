@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int id
  * @property string catalog_id
  * @property string title
+ * @property string series_title
  * @property string denecke_teitge
  * @property string volumes
  * @property string vols_year

@@ -14,6 +14,7 @@ return [
 
     'catalog_id' => 'fortl. Buchnummer',
     'title' => 'Titel',
+    'series_title' => 'Reihentitel',
     'denecke_teitge' => 'Denecke / Teitge',
 
     'volumes' => 'Bd(e)',

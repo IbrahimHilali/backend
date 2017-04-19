@@ -40,6 +40,7 @@ class UpdateLibraryRequest extends Request
     {
         $book->catalog_id = $this->input('catalog_id');
         $book->title = $this->input('title');
+        $book->series_title = $this->input('series_title');
 
         $book->denecke_teitge = $this->input('denecke_teitge');
 

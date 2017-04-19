@@ -57,6 +57,8 @@
 
                     @include('partials.form.field', ['field' => 'title', 'model' => $book, 'disabled' => $book->trashed()])
 
+                    @include('partials.form.field', ['field' => 'series_title', 'model' => $book, 'disabled' => $book->trashed()])
+
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <a href @click.prevent="moreFields = !moreFields">
