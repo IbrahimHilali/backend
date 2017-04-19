@@ -22,36 +22,52 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Verfasst</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">
-                                {{ $person->written->pluck('title')->implode(', ') }}
-                            </p>
+                            <ul class="form-control-static">
+                                @forelse($person->written as $book)
+                                    <li>{{ $book->title }}</li>
+                                @empty
+                                    <li>kein Buch verfasst</li>
+                                @endforelse
+                            </ul>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Herausgegeben</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">
-                                {{ $person->edited->pluck('title')->implode(', ') }}
-                            </p>
+                            <ul class="form-control-static">
+                                @forelse($person->edited as $book)
+                                    <li>{{ $book->title }}</li>
+                                @empty
+                                    <li>kein Buch herausgegeben</li>
+                                @endforelse
+                            </ul>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Übersetzt</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">
-                                {{ $person->translated->pluck('title')->implode(', ') }}
-                            </p>
+                            <ul class="form-control-static">
+                                @forelse($person->translated as $book)
+                                    <li>{{ $book->title }}</li>
+                                @empty
+                                    <li>kein Buch übersetzt</li>
+                                @endforelse
+                            </ul>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Illustiert</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">
-                                {{ $person->illustrated->pluck('title')->implode(', ') }}
-                            </p>
+                            <ul class="form-control-static">
+                                @forelse($person->illustrated as $book)
+                                    <li>{{ $book->title }}</li>
+                                @empty
+                                    <li>kein Buch illustriert</li>
+                                @endforelse
+                            </ul>
                         </div>
                     </div>
                 </form>
