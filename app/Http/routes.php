@@ -64,8 +64,8 @@ $this->group(['middleware' => 'web'], function () {
             ['as' => 'librarybooks.relation', 'uses' => 'LibraryBooksController@relation']);
         $this->post('librarybooks/{book}/relation/{name}', 'LibraryBooksController@storeRelation');
 
-        $this->resource('librarypeople', 'LibraryPeopleController', ['only' => ['show', 'store']]);
         $this->get('librarypeople/search', 'LibraryPeopleController@search');
+        $this->resource('librarypeople', 'LibraryPeopleController', ['only' => ['show', 'store']]);
 
         // Associations (user-book)
         $this->get('books/{books}/associations',
