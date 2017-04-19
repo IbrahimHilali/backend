@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $person->catalog_id . ': ' . $person->title . ' | ')
+@section('title', $person->name . ' | ')
 
 @section('content')
     <div class="container" id="library">
@@ -22,28 +22,36 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Verfasst</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">...</p>
+                            <p class="form-control-static">
+                                {{ $person->written->pluck('title')->implode(', ') }}
+                            </p>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Herausgegeben</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">...</p>
+                            <p class="form-control-static">
+                                {{ $person->edited->pluck('title')->implode(', ') }}
+                            </p>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Übersetzt</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">...</p>
+                            <p class="form-control-static">
+                                {{ $person->translated->pluck('title')->implode(', ') }}
+                            </p>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Illustiert</label>
                         <div class="col-sm-10">
-                            <p class="form-control-static">...</p>
+                            <p class="form-control-static">
+                                {{ $person->illustrated->pluck('title')->implode(', ') }}
+                            </p>
                         </div>
                     </div>
                 </form>
