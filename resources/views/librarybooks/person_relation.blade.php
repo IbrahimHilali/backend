@@ -5,7 +5,7 @@
         <div class="generic">
             <a href="{{ route('librarybooks.relation', [$book, $name]) }}" role="button" class="btn btn-default btn-sm">
                 <span class="fa fa-plus"></span>
-                Person hinzufügen
+                {{ trans('librarybooks.relations.' . $name . '.name') }} hinzufügen
             </a>
         </div>
     </div>
