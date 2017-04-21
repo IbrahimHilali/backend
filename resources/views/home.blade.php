@@ -34,7 +34,7 @@
                             @endforeach
                         </ul>
 
-                        <h3>Bücher</h3>
+                        <h3>Bibliothek</h3>
 
                         <ul>
                             @foreach($latestLibraryBooksCreated as $book)
