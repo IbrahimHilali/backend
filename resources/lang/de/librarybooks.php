@@ -3,6 +3,8 @@
 return [
     'library' => 'Bibliothek',
 
+    'librarybook' => 'Bibliotheksbuch',
+
     'store' => 'Buch hinzufügen',
     'update' => 'Buch bearbeiten',
     'delete' => 'Buch löschen',

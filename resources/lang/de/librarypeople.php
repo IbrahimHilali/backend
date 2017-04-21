@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'libraryperson' => 'Bibliotheksperson',
+
     'name' => 'Name',
     'note' => 'Notiz',
 
