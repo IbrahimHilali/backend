@@ -13,7 +13,9 @@
                         <ul>
                             @foreach($latestPeopleCreated as $person)
                                 <li>
-                                    <a href="{{ route('people.show', ['id' => $person->id]) }}">{{ $person->first_name }} {{ $person->last_name }}</a>
+                                    <a href="{{ route('people.show', ['id' => $person->id]) }}">
+                                        {{ $person->first_name }} {{ $person->last_name }}
+                                    </a>
                                     ({{ $person->updated_at->format('d.m.Y H:i:s') }})
                                 </li>
                             @endforeach
@@ -24,7 +26,9 @@
                         <ul>
                             @foreach($latestBooksCreated as $book)
                                 <li>
-                                    <a href="{{ route('books.show', ['id' => $book->id]) }}">{{ $book->title }}</a>
+                                    <a href="{{ route('books.show', ['id' => $book->id]) }}">
+                                        {{ \Illuminate\Support\Str::words($book->title, 9) }}
+                                    </a>
                                     ({{ $book->updated_at->format('d.m.Y H:i:s') }})
                                 </li>
                             @endforeach
@@ -35,7 +39,9 @@
                         <ul>
                             @foreach($latestLibraryBooksCreated as $book)
                                 <li>
-                                    <a href="{{ route('librarybooks.show', ['id' => $book->id]) }}">{{ $book->title }}</a>
+                                    <a href="{{ route('librarybooks.show', ['id' => $book->id]) }}">
+                                        {{ \Illuminate\Support\Str::words($book->title, 9) }}
+                                    </a>
                                     ({{ $book->updated_at->format('d.m.Y H:i:s') }})
                                 </li>
                             @endforeach
