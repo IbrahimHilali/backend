@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\DestroyLibraryEvent;
+use App\Events\DestroyLibraryRelationEvent;
 use App\Events\StoreLibraryEvent;
 use App\Events\UpdateLibraryEvent;
 use App\Filters\Library\TitleFilter;
@@ -10,6 +11,7 @@ use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
 use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
+use App\Http\Requests\DestroyLibraryRelationRequest;
 use App\Http\Requests\DestroyLibraryRequest;
 use App\Http\Requests\IndexLibraryRequest;
 use App\Http\Requests\ShowLibraryRequest;
@@ -135,6 +137,19 @@ class LibraryBooksController extends Controller
         return redirect()
             ->route('librarybooks.show', [$book])
             ->with('success', 'Verknüpfung wurde erstellt');
+    }
+
+    public function deleteRelation(DestroyLibraryRelationRequest $request, LibraryBook $book, $relation)
+    {
+        $request->persist($book, $relation);
+
+        event(
+            new DestroyLibraryRelationEvent($book, $request->user())
+        );
+
+        return response()->json([
+            'status' => 'ok'
+        ]);
     }
 
     /**

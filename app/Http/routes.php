@@ -63,6 +63,7 @@ $this->group(['middleware' => 'web'], function () {
         $this->get('librarybooks/{book}/relation/{name}',
             ['as' => 'librarybooks.relation', 'uses' => 'LibraryBooksController@relation']);
         $this->post('librarybooks/{book}/relation/{name}', 'LibraryBooksController@storeRelation');
+        $this->delete('librarybooks/{book}/relation/{name}', 'LibraryBooksController@deleteRelation');
 
         $this->get('librarypeople/search', 'LibraryPeopleController@search');
         $this->resource('librarypeople', 'LibraryPeopleController', ['only' => ['show', 'store']]);

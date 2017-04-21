@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Request;
 use App\Library\Services\Exceptions\InvalidRelationTypeException;
 use App\Library\Services\LibraryRelationService;
 use Grimm\LibraryBook;
 use Grimm\LibraryPerson;
 
-class StoreLibraryRelationRequest extends Request
+class DestroyLibraryRelationRequest extends Request
 {
 
     /**
@@ -54,7 +55,7 @@ class StoreLibraryRelationRequest extends Request
     public function persist(LibraryBook $book, $relation)
     {
         try {
-            return $this->service->store(
+            return $this->service->delete(
                 $book,
                 $relation,
                 LibraryPerson::findOrFail($this->input('person'))

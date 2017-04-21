@@ -10282,6 +10282,22 @@ new _vue2.default({
     ready: function ready() {},
 
     methods: {
+        deleteRelation: function deleteRelation(bookId, relationType, person) {
+            $.ajax({
+                url: '/librarybooks/' + bookId + '/relation/' + relationType,
+                type: 'DELETE',
+                data: {
+                    _token: Laravel.csrfToken,
+                    person: person
+                }
+            }).done(function (response) {
+                if (response.status == 'ok') {
+                    location.reload(true);
+                }
+            }).fail(function (response) {
+                console.log(response);
+            });
+        },
         personSelected: function personSelected(person) {
             this.person = person;
         },

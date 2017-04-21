@@ -14,7 +14,8 @@
         <tr>
             <th width="10%">#</th>
             <th width="45%">Name</th>
-            <th width="45%">Notizen</th>
+            <th width="40%">Notizen</th>
+            <th width="5%"></th>
         </tr>
         @forelse($book->{str_plural($name)} as $person)
             <tr>
@@ -29,6 +30,14 @@
                 <td>
                     {{ $person->note }}
                 </td>
+                <th>
+                    <a href @click.prevent="deleteRelation({{ $book->id }}, '{{ $name }}', '{{ $person->id }}')"
+                       role="button" class="btn btn-danger"
+                       data-toggle="tooltip"
+                       title="Verknüpfung aufheben (löscht nicht die Person)">
+                        &times;
+                    </a>
+                </th>
             </tr>
         @empty
             <tr>
