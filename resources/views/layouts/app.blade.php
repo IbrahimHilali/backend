@@ -15,6 +15,13 @@
     <!-- Styles -->
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
 
+    <script>
+
+        window.Laravel = {
+            csrfToken: '{{ csrf_token() }}'
+        };
+
+    </script>
 </head>
 <body id="app-layout">
 <nav class="navbar navbar-default">
