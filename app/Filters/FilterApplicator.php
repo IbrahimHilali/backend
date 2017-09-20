@@ -106,7 +106,7 @@ class FilterApplicator
 
     /**
      * Return the filter object for the given filter URL key.
-     * 
+     *
      * @param $key
      *
      * @return Filter
@@ -240,7 +240,7 @@ class FilterApplicator
      * Determines if the given filter value should be preserved in
      * the URL for the next page.
      *
-     * @param string     $key
+     * @param string $key
      * @param Collection $toRemove
      *
      * @return bool

@@ -90,7 +90,6 @@
                         @include('partials.form.field', ['field' => 'shelf_mark', 'model' => $book, 'disabled' => $book->trashed()])
 
                         @include('partials.form.field', ['field' => 'tales_comm_1856', 'model' => $book, 'disabled' => $book->trashed()])
-                        @include('partials.form.field', ['field' => 'handwr_add_tales_comm_1856', 'model' => $book, 'disabled' => $book->trashed()])
 
                         @include('partials.form.field', ['field' => 'external_digitization', 'model' => $book, 'disabled' => $book->trashed()])
                     </div>

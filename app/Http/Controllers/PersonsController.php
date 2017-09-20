@@ -113,7 +113,7 @@ class PersonsController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePersonDataRequest $request
-     * @param Person                  $people
+     * @param Person $people
      *
      * @return \Illuminate\Http\Response
      */
@@ -131,7 +131,7 @@ class PersonsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DestroyPersonRequest $request
-     * @param Person               $people
+     * @param Person $people
      *
      * @return \Illuminate\Http\Response
      */

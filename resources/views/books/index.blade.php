@@ -41,10 +41,10 @@
                     <thead>
                     <tr>
                         <th><a href="{{ sort_link('books', 'id') }}"># {!! sort_arrow('id') !!}</a></th>
-                        <th><a href="{{ sort_link('books', 'short_title') }}">Kurztitel  {!! sort_arrow('short_title') !!}</a></th>
-                        <th><a href="{{ sort_link('books', 'title') }}">Titel  {!! sort_arrow('title') !!}</a></th>
+                        <th><a href="{{ sort_link('books', 'short_title') }}">{{ trans('books.short_title') }}  {!! sort_arrow('short_title') !!}</a></th>
+                        <th><a href="{{ sort_link('books', 'title') }}">{{ trans('books.title') }}  {!! sort_arrow('title') !!}</a></th>
                         {{-- <th><a href="{{ sort_link('books', 'year') }}">Jahr  {!! sort_arrow('year') !!}</a></th>--}}
-                        <th><a href="{{ sort_link('books', 'volume') }}">Band  {!! sort_arrow('volume') !!}</a></th>
+                        <th><a href="{{ sort_link('books', 'volume') }}">{{ trans('books.volume') }}  {!! sort_arrow('volume') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'edition') }}">Edition  {!! sort_arrow('edition') !!}</a></th>
                         <th><a href="{{ sort_link('books', 'source') }}">Herkunft {!! sort_arrow('source') !!}</a></th>
                     </tr>

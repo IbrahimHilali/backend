@@ -2,6 +2,7 @@
 
 namespace Grimm;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property PersonPrint[] prints
  * @property PersonInheritance[] inheritances
  * @property BookPersonAssociation[] bookAssociations
+ *
+ * @property Carbon created_at
  */
 class Person extends Model
 {
@@ -117,7 +120,7 @@ class Person extends Model
      * Search for a person by name
      *
      * @param  Builder $query The query object
-     * @param  string  $name  The name searched for
+     * @param  string $name The name searched for
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */

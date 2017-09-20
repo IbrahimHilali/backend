@@ -63,7 +63,7 @@ class UpdateLibraryRequest extends Request
         $book->shelf_mark = $this->input('shelf_mark');
 
         $book->tales_comm_1856 = $this->input('tales_comm_1856');
-        $book->handwr_add_tales_comm_1856 = $this->input('handwr_add_tales_comm_1856');
+        $book->handwr_add_tales_comm_1856 = null;
 
         $book->external_digitization = $this->input('external_digitization');
 
