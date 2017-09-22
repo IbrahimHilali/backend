@@ -26,10 +26,10 @@ class StorePersonRequest extends Request
     {
         return [
             'last_name' => 'required',
-            'first_name' => 'string',
-            'birth_date' => 'string',
-            'death_date' => 'string',
-            'bio_data'  => 'string',
+            'first_name' => 'nullable|string',
+            'birth_date' => 'nullable|string',
+            'death_date' => 'nullable|string',
+            'bio_data'  => 'nullable|string',
             'is_organization' => 'required|boolean',
             'auto_generated' => 'required|boolean'
         ];

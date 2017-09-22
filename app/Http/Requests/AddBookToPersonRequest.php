@@ -26,9 +26,9 @@ class AddBookToPersonRequest extends Request
         return [
             'book' => 'required|exists:books,id',
             'page' => 'required|numeric|min:1',
-            'page_description' => 'string',
-            'page_to' => 'numeric|min:1',
-            'line' => 'numeric|min:1',
+            'page_description' => 'nullable|string',
+            'page_to' => 'nullable|numeric|min:1',
+            'line' => 'nullable|numeric|min:1',
         ];
     }
 }

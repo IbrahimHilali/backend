@@ -26,7 +26,7 @@ class UpdatePersonDataRequest extends Request
     {
         return [
             'last_name' => 'required',
-            'first_name' => 'string',
+            'first_name' => 'nullable|string',
             'birth_date' => 'nullable|string',
             'death_date' => 'nullable|string',
             'bio_data'  => 'nullable|string',

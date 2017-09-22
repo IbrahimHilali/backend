@@ -26,14 +26,14 @@ class BookStoreRequest extends Request
     {
         return [
             'title' => 'required|min:3',
-            'short_title' => 'max:255',
+            'short_title' => 'nullable|max:255',
             //'year' => 'numeric|max:9999',
-            'volume' => 'numeric|min:1',
-            'volume_irregular' => 'numeric|min:1',
-            'edition' => 'numeric|min:1',
-            'source' => 'string',
-            'notes' => 'string',
-            'grimm' => 'boolean',
+            'volume' => 'nullable|numeric|min:1',
+            'volume_irregular' => 'nullable|numeric|min:1',
+            'edition' => 'nullable|numeric|min:1',
+            'source' => 'nullable|string',
+            'notes' => 'nullable|string',
+            'grimm' => 'nullable|boolean',
         ];
     }
 
