@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use Grimm\Permission;
 use Grimm\User;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,19 +22,18 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any application authentication / authorization services.
      *
-     * @param  \Illuminate\Contracts\Auth\Access\Gate $gate
      * @return void
      */
-    public function boot(GateContract $gate)
+    public function boot()
     {
-        $this->registerPolicies($gate);
+        $this->registerPolicies();
 
         if (!$this->app->runningInConsole()) {
-            $this->registerRolesAsGates($gate);
+            $this->registerRolesAsGates();
         }
     }
 
-    private function registerRolesAsGates(GateContract $gate)
+    private function registerRolesAsGates()
     {
         $groups = Permission::selectRaw("SUBSTRING_INDEX(`name`, '.', 1) as topic, GROUP_CONCAT(name) as permissions")->groupBy('topic')->get();
 
@@ -42,12 +41,12 @@ class AuthServiceProvider extends ServiceProvider
         foreach($groups as $permissionGroup) {
             $permissions = explode(",", $permissionGroup->permissions);
             foreach ($permissions as $permission) {
-                $gate->define($permission, function (User $user) use ($permission) {
+                Gate::define($permission, function (User $user) use ($permission) {
                     return $user->hasPermission($permission);
                 });
             }
 
-            $gate->define($permissionGroup->topic . '.*', function(User $user) use($permissions) {
+            Gate::define($permissionGroup->topic . '.*', function(User $user) use($permissions) {
                 foreach ($permissions as $permission) {
                     if ($user->hasPermission($permission)) {
                         return true;

@@ -5,23 +5,14 @@ namespace App\Backup;
 
 
 use Carbon\Carbon;
-use Illuminate\Redis\Database;
+use Illuminate\Support\Facades\Redis;
 
 class BackupStatusReader
 {
-    /**
-     * @var Database
-     */
-    private $redis;
-
-    public function __construct(Database $redis)
-    {
-        $this->redis = $redis;
-    }
 
     public function lastBackupAttempt($format = null)
     {
-        $data = $this->redis->get('grimm.last_backup_attempt');
+        $data = Redis::get('grimm.last_backup_attempt');
 
         $date = new Carbon($data);
         if ($format === null) {
@@ -33,12 +24,12 @@ class BackupStatusReader
 
     public function lastBackupStatus()
     {
-        return $this->redis->get('grimm.last_backup_status');
+        return Redis::get('grimm.last_backup_status');
     }
 
     public function lastSuccessfulBackup($format = null)
     {
-        $data = $this->redis->get('grimm.last_successful_backup');
+        $data = Redis::get('grimm.last_successful_backup');
         $date = new Carbon($data);
 
         if ($format === null) {
@@ -63,7 +54,7 @@ class BackupStatusReader
 
     public function lastBackupName()
     {
-        return $this->redis->get('grimm.last_backup_name');
+        return Redis::get('grimm.last_backup_name');
     }
 
     /**

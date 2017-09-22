@@ -138,6 +138,7 @@ return [
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
@@ -152,6 +153,8 @@ return [
         Spatie\Backup\BackupServiceProvider::class,
         Cviebrock\LaravelElasticsearch\ServiceProvider::class,
 
+        Illuminate\Redis\RedisServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -159,6 +162,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\ViewComposerServiceProvider::class,
         App\Providers\ModelActivityProvider::class,
         App\Providers\ImportServiceProvider::class,
