@@ -113,17 +113,17 @@ class PersonsController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePersonDataRequest $request
-     * @param Person $people
-     *
+     * @param Person $person
      * @return \Illuminate\Http\Response
+     *
      */
-    public function update(UpdatePersonDataRequest $request, Person $people)
+    public function update(UpdatePersonDataRequest $request, Person $person)
     {
-        $this->updatePersonModel($request, $people);
+        $this->updatePersonModel($request, $person);
 
-        event(new UpdatePersonEvent($people, $request->user()));
+        event(new UpdatePersonEvent($person, $request->user()));
 
-        return redirect()->route('people.show', [$people->id])->with('success',
+        return redirect()->route('people.show', [$person->id])->with('success',
             'Eintrag erfolgreich aktualisiert!');
     }
 
@@ -131,15 +131,15 @@ class PersonsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param DestroyPersonRequest $request
-     * @param Person $people
+     * @param Person $person
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyPersonRequest $request, Person $people)
+    public function destroy(DestroyPersonRequest $request, Person $person)
     {
-        $people->delete();
+        $person->delete();
 
-        event(new DestroyPersonEvent($people, $request->user()));
+        event(new DestroyPersonEvent($person, $request->user()));
 
         return redirect()->route('people.index')->with('success', 'Die Person wurde erfolgreich gelöscht!');
     }

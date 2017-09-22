@@ -70,13 +70,11 @@ class UsersController extends Controller
      * Display the specified resource.
      *
      * @param ShowUserRequest $request
-     * @param User $users
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(ShowUserRequest $request, User $users)
+    public function show(ShowUserRequest $request, User $user)
     {
-        /** @var User $user */
-        $user = $users;
         $roles = Role::all();
 
         return view('users.show', compact('user', 'roles'));
@@ -97,42 +95,42 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateUserRequest $request
-     * @param User $users
+     * @param User $user
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function update(UpdateUserRequest $request, User $users)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $users->name = $request->get('name');
-        $users->email = $request->get('email');
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
 
         if ($request->has('password')) {
-            $users->password = bcrypt($request->get('password'));
+            $user->password = bcrypt($request->get('password'));
         }
 
         if ($request->has('roles')) {
-            $users->roles()->sync($request->get('roles'));
+            $user->roles()->sync($request->get('roles'));
         }
 
         if ($request->has('api_only')) {
-            $users->api_only = $request->get('api_only');
+            $user->api_only = $request->get('api_only');
         }
 
-        $users->save();
+        $user->save();
 
-        return redirect()->route('users.show', [$users->id])->with('success', 'Die Nutzerdaten wurden erfolgreich aktualisiert!');
+        return redirect()->route('users.show', [$user->id])->with('success', 'Die Nutzerdaten wurden erfolgreich aktualisiert!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param DestroyUserRequest $request
-     * @param User $users
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyUserRequest $request, User $users)
+    public function destroy(DestroyUserRequest $request, User $user)
     {
-        $users->delete();
+        $user->delete();
 
         return redirect()->route('users.index')->with('success', 'Der Benutzer wurde erfolgreich gelöscht!');
     }

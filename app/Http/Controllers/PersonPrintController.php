@@ -17,14 +17,14 @@ class PersonPrintController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Person $people
+     * @param Person $person
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($people)
+    public function index($person)
     {
-        $people = Person::withTrashed()->findOrFail($people);
-        return $people->prints;
+        $person = Person::withTrashed()->findOrFail($person);
+        return $person->prints;
     }
 
     /**
@@ -41,35 +41,35 @@ class PersonPrintController extends Controller
      * Store a newly created resource in storage.
      *
      * @param AddNewPrintToPersonRequest $request
-     * @param Person                     $people
+     * @param Person                     $person
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AddNewPrintToPersonRequest $request, Person $people)
+    public function store(AddNewPrintToPersonRequest $request, Person $person)
     {
         $print = new PersonPrint();
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
-        $people->prints()->save($print);
+        $person->prints()->save($print);
 
         if ($request->ajax()) {
-            return $people->prints;
+            return $person->prints;
         }
 
-        return redirect()->route('people.show', ['people' => $people->id]);
+        return redirect()->route('people.show', ['people' => $person->id]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Person $people
+     * @param Person $person
      * @param        $printId
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Person $people, $printId)
+    public function show(Person $person, $printId)
     {
-        return $people->prints()->findOrFail($printId);
+        return $person->prints()->findOrFail($printId);
     }
 
     /**
@@ -88,16 +88,16 @@ class PersonPrintController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdatePrintRequest $request
-     * @param Person             $people
+     * @param Person             $person
      * @param                    $printId
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePrintRequest $request, Person $people, $printId)
+    public function update(UpdatePrintRequest $request, Person $person, $printId)
     {
 
         /** @var PersonPrint $print */
-        $print = $people->prints()->find($printId);
+        $print = $person->prints()->find($printId);
 
         $print->entry = $request->get('entry');
         $print->year = $request->get('year');
@@ -110,17 +110,17 @@ class PersonPrintController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Person $people
+     * @param Person $person
      * @param        $printId
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $people, $printId)
+    public function destroy(Person $person, $printId)
     {
         $this->authorize('people.update');
 
-        $people->prints()->find($printId)->delete();
+        $person->prints()->find($printId)->delete();
 
-        return $people->prints;
+        return $person->prints;
     }
 }

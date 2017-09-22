@@ -84,20 +84,20 @@ class RolesController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateRoleRequest $request
-     * @param Role $roles
+     * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $roles)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        $roles->name = $request->input('name');
+        $role->name = $request->input('name');
 
-        $roles->users()->sync($request->input('users', []));
+        $role->users()->sync($request->input('users', []));
 
-        $roles->permissions()->sync($request->input('permissions', []));
+        $role->permissions()->sync($request->input('permissions', []));
 
-        $roles->save();
+        $role->save();
 
-        return redirect()->route('roles.show', [$roles->id])->with('success', trans('users.update.success'));
+        return redirect()->route('roles.show', [$role->id])->with('success', trans('users.update.success'));
     }
 
     /**

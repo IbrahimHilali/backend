@@ -45,9 +45,9 @@ $this->group(['middleware' => 'auth'], function () {
     $this->resource('librarypeople', 'LibraryPeopleController', ['only' => ['show', 'store']]);
 
     // Associations (user-book)
-    $this->get('books/{books}/associations',
+    $this->get('books/{book}/associations',
         ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
-    $this->post('books/{books}/associations',
+    $this->post('books/{book}/associations',
         ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
 
     $this->get('people/book/{association}', ['as' => 'people.book', 'uses' => 'BooksPersonController@show']);
