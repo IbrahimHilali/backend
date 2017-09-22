@@ -42,6 +42,7 @@
                 this.saving = true;
                 $.ajax({
                     data: {
+                        _token: window.Laravel.csrfToken,
                         'entry': this.editingEntry,
                         'year': this.editingYear
                     },
@@ -57,6 +58,7 @@
             deletePrint: function() {
                 if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
                     $.ajax({
+                        _token: window.Laravel.csrfToken,
                         url: this.baseUrl + '/' + this.printId,
                         method: 'DELETE'
                     }).done((response) => {

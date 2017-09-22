@@ -32,7 +32,7 @@ new Vue({
 
             $.ajax({
                 url: url,
-                data: {entry: this.createEntry, year: this.createYear},
+                data: { _token: window.Laravel.csrfToken, entry: this.createEntry, year: this.createYear},
                 method: 'POST'
             }).done((response) => {
                 this.prints = response;
@@ -68,7 +68,7 @@ new Vue({
 
             $.ajax({
                 url: url,
-                data: {'entry': this.createEntry},
+                data: {_token: window.Laravel.csrfToken, 'entry': this.createEntry},
                 method: 'POST'
             }).done((response) => {
                 this.inheritances = response;

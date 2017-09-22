@@ -10267,6 +10267,7 @@ exports.default = {
             this.saving = true;
             $.ajax({
                 data: {
+                    _token: window.Laravel.csrfToken,
                     'entry': this.editingEntry
                 },
                 url: this.baseUrl + '/' + this.inheritanceId,
@@ -10282,6 +10283,7 @@ exports.default = {
 
             if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
                 $.ajax({
+                    _token: window.Laravel.csrfToken,
                     url: this.baseUrl + '/' + this.inheritanceId,
                     method: 'DELETE'
                 }).done(function (response) {
@@ -10340,6 +10342,7 @@ exports.default = {
             this.saving = true;
             $.ajax({
                 data: {
+                    _token: window.Laravel.csrfToken,
                     'entry': this.editingEntry,
                     'year': this.editingYear
                 },
@@ -10357,6 +10360,7 @@ exports.default = {
 
             if (window.confirm("Soll der Druck wirklich gelöscht werden?")) {
                 $.ajax({
+                    _token: window.Laravel.csrfToken,
                     url: this.baseUrl + '/' + this.printId,
                     method: 'DELETE'
                 }).done(function (response) {
@@ -10436,7 +10440,7 @@ new _vue2.default({
 
             $.ajax({
                 url: url,
-                data: { entry: this.createEntry, year: this.createYear },
+                data: { _token: window.Laravel.csrfToken, entry: this.createEntry, year: this.createYear },
                 method: 'POST'
             }).done(function (response) {
                 _this2.prints = response;
@@ -10476,7 +10480,7 @@ new _vue2.default({
 
             $.ajax({
                 url: url,
-                data: { 'entry': this.createEntry },
+                data: { _token: window.Laravel.csrfToken, 'entry': this.createEntry },
                 method: 'POST'
             }).done(function (response) {
                 _this4.inheritances = response;

@@ -36,6 +36,7 @@
                 this.saving = true;
                 $.ajax({
                     data: {
+                        _token: window.Laravel.csrfToken,
                         'entry': this.editingEntry,
                     },
                     url: this.baseUrl + '/' + this.inheritanceId,
@@ -49,6 +50,7 @@
             deleteInheritance: function() {
                 if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
                     $.ajax({
+                        _token: window.Laravel.csrfToken,
                         url: this.baseUrl + '/' + this.inheritanceId,
                         method: 'DELETE'
                     }).done((response) => {

@@ -30,6 +30,9 @@ $this->group(['middleware' => 'auth'], function () {
     $this->post('librarybooks/{id}/restore',
         ['as' => 'librarybooks.restore', 'uses' => 'LibraryBooksController@restore']);
 
+    $this->resource('people.prints', 'PersonPrintController', ['except' => ['edit']]);
+    $this->resource('people.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
+
     // Users
     $this->resource('users', 'UsersController');
     $this->resource('roles', 'RolesController', ['except' => ['edit']]);
