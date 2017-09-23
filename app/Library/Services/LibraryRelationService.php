@@ -56,6 +56,11 @@ class LibraryRelationService
         try {
             $relationQuery->detach([$person->id]);
 
+            // a person in the library database can not exists without corresponding books
+            if ($person->totalBookCount() == 0) {
+                $person->delete();
+            }
+
             return true;
         } catch (\Exception $e) {
             return false;
