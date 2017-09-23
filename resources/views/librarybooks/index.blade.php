@@ -79,6 +79,12 @@
                     {{ $books->appends($filter->delta())->links() }}
                 </div>
             </div>
+
+            <div class="pull-right">
+                <a href="{{ route('librarypeople.index') }}" role="button" class="btn btn-default btn-sm">
+                    <span class="fa fa-users"></span>
+                </a>
+            </div>
         </div>
     </div>
 @endsection
