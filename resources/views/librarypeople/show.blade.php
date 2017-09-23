@@ -24,7 +24,9 @@
                         <div class="col-sm-10">
                             <ul class="form-control-static">
                                 @forelse($person->written as $book)
-                                    <li>{{ $book->title }}</li>
+                                    <li>
+                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
+                                    </li>
                                 @empty
                                     <li>kein Buch verfasst</li>
                                 @endforelse
@@ -37,7 +39,9 @@
                         <div class="col-sm-10">
                             <ul class="form-control-static">
                                 @forelse($person->edited as $book)
-                                    <li>{{ $book->title }}</li>
+                                    <li>
+                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
+                                    </li>
                                 @empty
                                     <li>kein Buch herausgegeben</li>
                                 @endforelse
@@ -50,7 +54,9 @@
                         <div class="col-sm-10">
                             <ul class="form-control-static">
                                 @forelse($person->translated as $book)
-                                    <li>{{ $book->title }}</li>
+                                    <li>
+                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
+                                    </li>
                                 @empty
                                     <li>kein Buch übersetzt</li>
                                 @endforelse
@@ -63,7 +69,9 @@
                         <div class="col-sm-10">
                             <ul class="form-control-static">
                                 @forelse($person->illustrated as $book)
-                                    <li>{{ $book->title }}</li>
+                                    <li>
+                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
+                                    </li>
                                 @empty
                                     <li>kein Buch illustriert</li>
                                 @endforelse
