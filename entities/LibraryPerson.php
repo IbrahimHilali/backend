@@ -26,6 +26,14 @@ class LibraryPerson extends Model
         'name',
     ];
 
+    public function totalBookCount()
+    {
+        return $this->edited()->count()
+            + $this->written()->count()
+            + $this->translated()->count()
+            + $this->illustrated()->count();
+    }
+
     /**
      * Search for a book by title
      *

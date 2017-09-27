@@ -1,15 +1,14 @@
 <?php
 
 // Authentication Routes...
-$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
-$this->post('login', 'Auth\LoginController@login');
-$this->get('logout', 'Auth\LoginController@logout')->name('logout');
+$this->get('login', 'Auth\AuthController@showLoginForm');
+$this->post('login', 'Auth\AuthController@login');
+$this->get('logout', 'Auth\AuthController@logout');
 
 // Password Reset Routes...
-$this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-$this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-$this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-$this->post('password/reset', 'Auth\ResetPasswordController@reset');
+$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+$this->post('password/reset', 'Auth\PasswordController@reset');
 
 $this->group(['middleware' => 'auth'], function () {
     $this->get('/', function () {
@@ -30,9 +29,6 @@ $this->group(['middleware' => 'auth'], function () {
     $this->post('librarybooks/{id}/restore',
         ['as' => 'librarybooks.restore', 'uses' => 'LibraryBooksController@restore']);
 
-    $this->resource('people.prints', 'PersonPrintController', ['except' => ['edit']]);
-    $this->resource('people.inheritances', 'PersonInheritanceController', ['except' => ['edit']]);
-
     // Users
     $this->resource('users', 'UsersController');
     $this->resource('roles', 'RolesController', ['except' => ['edit']]);
@@ -45,12 +41,12 @@ $this->group(['middleware' => 'auth'], function () {
     $this->delete('librarybooks/{book}/relation/{name}', 'LibraryBooksController@deleteRelation');
 
     $this->get('librarypeople/search', 'LibraryPeopleController@search');
-    $this->resource('librarypeople', 'LibraryPeopleController', ['only' => ['show', 'store']]);
+    $this->resource('librarypeople', 'LibraryPeopleController', ['only' => ['index', 'show', 'store']]);
 
     // Associations (user-book)
-    $this->get('books/{book}/associations',
+    $this->get('books/{books}/associations',
         ['as' => 'books.associations.index', 'uses' => 'BooksPersonController@showBook']);
-    $this->post('books/{book}/associations',
+    $this->post('books/{books}/associations',
         ['as' => 'books.associations.store', 'uses' => 'BooksPersonController@bookStorePerson']);
 
     $this->get('people/book/{association}', ['as' => 'people.book', 'uses' => 'BooksPersonController@show']);

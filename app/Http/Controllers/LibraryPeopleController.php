@@ -3,12 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Events\StoreLibraryPersonEvent;
+use App\Filters\People\NameFilter;
+use App\Filters\Shared\OnlyTrashedFilter;
+use App\Filters\Shared\PrefixFilter;
+use App\Filters\Shared\SortFilter;
+use App\Filters\Shared\TrashFilter;
+use App\Http\Requests\IndexLibraryPeopleRequest;
 use App\Http\Requests\StoreLibraryPersonRequest;
 use Grimm\LibraryPerson;
 use Illuminate\Http\Request;
 
 class LibraryPeopleController extends Controller
 {
+
+    use FiltersEntity;
+
+    public function index(IndexLibraryPeopleRequest $request)
+    {
+        $people = LibraryPerson::query();
+
+        $this->filter($people);
+
+        $this->preparePrefixDisplay($request->get('prefix'), LibraryPerson::prefixesOfLength('name', 2)->get());
+
+        $people = $this->prepareCollection('last_person_index', $people, $request, 25);
+
+        return view('librarypeople.index', compact('people'));
+    }
 
     public function show($id)
     {
@@ -50,5 +71,20 @@ class LibraryPeopleController extends Controller
         return redirect()
             ->route('librarybooks.show', ['book' => $request->input('book')])
             ->with('success', 'Die Person und Verknüpfung wurden gespeichert.');
+    }
+
+    protected function filters()
+    {
+        return [
+            new TrashFilter('library'),
+            // new NameFilter(),
+            new PrefixFilter('name'),
+            new OnlyTrashedFilter('library.people'),
+            new SortFilter(function ($builder, $orderByKey, $direction) {
+                $builder->orderBy('name', $direction);
+
+                return 'name';
+            }),
+        ];
     }
 }
