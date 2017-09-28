@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
-@section('title', $book->catalog_id . ': ' . $book->title . ' | ')
+@section('title', $person->name . ' | ')
 
 @section('content')
     <div class="container" id="library">
         <div class="row page">
             <div class="col-md-12 page-title">
-                <h1>{{ trans('librarybooks.relations.' . $name . '.name') }} hinzufügen: {{ $book->title }}</h1>
+                <h1>{{ $person->name }} mit anderer Person zusammenführen (insgesamt {{ $person->totalBookCount() }}
+                    Bücher)</h1>
             </div>
 
             <div class="col-md-12 page-content">
@@ -22,14 +23,14 @@
                                        empty="Es wurde keine Person gefunden!"
                             >
                                 <template slot="list-item" scope="props">
-                                    @{{ props.item.name }}
+                                    @{{ props.item.name }} <strong>[#@{{ props.item.id }}]</strong>
                                 </template>
                             </typeahead>
                         </div>
                     </div>
                 </form>
 
-                <form id="book-editor" action="{{ route('librarybooks.relation', [$book, $name]) }}"
+                <form id="book-editor" action="{{ route('librarypeople.combine', [$person]) }}"
                       class="form-horizontal"
                       method="POST">
                     {{ csrf_field() }}
@@ -59,56 +60,15 @@
 
                     <div class="button-bar row">
                         <div class="col-sm-10 col-md-offset-2">
-                            <button type="submit" class="btn btn-primary">Verknüpfung speichern</button>
-                            <a href="{{ route('librarybooks.show', [$book]) }}"
-                               class="btn btn-link">Abbrechen</a>
-                        </div>
-                    </div>
-                </form>
+                            <p class="text-danger">
+                                Achtung! Diese Person wird gelöscht. Die ausgewählte Person bleibt bestehen
+                                und wird um die Bücher ergänzt.
+                            </p>
 
-                <hr>
-
-                <form action="{{ route('librarypeople.store') }}"
-                      class="form-horizontal"
-                      method="POST">
-                    {{ csrf_field() }}
-
-                    <div class="row">
-                        <div class="col-sm-10 col-md-offset-2">
-                            <p>Person noch nicht vorhanden? Neue anlegen...</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('book') ? ' has-error' : '' }}">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            @if ($errors->has('book'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('book') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('relation') ? ' has-error' : '' }}">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            @if ($errors->has('relation'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('relation') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <input type="hidden" name="book" value="{{ $book->id }}">
-                    <input type="hidden" name="relation" value="{{ $name }}">
-
-                    @include('partials.form.field', ['field' => 'name', 'model' => 'librarypeople'])
-                    @include('partials.form.field', ['field' => 'note', 'model' => 'librarypeople'])
-
-                    <div class="button-bar row">
-                        <div class="col-sm-10 col-md-offset-2">
-                            <button type="submit" class="btn btn-primary">Person speichern</button>
-                            <a href="{{ route('librarybooks.show', [$book]) }}"
+                            <button type="submit" class="btn btn-danger">
+                                Personen zusammenführen
+                            </button>
+                            <a href="{{ route('librarypeople.show', [$person]) }}"
                                class="btn btn-link">Abbrechen</a>
                         </div>
                     </div>

@@ -3,6 +3,8 @@
 namespace Grimm;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * @property mixed  id
@@ -14,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.

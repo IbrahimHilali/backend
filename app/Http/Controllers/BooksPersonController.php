@@ -74,17 +74,17 @@ class BooksPersonController extends Controller
 
     /**
      * @param AddPersonToBookRequest $request
-     * @param Book $books
+     * @param Book $book
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function bookStorePerson(AddPersonToBookRequest $request, Book $books)
+    public function bookStorePerson(AddPersonToBookRequest $request, Book $book)
     {
         $person = Person::findOrFail($request->input('person'));
 
-        $association = $this->storeAssociation($request, $person, $books);
+        $association = $this->storeAssociation($request, $person, $book);
 
         return redirect()
-            ->route('books.associations.index', [$books->id])
+            ->route('books.show', [$book])
             ->with('success', 'Verknüpfung erstellt');
     }
 
@@ -119,10 +119,10 @@ class BooksPersonController extends Controller
         return view('books.person', compact('association'));
     }
 
-    public function showBook(Request $request, Book $books)
+    public function showBook(Request $request, Book $book)
     {
         /*
-        $books->load([
+        $book->load([
             'personAssociations' => function ($query) {
                 return $query->orderBy('page')
                     ->orderBy('line');
@@ -141,14 +141,16 @@ class BooksPersonController extends Controller
         /** @var Collection $persons */
         $persons = Person::query()
             ->with([
-                'bookAssociations' => function ($query) {
-                    return $query->orderBy('page')
+                'bookAssociations' => function ($query) use ($book) {
+                    return $query
+                        ->where('book_id', $book->id)
+                        ->orderBy('page')
                         ->orderBy('line');
                 }
             ])
             ->whereHas('bookAssociations',
-                function ($query) use ($books) {
-                    $query->where('book_id', $books->id);
+                function ($query) use ($book) {
+                    return $query->where('book_id', $book->id);
                 }
             )
             ->latest()
@@ -165,7 +167,7 @@ class BooksPersonController extends Controller
             return $lastNameOrder;
         });
 
-        return view('books.associations', ['book' => $books, 'persons' => $persons]);
+        return view('books.associations', ['book' => $book, 'persons' => $persons]);
     }
 
     /**

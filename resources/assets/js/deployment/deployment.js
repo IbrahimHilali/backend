@@ -1,4 +1,5 @@
-import Vue from 'vue';
+import '../bootstrap';
+
 import Pusher from 'pusher-js';
 
 new Vue({
@@ -16,7 +17,7 @@ new Vue({
         history: []
     },
 
-    ready() {
+    mounted() {
         this.pusher = new Pusher(PUSHER_KEY, {
             cluster: PUSHER_CLUSTER
         });
@@ -37,12 +38,12 @@ new Vue({
             this.started = false;
         });
 
-        $.get(BASE_URL + '/status').done((response) => {
+        axios.get(BASE_URL + '/status').then((response) => {
             this.started = response.data.inProgress;
             this.last = new Date(response.data.last);
             this.blank = response.data.blank;
             if (!this.blank) {
-                $.get(HISTORY_URL, {date: this.last.toISOString()}).done((response) => {
+                axios.get(HISTORY_URL, {date: this.last.toISOString()}).then((response) => {
                     this.history = response.data.history;
                 });
             }
@@ -52,14 +53,14 @@ new Vue({
     methods: {
         deploy(event) {
             event.preventDefault();
-            $.post(BASE_URL + '/trigger').done((response) => {
+            axios.post(BASE_URL + '/trigger').then((response) => {
                 this.messages.push({
                     type: "start"
                 });
                 this.books = response.data.books;
                 this.people = response.data.people;
                 this.started = true;
-            }).fail((response) => {
+            }).catch((response) => {
                 alert('Die Veröffentlichung konnte nicht gestartet werden!');
             });
         },

@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int id
  * @property string name
  * @property string note
+ * @property LibraryBook[] written
+ * @property LibraryBook[] edited
+ * @property LibraryBook[] translated
+ * @property LibraryBook[] illustrated
  */
 class LibraryPerson extends Model
 {

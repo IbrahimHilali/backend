@@ -34,11 +34,11 @@
                                        src="{{ url('people/search') }}?name="
                                        :prepare-response="prepareResponse"
                                        :on-hit="personSelected"
-                                       result="person"
-                                       template-name="person"
-                                       template="@{{ item.last_name }}, @{{ item.first_name }} <em class='pull-right'>@{{ item.bio_data }}</em>"
-                                       empty="Es wurde keine Person gefunden!"
-                            >
+                                       empty="Es wurde keine Person gefunden!">
+                                <template slot="list-item" scope="props">
+                                    @{{ props.item.last_name }}, @{{ props.item.first_name }} <em
+                                            class='pull-right'>@{{ props.item.bio_data }}</em>
+                                </template>
                             </typeahead>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <label class="col-sm-2 control-label">Seite</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="page"
-                                   v-el:page-field
+                                   ref="pageField"
                                    value="{{ old('page') }}">
                         </div>
                         <label class="col-sm-1 control-label" style="text-align: center;">bis</label>
@@ -185,7 +185,7 @@
                             </td>
                             <td>
                                 <button @click="fillOccurrenceForm({{ $person }})" class="btn btn-sm btn-primary">
-                                <i class="fa fa-plus"></i>
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </td>
                         </tr>

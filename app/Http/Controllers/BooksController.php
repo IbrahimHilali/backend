@@ -101,18 +101,18 @@ class BooksController extends Controller
      * Update the specified resource in storage.
      *
      * @param BookUpdateRequest $request
-     * @param Book              $books
+     * @param Book              $book
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(BookUpdateRequest $request, Book $books)
+    public function update(BookUpdateRequest $request, Book $book)
     {
-        $request->persist($books);
+        $request->persist($book);
 
-        event(new UpdateBookEvent($books, $request->user()));
+        event(new UpdateBookEvent($book, $request->user()));
 
         return redirect()
-            ->route('books.show', ['id' => $books->id])
+            ->route('books.show', ['id' => $book->id])
             ->with('success', 'Die Änderungen wurden gespeichert');
     }
 
@@ -120,17 +120,17 @@ class BooksController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @param Book    $books
+     * @param Book    $book
      *
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Request $request, Book $books)
+    public function destroy(Request $request, Book $book)
     {
 
-        $books->delete();
+        $book->delete();
 
-        event(new DestroyBookEvent($books, $request->user()));
+        event(new DestroyBookEvent($book, $request->user()));
 
         return redirect()
             ->route('books.index')

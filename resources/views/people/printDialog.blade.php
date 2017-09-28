@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="entry">Eintrag: </label>
                         <input type="text" class="form-control input-sm" name="entry"
-                               v-el:create-entry-field v-model="createEntry">
+                               ref="createEntryField" v-model="createEntry">
                     </div>
                     <div class="form-group">
                         <label for="year">Jahr: </label>

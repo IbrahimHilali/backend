@@ -14,7 +14,7 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->can('users.update') || $this->user()->id === $this->route('users')->id;
+        return $this->user()->can('users.update') || $this->user()->id === $this->route('user')->id;
     }
 
     /**
@@ -25,9 +25,9 @@ class UpdateUserRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:users,name,'.$this->route('users')->id,
-            'email' => 'required|email|unique:users,email,'.$this->route('users')->id,
-            'password' => 'sometimes|min:4|confirmed',
+            'name' => 'required|unique:users,name,'.$this->route('user')->id,
+            'email' => 'required|email|unique:users,email,'.$this->route('user')->id,
+            'password' => 'nullable|sometimes|min:4|confirmed',
         ];
     }
 

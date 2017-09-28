@@ -25,9 +25,9 @@ class UpdateLibraryRequest extends Request
     public function rules()
     {
         return [
-            'catalog_id' => 'required|unique:library_books,catalog_id,' . $this->route()->parameter('librarybooks'),
+            'catalog_id' => 'required|unique:library_books,catalog_id,' . $this->route()->parameter('librarybook'),
             'title' => 'string|required',
-            'external_digitization' => 'url',
+            'external_digitization' => 'nullable|url',
         ];
     }
 
