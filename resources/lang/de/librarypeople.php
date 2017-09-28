@@ -14,5 +14,12 @@ return [
 
     'deleted_success' => 'Die Person wurde gelöscht.',
     'store_success' => 'Die Person wurde erfolgreich angelegt!',
+
+    'relations' => [
+        'written' => 'verfasst',
+        'edited' => 'herausgegeben',
+        'translated' => 'übersetzt',
+        'illustrated' => 'illustriert',
+    ]
 ];
 

@@ -29,8 +29,18 @@
                         </a>
                     </div>
                 </div>
-                <h1>Grimm-Bibliothek</h1>
+
+                <h1>
+                    Grimm-Bibliothek
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('librarypeople.index') }}" role="button" class="btn-link">
+                        <span class="fa fa-address-book"></span>
+
+                        Zum Personenregister
+                    </a>
+                </h1>
             </div>
+
             @include('partials.prefixSelection', ['route' => 'library'])
             <div class="col-md-12 pagination-container">
                 {{ $books->appends($filter->delta())->links() }}
@@ -78,12 +88,6 @@
                 <div class="pagination-container">
                     {{ $books->appends($filter->delta())->links() }}
                 </div>
-            </div>
-
-            <div class="pull-right">
-                <a href="{{ route('librarypeople.index') }}" role="button" class="btn btn-default btn-sm">
-                    <span class="fa fa-users"></span>
-                </a>
             </div>
         </div>
     </div>

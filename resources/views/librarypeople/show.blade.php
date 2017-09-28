@@ -34,7 +34,7 @@
             @endif
 
             <div class="col-md-12 page-content">
-                <form class="form-horizontal" onsubmit="alert('coming soon...'); return false;">
+                <form class="form-horizontal" action="{{ route('librarypeople.update', [$person]) }}" method="post">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
 
@@ -67,117 +67,19 @@
 
                 <hr>
 
-                <h3>Verfasst</h3>
-
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Kat. Nr.</th>
-                        <th>Kurztitel</th>
-                        <th>Titel</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($person->written as $book)
-                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
-                            style="cursor: pointer;">
-                            <td>{{ $book->id }}</td>
-                            <td>{{ $book->catalog_id }}</td>
-                            <td>{{ $book->shorttitle }}</td>
-                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" style="text-align: center;">kein Buch verfasst</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                @include('librarypeople.book_relation',['relation' => 'written'])
 
                 <hr>
 
-                <h3>Herausgegeben</h3>
-
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Kurztitel</th>
-                        <th>Titel</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($person->edited as $book)
-                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
-                            style="cursor: pointer;">
-                            <td>{{ $book->id }}</td>
-                            <td>{{ $book->shorttitle }}</td>
-                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" style="text-align: center;">kein Buch herausgegeben</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                @include('librarypeople.book_relation',['relation' => 'edited'])
 
                 <hr>
 
-                <h3>Übersetzt</h3>
-
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Kurztitel</th>
-                        <th>Titel</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($person->translated as $book)
-                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
-                            style="cursor: pointer;">
-                            <td>{{ $book->id }}</td>
-                            <td>{{ $book->shorttitle }}</td>
-                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" style="text-align: center;">kein Buch übersetzt</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                @include('librarypeople.book_relation',['relation' => 'translated'])
 
                 <hr>
 
-                <h3>Illustiert</h3>
-
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Kurztitel</th>
-                        <th>Titel</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($person->illustrated as $book)
-                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
-                            style="cursor: pointer;">
-                            <td>{{ $book->id }}</td>
-                            <td>{{ $book->shorttitle }}</td>
-                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" style="text-align: center;">kein Buch illustriert</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                @include('librarypeople.book_relation',['relation' => 'illustrated'])
 
                 <div>
                     @include('logs.entity-activity', ['entity' => $person])

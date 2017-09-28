@@ -11,6 +11,8 @@ use App\Filters\Shared\TrashFilter;
 use App\Http\Requests\CombinePeopleRequest;
 use App\Http\Requests\IndexLibraryPeopleRequest;
 use App\Http\Requests\StoreLibraryPersonRequest;
+use App\Http\Requests\UpdateLibraryPersonRequest;
+use Grimm\LibraryBook;
 use Grimm\LibraryPerson;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -60,12 +62,12 @@ class LibraryPeopleController extends Controller
 
     /**
      * @param CombinePeopleRequest $request
-     * @param $libraryPerson
+     * @param $libraryperson
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function postCombine(CombinePeopleRequest $request, $libraryPerson)
+    public function postCombine(CombinePeopleRequest $request, $libraryperson)
     {
-        $person = LibraryPerson::find($libraryPerson);
+        $person = LibraryPerson::find($libraryperson);
 
         $other = LibraryPerson::find($request->input('person'));
 
@@ -102,6 +104,20 @@ class LibraryPeopleController extends Controller
         return redirect()
             ->route('librarybooks.show', ['book' => $request->input('book')])
             ->with('success', 'Die Person und Verknüpfung wurden gespeichert.');
+    }
+
+    /**
+     * @param UpdateLibraryPersonRequest $request
+     * @param LibraryPerson $libraryperson
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateLibraryPersonRequest $request, LibraryPerson $libraryperson)
+    {
+        $request->persist($libraryperson);
+
+        return redirect()
+            ->back()
+            ->with('success', 'Die Änderungen wurden gespeichert!');
     }
 
     protected function filters()
