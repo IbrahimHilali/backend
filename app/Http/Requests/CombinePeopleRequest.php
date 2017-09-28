@@ -39,7 +39,7 @@ class CombinePeopleRequest extends FormRequest
     public function rules()
     {
         return [
-            'person' => 'different:' . $this->route()->parameter('libraryperson')
+            'person' => 'different:' . $this->route()->parameter('libraryperson') . '|exists:library_people,id'
         ];
     }
 
