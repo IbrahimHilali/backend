@@ -32,12 +32,13 @@ class TrashFilter implements Filter, FlagFilter
 
     public function apply(Builder $query, Collection $values)
     {
-        if ($values->has('trash')) {
+        if ($values->has($this->appliesTo())) {
             $key = $this->sessionKey();
 
             $to = $values->get($this->appliesTo());
             session([$key => $to]);
         }
+
         return $query;
     }
 
