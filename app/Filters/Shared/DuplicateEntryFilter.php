@@ -46,8 +46,8 @@ class DuplicateEntryFilter implements Filter, SelectableFilter
     public function default(Builder $query)
     {
         if (session($this->sessionKey())) {
-            $query->whereIn('id', function ( $query ) {
-                $query->select('id')->from($this->namespace)->where('deleted_at', null)->groupBy($this->field)->havingRaw('count(*) > 1');
+            $query->whereIn($this->field, function ( $query ) {
+                $query->select($this->field)->from($this->namespace)->where('deleted_at', null)->groupBy($this->field)->havingRaw('count(*) > 1');
             });
         }
     }
