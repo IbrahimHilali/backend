@@ -58,7 +58,7 @@ class LibraryRelationService
 
             // a person in the library database can not exists without corresponding books
             if ($person->totalBookCount() == 0) {
-                $person->delete();
+                $person->forceDelete();
             }
 
             return true;
