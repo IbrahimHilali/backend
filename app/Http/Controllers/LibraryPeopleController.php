@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\StoreLibraryPersonEvent;
-use App\Filters\People\NameFilter;
+use App\Filters\Shared\DuplicateEntryFilter;
 use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
 use App\Filters\Shared\SortFilter;
@@ -12,9 +12,7 @@ use App\Http\Requests\CombinePeopleRequest;
 use App\Http\Requests\IndexLibraryPeopleRequest;
 use App\Http\Requests\StoreLibraryPersonRequest;
 use App\Http\Requests\UpdateLibraryPersonRequest;
-use Grimm\LibraryBook;
 use Grimm\LibraryPerson;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class LibraryPeopleController extends Controller
@@ -126,6 +124,7 @@ class LibraryPeopleController extends Controller
             new TrashFilter('library'),
             // new NameFilter(),
             new PrefixFilter('name'),
+            new DuplicateEntryFilter('library_people', 'name'),
             new OnlyTrashedFilter('library.people'),
             new SortFilter(function ($builder, $orderByKey, $direction) {
                 $builder->orderBy('name', $direction);
