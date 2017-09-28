@@ -73,6 +73,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>Kat. Nr.</th>
                         <th>Kurztitel</th>
                         <th>Titel</th>
                     </tr>
@@ -82,6 +83,7 @@
                         <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
                             style="cursor: pointer;">
                             <td>{{ $book->id }}</td>
+                            <td>{{ $book->catalog_id }}</td>
                             <td>{{ $book->shorttitle }}</td>
                             <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
                         </tr>

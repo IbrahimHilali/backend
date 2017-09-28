@@ -23,7 +23,7 @@
                         </div>
                     @endif
                 </div>
-                <h1>Pers. Grimm-Bibliothek</h1>
+                <h1>Personenregister - Grimm-Bibliothek</h1>
             </div>
             @include('partials.prefixSelection', ['route' => 'library'])
             <div class="col-md-12 pagination-container">

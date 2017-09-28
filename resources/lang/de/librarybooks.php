@@ -37,7 +37,7 @@ return [
     'purchase_number' => 'Erwerbungsnummer',
     'shelf_mark' => 'Signatur',
 
-    'tales_comm_1856' => 'KHM-Anm. 1856',
+    'tales_comm_1856' => 'KHM-Anm.',
     'handwr_add_tales_comm_1856' => 'Notizen Anm. 1856',
 
     'external_digitization' => 'Digitalisat',

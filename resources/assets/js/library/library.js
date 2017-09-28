@@ -19,12 +19,16 @@ new Vue({
 
     methods: {
         deleteRelation(bookId, relationType, person) {
-            axios.delete(`/librarybooks/${bookId}/relation/${relationType}`, {
-                person
-            }).then(response => {
-                if (response.status == 'ok') {
-                    location.reload(true);
+            console.log(person);
+
+            axios({
+                method: 'delete',
+                url: `/librarybooks/${bookId}/relation/${relationType}`,
+                data: {
+                    person
                 }
+            }).then(response => {
+                location.reload(true);
             }).catch(response => {
                 console.log(response);
             });
