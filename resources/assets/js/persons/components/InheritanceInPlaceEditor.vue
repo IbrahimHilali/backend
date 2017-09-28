@@ -1,17 +1,25 @@
 <template>
     <tr v-if="existing">
         <td colspan="2" v-if="!editing">
-            <a href="#" v-on:click.prevent="clickEdit" v-if="editable"><i class="fa fa-edit"></i></a> {{ inheritanceEntry }}
+            <a href="#" v-on:click.prevent="clickEdit" v-if="editable"><i class="fa fa-edit"></i></a> {{
+            inheritanceEntry }}
         </td>
-        <td v-if="!editing"><a href="#" v-on:click.prevent="deleteInheritance" v-if="editable"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Löschen"></i></a></td>
+        <td v-if="!editing"><a href="#" v-on:click.prevent="deleteInheritance" v-if="editable"><i class="fa fa-trash"
+                                                                                                  data-toggle="tooltip"
+                                                                                                  data-placement="top"
+                                                                                                  title="Löschen"></i></a>
+        </td>
         <td v-if="editing">
             <a href="#" class="btn btn-link btn-sm" v-on:click.prevent="stopEdit"><i class="fa fa-times"></i></a>
         </td>
         <td v-if="editing">
-            <input type="text" class="form-control input-sm" v-model="editingEntry" v-el:entry-input v-on:keyup.enter="saveInheritance()" />
+            <input type="text" class="form-control input-sm" v-model="editingEntry" ref="entryInput"
+                   v-on:keyup.enter="saveInheritance()"/>
         </td>
         <td v-if="editing">
-            <button type="button" class="btn btn-primary btn-sm" v-on:click="saveInheritance()"><i class="fa fa-spinner fa-spin" v-if="saving"></i> Speichern</button>
+            <button type="button" class="btn btn-primary btn-sm" v-on:click="saveInheritance()"><i
+                    class="fa fa-spinner fa-spin" v-if="saving"></i> Speichern
+            </button>
         </td>
     </tr>
 </template>
@@ -21,50 +29,47 @@
 
     export default {
         props: ['inheritanceId', 'inheritanceEntry', 'baseUrl', 'editable'],
+
         methods: {
-            clickEdit: function () {
+            clickEdit() {
                 if (this.editingEntry == '') {
                     this.editingEntry = this.inheritanceEntry;
                 }
                 this.editing = true;
                 this.focusEntryInput();
             },
-            stopEdit: function() {
+
+            stopEdit: function () {
                 this.editing = false;
             },
-            saveInheritance: function() {
+
+            saveInheritance: function () {
                 this.saving = true;
-                $.ajax({
-                    data: {
-                        _token: window.Laravel.csrfToken,
-                        'entry': this.editingEntry,
-                    },
-                    url: this.baseUrl + '/' + this.inheritanceId,
-                    method: 'PUT'
-                }).done((function(response) {
-                    this.inheritanceEntry = response.entry;
+
+                axios.put(this.baseUrl + '/' + this.inheritanceId, {
+                    entry: this.editingEntry,
+                }).then(({data}) => {
+                    // this.inheritanceEntry = data.entry;
                     this.editing = false;
                     this.saving = false;
-                }).bind(this));
-            },
-            deleteInheritance: function() {
-                if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
-                    $.ajax({
-                        _token: window.Laravel.csrfToken,
-                        url: this.baseUrl + '/' + this.inheritanceId,
-                        method: 'DELETE'
-                    }).done((response) => {
-                        this.existing = false;
                 });
+            },
+
+            deleteInheritance: function () {
+                if (window.confirm("Soll der Nachlass wirklich gelöscht werden?")) {
+                    axios.delete(this.baseUrl + '/' + this.inheritanceId).then(() => {
+                        this.existing = false;
+                    });
                 }
             },
-            focusEntryInput: function() {
-                Vue.nextTick((function() {
-                    this.$els.entryInput.focus();
-                }).bind(this));
+
+            focusEntryInput: function () {
+                Vue.nextTick(() => {
+                    this.$refs.entryInput.focus();
+                });
             }
         },
-        data: function () {
+        data() {
             return {
                 editing: false,
                 existing: true,

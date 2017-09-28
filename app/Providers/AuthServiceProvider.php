@@ -6,6 +6,7 @@ use Grimm\Permission;
 use Grimm\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,8 @@ class AuthServiceProvider extends ServiceProvider
         if (!$this->app->runningInConsole()) {
             $this->registerRolesAsGates();
         }
+
+        Passport::routes();
     }
 
     private function registerRolesAsGates()

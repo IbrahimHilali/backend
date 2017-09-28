@@ -1,4 +1,5 @@
-import Vue from 'vue';
+import '../bootstrap';
+
 import InPlaceEditor from './components/PrintInPlaceEditor.vue';
 import InheritanceInPlaceEditor from './components/InheritanceInPlaceEditor.vue';
 
@@ -16,26 +17,31 @@ new Vue({
         createYear: ''
     },
 
-    ready: function () {
-        var url = BASE_URL + '/prints';
-        $.get(url).done((response) => {
-            this.prints = response;
-        });
-        $('#addPrint').on('shown.bs.modal', (e) => {
-            this.$els.createEntryField.focus();
+    mounted() {
+        this.$nextTick(() => {
+            var url = BASE_URL + '/prints';
+
+            axios.get(url).then(({ data }) => {
+                this.prints = data;
+            });
+
+            $('#addPrint').on('shown.bs.modal', (e) => {
+                this.$refs.createEntryField.focus();
+            });
         });
     },
 
     methods: {
-        storePrint: function () {
+        storePrint() {
             var url = $('#createPrintForm').attr('action');
 
-            $.ajax({
-                url: url,
-                data: { _token: window.Laravel.csrfToken, entry: this.createEntry, year: this.createYear},
-                method: 'POST'
-            }).done((response) => {
-                this.prints = response;
+            console.log(url);
+
+            axios.post(url, {
+                entry: this.createEntry,
+                year: this.createYear
+            }).then(({ data }) => {
+                this.prints = data;
                 this.createEntry = '';
                 this.createYear = '';
                 $('#addPrint').modal('hide');
@@ -52,26 +58,28 @@ new Vue({
         createEntry: ''
     },
 
-    ready: function () {
-        var url = BASE_URL + '/inheritances';
-        $.get(url).done((response) => {
-            this.inheritances = response;
-        });
-        $('#addInheritance').on('shown.bs.modal', (e) => {
-            this.$els.createEntryField.focus();
+    mounted() {
+        this.$nextTick(() => {
+            var url = BASE_URL + '/inheritances';
+
+            axios.get(url).then(({ data }) => {
+                this.inheritances = data;
+            });
+
+            $('#addInheritance').on('shown.bs.modal', (e) => {
+                this.$refs.createEntryField.focus();
+            });
         });
     },
 
     methods: {
-        storeInheritance: function () {
+        storeInheritance() {
             var url = $('#createInheritanceForm').attr('action');
 
-            $.ajax({
-                url: url,
-                data: {_token: window.Laravel.csrfToken, 'entry': this.createEntry},
-                method: 'POST'
-            }).done((response) => {
-                this.inheritances = response;
+            axios.post(url, {
+                entry: this.createEntry
+            }).then(({ data }) => {
+                this.inheritances = data;
                 this.createEntry = '';
                 $('#addInheritance').modal('hide');
             });
@@ -84,7 +92,7 @@ new Vue({
  * we will ask if the user wants to really change the entry
  * to prevent accidental overwriting.
  */
-$('#person-editor').on('submit', function(event) {
+$('#person-editor').on('submit', function (event) {
     let prevLastName = $('input[name=prev_last_name]').val();
     let prevFirstName = $('input[name=prev_first_name]').val();
     let prevName = `${prevLastName}, ${prevFirstName}`;

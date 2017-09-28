@@ -11,24 +11,19 @@ new Vue({
         person: null,
     },
 
-    ready: function () {
+    mounted() {
 
     },
 
     methods: {
         deleteRelation(bookId, relationType, person) {
-            $.ajax({
-                url: `/librarybooks/${bookId}/relation/${relationType}`,
-                type: 'DELETE',
-                data: {
-                    _token: Laravel.csrfToken,
-                    person
-                }
-            }).done(response => {
+            axios.delete(`/librarybooks/${bookId}/relation/${relationType}`, {
+                person
+            }).then(response => {
                 if (response.status == 'ok') {
                     location.reload(true);
                 }
-            }).fail(response => {
+            }).catch(response => {
                 console.log(response);
             });
         },

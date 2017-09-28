@@ -84,7 +84,7 @@ class BooksPersonController extends Controller
         $association = $this->storeAssociation($request, $person, $book);
 
         return redirect()
-            ->route('books.associations.index', [$book->id])
+            ->route('books.show', [$book])
             ->with('success', 'Verknüpfung erstellt');
     }
 
@@ -141,14 +141,16 @@ class BooksPersonController extends Controller
         /** @var Collection $persons */
         $persons = Person::query()
             ->with([
-                'bookAssociations' => function ($query) {
-                    return $query->orderBy('page')
+                'bookAssociations' => function ($query) use ($book) {
+                    return $query
+                        ->where('book_id', $book->id)
+                        ->orderBy('page')
                         ->orderBy('line');
                 }
             ])
             ->whereHas('bookAssociations',
                 function ($query) use ($book) {
-                    $query->where('book_id', $book->id);
+                    return $query->where('book_id', $book->id);
                 }
             )
             ->latest()

@@ -1,28 +1,33 @@
 <template>
-    <input class="form-control"
-           :id="id"
-           :placeholder="placeholder"
-           v-el:search-person
-           v-model="value"
-           debounce="500"
-           @keydown.up="up"
-           @keydown.down="down"
-           @keydown.enter.prevent="hit"
-           @keydown.esc="reset"
-           autocomplete="off">
-    <ul class="list-group">
-        <li v-for="item in results"
-            @click="itemClicked(item)"
-            @mousemove="current = $index"
-            class="list-group-item typeahead-item"
-            :class="{'active': $index == current}">
-            <partial :name="templateName"></partial>
-        </li>
-        <li v-show="searched && results.length == 0"
-            class="list-group-item">
-            <span v-html="empty"></span>
-        </li>
-    </ul>
+    <div>
+        <input class="form-control"
+               :id="id"
+               :placeholder="placeholder"
+               ref="searchPerson"
+               v-model="value"
+               debounce="500"
+               @keydown.up="up"
+               @keydown.down="down"
+               @keydown.enter.prevent="hit"
+               @keydown.esc="reset"
+               autocomplete="off">
+        <ul class="list-group">
+            <li v-for="(item, index) in results"
+                @click="itemClicked(item)"
+                @mousemove="current = index"
+                class="list-group-item typeahead-item"
+                :class="{'active': index == current}">
+            <slot name="list-item"
+                  :item="item">
+                <span v-html="item"></span>
+            </slot>
+            </li>
+            <li v-show="searched && results.length == 0"
+                class="list-group-item">
+                <span v-html="empty"></span>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <style>
@@ -32,12 +37,11 @@
 </style>
 
 <script type="text/babel">
-    import Vue from 'vue';
+    import '../bootstrap';
 
     export default {
         props: [
             'id', 'placeholder',
-            'templateName', 'template',
             'src', 'onHit', 'prepareResponse',
             'result', 'empty'
         ],
@@ -51,22 +55,14 @@
             };
         },
 
-        partials: {
-            'default': '<span v-html="item | highlight value"></span>'
-        },
-
-        ready() {
-            if (this.templateName && this.templateName !== 'default') {
-                Vue.partial(this.templateName, this.template);
-            } else {
-                this.templateName = 'default';
-            }
-
-            this.$els.searchPerson.focus();
+        mounted() {
+            this.$nextTick(() => {
+                this.$refs.searchPerson.focus();
+            });
 
             this.$watch('value', (newValue, oldValue) => {
-                $.get(this.src + encodeURIComponent(newValue), (response) => {
-                    this.results = this.preparation(response);
+                axios.get(this.src + encodeURIComponent(newValue)).then(({data}) => {
+                    this.results = this.preparation(data);
                     this.searched = true;
                     this.current = 0;
                 });

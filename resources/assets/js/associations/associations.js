@@ -6,15 +6,19 @@ new Vue({
 
     data: {
         associations: [],
-        person: null,
+        person: {
+            id: null,
+        },
         createEntry: ''
     },
 
-    ready: function () {
-        var url = BASE_URL + '/associations';
+    mounted() {
+        this.$nextTick(() => {
+            var url = BASE_URL + '/associations';
 
-        $('#addOccurrence').on('shown.bs.modal', (e) => {
-            this.$els.storeOccurrence.focus();
+            $('#addOccurrence').on('shown.bs.modal', (e) => {
+                this.$refs.storeOccurrence.focus();
+            });
         });
     },
 
@@ -22,10 +26,12 @@ new Vue({
         fillOccurrenceForm(person) {
             this.personSelected(person);
         },
+
         personSelected(person) {
             this.person = person;
-            this.$els.pageField.focus();
+            this.$refs.pageField.focus();
         },
+
         prepareResponse(response) {
             return response.data;
         }
