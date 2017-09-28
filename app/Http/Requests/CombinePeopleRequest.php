@@ -57,13 +57,13 @@ class CombinePeopleRequest extends FormRequest
             'translated' => 'translator',
         ];
 
-        foreach($lookup as $collection => $relation) {
-            foreach($person->{$collection} as $book) {
+        foreach ($lookup as $collection => $relation) {
+            foreach ($person->{$collection} as $book) {
                 $this->service->store($book, $relation, $other);
             }
         }
 
-        $person->delete();
+        $person->forceDelete();
 
         return true;
     }
