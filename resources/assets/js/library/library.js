@@ -8,7 +8,9 @@ new Vue({
     data: {
         moreFields: false,
         morePeople: false,
-        person: null,
+        person: {
+            id: null
+        },
     },
 
     mounted() {

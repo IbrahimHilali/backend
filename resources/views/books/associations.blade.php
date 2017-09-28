@@ -34,8 +34,6 @@
                                        src="{{ url('people/search') }}?name="
                                        :prepare-response="prepareResponse"
                                        :on-hit="personSelected"
-                                       result="person"
-                                       template-name="person"
                                        empty="Es wurde keine Person gefunden!">
                                 <template slot="list-item" scope="props">
                                     @{{ props.item.last_name }}, @{{ props.item.first_name }} <em

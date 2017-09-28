@@ -34,75 +34,148 @@
             @endif
 
             <div class="col-md-12 page-content">
-                <form class="form-horizontal">
+                <form class="form-horizontal" onsubmit="alert('coming soon...'); return false;">
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
 
-                    @include('partials.form.field', ['field' => 'name', 'model' => $person, 'disabled' => true])
-                    @include('partials.form.field', ['field' => 'note', 'model' => $person, 'disabled' => true])
+                    @include('partials.form.field', ['field' => 'name', 'model' => $person])
+                    @include('partials.form.field', ['field' => 'note', 'model' => $person])
 
-                    <hr>
+                    @unless($person->trashed())
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                @can('library.update')
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="fa fa-floppy-o"></span>
+                                        Speichern
+                                    </button>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Verfasst</label>
-                        <div class="col-sm-10">
-                            <ul class="form-control-static">
-                                @forelse($person->written as $book)
-                                    <li>
-                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
-                                    </li>
-                                @empty
-                                    <li>kein Buch verfasst</li>
-                                @endforelse
-                            </ul>
+                                    <button type="reset" class="btn btn-link">
+                                        Änderungen zurücksetzen
+                                    </button>
+
+                                    <a href="{{ route('librarypeople.combine', [$person]) }}" class="btn btn-danger"
+                                       onclick="return confirm('Achtung! Diese Person wirklich zusammen führen?')">
+                                        <span class="fa fa-exclamation-triangle"></span>
+                                        Person mit anderer zusammenführen
+                                    </a>
+                                @endcan
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Herausgegeben</label>
-                        <div class="col-sm-10">
-                            <ul class="form-control-static">
-                                @forelse($person->edited as $book)
-                                    <li>
-                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
-                                    </li>
-                                @empty
-                                    <li>kein Buch herausgegeben</li>
-                                @endforelse
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Übersetzt</label>
-                        <div class="col-sm-10">
-                            <ul class="form-control-static">
-                                @forelse($person->translated as $book)
-                                    <li>
-                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
-                                    </li>
-                                @empty
-                                    <li>kein Buch übersetzt</li>
-                                @endforelse
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Illustiert</label>
-                        <div class="col-sm-10">
-                            <ul class="form-control-static">
-                                @forelse($person->illustrated as $book)
-                                    <li>
-                                        <a href="{{ route('librarybooks.show', [$book]) }}">{{ $book->title }}</a>
-                                    </li>
-                                @empty
-                                    <li>kein Buch illustriert</li>
-                                @endforelse
-                            </ul>
-                        </div>
-                    </div>
+                    @endunless
                 </form>
+
+                <hr>
+
+                <h3>Verfasst</h3>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Kurztitel</th>
+                        <th>Titel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($person->written as $book)
+                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
+                            style="cursor: pointer;">
+                            <td>{{ $book->id }}</td>
+                            <td>{{ $book->shorttitle }}</td>
+                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center;">kein Buch verfasst</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <h3>Herausgegeben</h3>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Kurztitel</th>
+                        <th>Titel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($person->edited as $book)
+                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
+                            style="cursor: pointer;">
+                            <td>{{ $book->id }}</td>
+                            <td>{{ $book->shorttitle }}</td>
+                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center;">kein Buch herausgegeben</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <h3>Übersetzt</h3>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Kurztitel</th>
+                        <th>Titel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($person->translated as $book)
+                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
+                            style="cursor: pointer;">
+                            <td>{{ $book->id }}</td>
+                            <td>{{ $book->shorttitle }}</td>
+                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center;">kein Buch übersetzt</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <h3>Illustiert</h3>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Kurztitel</th>
+                        <th>Titel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($person->illustrated as $book)
+                        <tr onclick="location.href='{{ route('librarybooks.show', [$book]) }}'"
+                            style="cursor: pointer;">
+                            <td>{{ $book->id }}</td>
+                            <td>{{ $book->shorttitle }}</td>
+                            <td>{{ \Illuminate\Support\Str::words($book->title, 20) }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center;">kein Buch illustriert</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
 
                 <div>
                     @include('logs.entity-activity', ['entity' => $person])

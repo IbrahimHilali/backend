@@ -8,9 +8,11 @@ use App\Filters\Shared\OnlyTrashedFilter;
 use App\Filters\Shared\PrefixFilter;
 use App\Filters\Shared\SortFilter;
 use App\Filters\Shared\TrashFilter;
+use App\Http\Requests\CombinePeopleRequest;
 use App\Http\Requests\IndexLibraryPeopleRequest;
 use App\Http\Requests\StoreLibraryPersonRequest;
 use Grimm\LibraryPerson;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class LibraryPeopleController extends Controller
@@ -43,6 +45,35 @@ class LibraryPeopleController extends Controller
             ->findOrFail($id);
 
         return view('librarypeople.show', compact('person'));
+    }
+
+    /**
+     * @param $libraryPerson
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function combine($libraryPerson)
+    {
+        $person = LibraryPerson::findOrFail($libraryPerson);
+
+        return view('librarypeople.combine', ['person' => $person]);
+    }
+
+    /**
+     * @param CombinePeopleRequest $request
+     * @param $libraryPerson
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function postCombine(CombinePeopleRequest $request, $libraryPerson)
+    {
+        $person = LibraryPerson::find($libraryPerson);
+
+        $other = LibraryPerson::find($request->input('person'));
+
+        $request->persist($person, $other);
+
+        return redirect()
+            ->route('librarypeople.index')
+            ->with('success', 'Personen zusammengeführt');
     }
 
     /**

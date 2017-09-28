@@ -5,7 +5,6 @@
                :placeholder="placeholder"
                ref="searchPerson"
                v-model="value"
-               debounce="500"
                @keydown.up="up"
                @keydown.down="down"
                @keydown.enter.prevent="hit"
@@ -39,6 +38,8 @@
 <script type="text/babel">
     import '../bootstrap';
 
+    var ___debouncer;
+
     export default {
         props: [
             'id', 'placeholder',
@@ -61,11 +62,15 @@
             });
 
             this.$watch('value', (newValue, oldValue) => {
-                axios.get(this.src + encodeURIComponent(newValue)).then(({data}) => {
-                    this.results = this.preparation(data);
-                    this.searched = true;
-                    this.current = 0;
-                });
+                clearTimeout(___debouncer);
+
+                ___debouncer = setTimeout(() => {
+                    axios.get(this.src + encodeURIComponent(newValue)).then(({data}) => {
+                        this.results = this.preparation(data);
+                        this.searched = true;
+                        this.current = 0;
+                    });
+                }, 500);
             });
         },
 
@@ -87,11 +92,12 @@
             },
 
             reset() {
+                this.searched = false;
                 this.results = [];
             },
 
             hit() {
-                this.onHit(this.results[this.current], this);
+                this.itemClicked(this.results[this.current]);
             },
 
             up() {
