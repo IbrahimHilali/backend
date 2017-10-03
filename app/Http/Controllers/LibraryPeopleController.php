@@ -28,7 +28,7 @@ class LibraryPeopleController extends Controller
 
         $this->preparePrefixDisplay($request->get('prefix'), LibraryPerson::prefixesOfLength('name', 2)->get());
 
-        $people = $this->prepareCollection('last_person_index', $people, $request, 25);
+        $people = $this->prepareCollection('last_library_person_index', $people, $request, 25);
 
         return view('librarypeople.index', compact('people'));
     }
@@ -72,7 +72,7 @@ class LibraryPeopleController extends Controller
         $request->persist($person, $other);
 
         return redirect()
-            ->route('librarypeople.index')
+            ->to(referrer_url('last_library_person_index', route('librarypeople.index')))
             ->with('success', 'Personen zusammengeführt');
     }
 
