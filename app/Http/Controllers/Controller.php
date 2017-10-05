@@ -84,7 +84,13 @@ class Controller extends BaseController
         $search = ['ä', 'ö', 'ü'];
         $replace = ['a', 'o', 'u'];
 
-        $prefix = str_replace($search, $replace, $prefix);
+        /* TODO:
+         * - we can not use this, otherwise a lot of items are hidden.
+         * - do not only replace äöü, also éèêíì....
+         * - do a multi search in "CollectPrefixes" -> scopeByPrefix
+         */
+
+        // $prefix = str_replace($search, $replace, $prefix);
 
         return Str::ucfirst($prefix);
     }
